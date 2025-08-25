@@ -1,0 +1,2895 @@
+about:
+  date: August 24, 2025 09:18:39
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+application:
+  app:
+    description: generated Ontimize application
+    menu_group:
+      data:
+        icon: edit_square
+        menu_item:
+          Comment:
+            icon: edit_square
+            menu_name: Comment
+            menu_title: Comment
+            page:
+              detail:
+                columns: CommentId,InstanceId,TaskInstanceId,CommentType,CommentText,Author,CreatedDate,IsVisible
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Comment
+                typescript_name: detail_component.jinja
+                visible_columns: CommentId,InstanceId,TaskInstanceId,CommentType,CommentText,Author,CreatedDate,IsVisible
+              home:
+                columns: CommentId,InstanceId,TaskInstanceId,CommentType,CommentText,Author,CreatedDate,IsVisible
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Comment
+                typescript_name: home_template.jinja
+                visible_columns: CommentId,InstanceId,TaskInstanceId,CommentType,CommentText,Author,CreatedDate,IsVisible
+              new:
+                columns: CommentId,InstanceId,TaskInstanceId,CommentType,CommentText,Author,CreatedDate,IsVisible
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Comment
+                typescript_name: new_component.jinja
+                visible_columns: CommentId,InstanceId,TaskInstanceId,CommentType,CommentText,Author,CreatedDate,IsVisible
+            template_name: module.jinja
+          Company:
+            icon: edit_square
+            menu_name: Company
+            menu_title: Company
+            page:
+              detail:
+                columns: CompanyName,ApplicationID,Category,StreetAddress,AddressLine2,City,State,Country,ZipCode,Website,CopackerDirectory,VeganCertification,PlantCount,CreatedDate,LastUpdatedDate,CompanyID,KashrusCompanyID,CurrentlyCertified,EverCertified,OwnBrand
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Company
+                typescript_name: detail_component.jinja
+                visible_columns: CompanyName,ApplicationID,Category,StreetAddress,AddressLine2,City,State,Country,ZipCode,Website,CopackerDirectory,VeganCertification,PlantCount,CreatedDate,LastUpdatedDate,CompanyID,KashrusCompanyID,CurrentlyCertified,EverCertified,OwnBrand
+              home:
+                columns: CompanyName,ApplicationID,Category,StreetAddress,AddressLine2,City,State,Country,ZipCode,Website,CopackerDirectory,VeganCertification,PlantCount,CreatedDate,LastUpdatedDate,CompanyID,KashrusCompanyID,CurrentlyCertified,EverCertified,OwnBrand
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Company
+                typescript_name: home_template.jinja
+                visible_columns: CompanyName,ApplicationID,Category,StreetAddress,AddressLine2,City,State,Country,ZipCode,Website,CopackerDirectory,VeganCertification,PlantCount,CreatedDate,LastUpdatedDate,CompanyID,KashrusCompanyID,CurrentlyCertified,EverCertified,OwnBrand
+              new:
+                columns: CompanyName,ApplicationID,Category,StreetAddress,AddressLine2,City,State,Country,ZipCode,Website,CopackerDirectory,VeganCertification,PlantCount,CreatedDate,LastUpdatedDate,CompanyID,KashrusCompanyID,CurrentlyCertified,EverCertified,OwnBrand
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Company
+                typescript_name: new_component.jinja
+                visible_columns: CompanyName,ApplicationID,Category,StreetAddress,AddressLine2,City,State,Country,ZipCode,Website,CopackerDirectory,VeganCertification,PlantCount,CreatedDate,LastUpdatedDate,CompanyID,KashrusCompanyID,CurrentlyCertified,EverCertified,OwnBrand
+            template_name: module.jinja
+          Contact:
+            icon: edit_square
+            menu_name: Contact
+            menu_title: Contact
+            page:
+              detail:
+                columns: FullName,ApplicationID,ContactType,JobTitle,Phone,Email,IsPrimary,Role,CreatedDate,ContactID
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Contact
+                typescript_name: detail_component.jinja
+                visible_columns: FullName,ApplicationID,ContactType,JobTitle,Phone,Email,IsPrimary,Role,CreatedDate,ContactID
+              home:
+                columns: FullName,ApplicationID,ContactType,JobTitle,Phone,Email,IsPrimary,Role,CreatedDate,ContactID
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Contact
+                typescript_name: home_template.jinja
+                visible_columns: FullName,ApplicationID,ContactType,JobTitle,Phone,Email,IsPrimary,Role,CreatedDate,ContactID
+              new:
+                columns: FullName,ApplicationID,ContactType,JobTitle,Phone,Email,IsPrimary,Role,CreatedDate,ContactID
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Contact
+                typescript_name: new_component.jinja
+                visible_columns: FullName,ApplicationID,ContactType,JobTitle,Phone,Email,IsPrimary,Role,CreatedDate,ContactID
+            template_name: module.jinja
+          Ingredient:
+            icon: edit_square
+            menu_name: Ingredient
+            menu_title: Ingredient
+            page:
+              detail:
+                columns: IngredientName,ApplicationID,Source,RMC,Manufacturer,Packaging,CertificationAgency,AddedDate,AddedBy,Status,CreatedDate,IngredientID,NCRCIngredientID,UKDID,Brand
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Ingredient
+                typescript_name: detail_component.jinja
+                visible_columns: IngredientName,ApplicationID,Source,RMC,Manufacturer,Packaging,CertificationAgency,AddedDate,AddedBy,Status,CreatedDate,IngredientID,NCRCIngredientID,UKDID,Brand
+              home:
+                columns: IngredientName,ApplicationID,Source,RMC,Manufacturer,Packaging,CertificationAgency,AddedDate,AddedBy,Status,CreatedDate,IngredientID,NCRCIngredientID,UKDID,Brand
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Ingredient
+                typescript_name: home_template.jinja
+                visible_columns: IngredientName,ApplicationID,Source,RMC,Manufacturer,Packaging,CertificationAgency,AddedDate,AddedBy,Status,CreatedDate,IngredientID,NCRCIngredientID,UKDID,Brand
+              new:
+                columns: IngredientName,ApplicationID,Source,RMC,Manufacturer,Packaging,CertificationAgency,AddedDate,AddedBy,Status,CreatedDate,IngredientID,NCRCIngredientID,UKDID,Brand
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Ingredient
+                typescript_name: new_component.jinja
+                visible_columns: IngredientName,ApplicationID,Source,RMC,Manufacturer,Packaging,CertificationAgency,AddedDate,AddedBy,Status,CreatedDate,IngredientID,NCRCIngredientID,UKDID,Brand
+            template_name: module.jinja
+          Message:
+            icon: edit_square
+            menu_name: Message
+            menu_title: Message
+            page:
+              detail:
+                columns: MessageId,InstanceId,FromUser,ToUser,ToRole,MessageType,Subject,MessageBody,SentDate,ReadDate,IsRead
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Message
+                typescript_name: detail_component.jinja
+                visible_columns: MessageId,InstanceId,FromUser,ToUser,ToRole,MessageType,Subject,MessageBody,SentDate,ReadDate,IsRead
+              home:
+                columns: MessageId,InstanceId,FromUser,ToUser,ToRole,MessageType,Subject,MessageBody,SentDate,ReadDate,IsRead
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Message
+                typescript_name: home_template.jinja
+                visible_columns: MessageId,InstanceId,FromUser,ToUser,ToRole,MessageType,Subject,MessageBody,SentDate,ReadDate,IsRead
+              new:
+                columns: MessageId,InstanceId,FromUser,ToUser,ToRole,MessageType,Subject,MessageBody,SentDate,ReadDate,IsRead
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Message
+                typescript_name: new_component.jinja
+                visible_columns: MessageId,InstanceId,FromUser,ToUser,ToRole,MessageType,Subject,MessageBody,SentDate,ReadDate,IsRead
+            template_name: module.jinja
+          Plant:
+            icon: edit_square
+            menu_name: Plant
+            menu_title: Plant
+            page:
+              detail:
+                columns: PlantName,ApplicationID,PlantNumber,StreetAddress,AddressLine2,City,State,Country,Province,Region,ZipCode,ContactName,ContactTitle,ContactPhone,ContactEmail,ManufacturingProcess,ClosestMajorCity,HasOtherProducts,OtherProductsList,HasOtherPlants,OtherPlantsLocation,OperationalStatus,LastInspection,ComplianceStatus,CreatedDate,PlantID
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Plant
+                typescript_name: detail_component.jinja
+                visible_columns: PlantName,ApplicationID,PlantNumber,StreetAddress,AddressLine2,City,State,Country,Province,Region,ZipCode,ContactName,ContactTitle,ContactPhone,ContactEmail,ManufacturingProcess,ClosestMajorCity,HasOtherProducts,OtherProductsList,HasOtherPlants,OtherPlantsLocation,OperationalStatus,LastInspection,ComplianceStatus,CreatedDate,PlantID
+              home:
+                columns: PlantName,ApplicationID,PlantNumber,StreetAddress,AddressLine2,City,State,Country,Province,Region,ZipCode,ContactName,ContactTitle,ContactPhone,ContactEmail,ManufacturingProcess,ClosestMajorCity,HasOtherProducts,OtherProductsList,HasOtherPlants,OtherPlantsLocation,OperationalStatus,LastInspection,ComplianceStatus,CreatedDate,PlantID
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Plant
+                typescript_name: home_template.jinja
+                visible_columns: PlantName,ApplicationID,PlantNumber,StreetAddress,AddressLine2,City,State,Country,Province,Region,ZipCode,ContactName,ContactTitle,ContactPhone,ContactEmail,ManufacturingProcess,ClosestMajorCity,HasOtherProducts,OtherProductsList,HasOtherPlants,OtherPlantsLocation,OperationalStatus,LastInspection,ComplianceStatus,CreatedDate,PlantID
+              new:
+                columns: PlantName,ApplicationID,PlantNumber,StreetAddress,AddressLine2,City,State,Country,Province,Region,ZipCode,ContactName,ContactTitle,ContactPhone,ContactEmail,ManufacturingProcess,ClosestMajorCity,HasOtherProducts,OtherProductsList,HasOtherPlants,OtherPlantsLocation,OperationalStatus,LastInspection,ComplianceStatus,CreatedDate,PlantID
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Plant
+                typescript_name: new_component.jinja
+                visible_columns: PlantName,ApplicationID,PlantNumber,StreetAddress,AddressLine2,City,State,Country,Province,Region,ZipCode,ContactName,ContactTitle,ContactPhone,ContactEmail,ManufacturingProcess,ClosestMajorCity,HasOtherProducts,OtherProductsList,HasOtherPlants,OtherPlantsLocation,OperationalStatus,LastInspection,ComplianceStatus,CreatedDate,PlantID
+            template_name: module.jinja
+          ProcessDefinition:
+            icon: edit_square
+            menu_name: ProcessDefinition
+            menu_title: ProcessDefinition
+            page:
+              detail:
+                columns: ProcessName,ProcessVersion,Description,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,ProcessId
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: ProcessDefinition
+                typescript_name: detail_component.jinja
+                visible_columns: ProcessName,ProcessVersion,Description,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,ProcessId
+              home:
+                columns: ProcessName,ProcessVersion,Description,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,ProcessId
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: ProcessDefinition
+                typescript_name: home_template.jinja
+                visible_columns: ProcessName,ProcessVersion,Description,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,ProcessId
+              new:
+                columns: ProcessName,ProcessVersion,Description,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,ProcessId
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: ProcessDefinition
+                typescript_name: new_component.jinja
+                visible_columns: ProcessName,ProcessVersion,Description,IsActive,CreatedDate,CreatedBy,ModifiedDate,ModifiedBy,ProcessId
+            template_name: module.jinja
+          ProcessInstance:
+            icon: edit_square
+            menu_name: ProcessInstance
+            menu_title: ProcessInstance
+            page:
+              detail:
+                columns: InstanceId,CurrentTaskId,Priority,ProcessId,Status,StartedDate,StartedBy,CompletedDate,CompletedBy,ContextData,ApplicationId
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: ProcessInstance
+                typescript_name: detail_component.jinja
+                visible_columns: InstanceId,CurrentTaskId,Priority,ProcessId,Status,StartedDate,StartedBy,CompletedDate,CompletedBy,ContextData,ApplicationId
+              home:
+                columns: InstanceId,CurrentTaskId,Priority,ProcessId,Status,StartedDate,StartedBy,CompletedDate,CompletedBy,ContextData,ApplicationId
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: ProcessInstance
+                typescript_name: home_template.jinja
+                visible_columns: InstanceId,CurrentTaskId,Priority,ProcessId,Status,StartedDate,StartedBy,CompletedDate,CompletedBy,ContextData,ApplicationId
+              new:
+                columns: InstanceId,CurrentTaskId,Priority,ProcessId,Status,StartedDate,StartedBy,CompletedDate,CompletedBy,ContextData,ApplicationId
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: ProcessInstance
+                typescript_name: new_component.jinja
+                visible_columns: InstanceId,CurrentTaskId,Priority,ProcessId,Status,StartedDate,StartedBy,CompletedDate,CompletedBy,ContextData,ApplicationId
+            template_name: module.jinja
+          Product:
+            icon: edit_square
+            menu_name: Product
+            menu_title: Product
+            page:
+              detail:
+                columns: LabelName,ApplicationID,Source,BrandName,LabelCompany,ConsumerIndustrial,CertificationSymbol,Status,Category,CreatedDate,ProductID,BulkShipped
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Product
+                typescript_name: detail_component.jinja
+                visible_columns: LabelName,ApplicationID,Source,BrandName,LabelCompany,ConsumerIndustrial,CertificationSymbol,Status,Category,CreatedDate,ProductID,BulkShipped
+              home:
+                columns: LabelName,ApplicationID,Source,BrandName,LabelCompany,ConsumerIndustrial,CertificationSymbol,Status,Category,CreatedDate,ProductID,BulkShipped
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Product
+                typescript_name: home_template.jinja
+                visible_columns: LabelName,ApplicationID,Source,BrandName,LabelCompany,ConsumerIndustrial,CertificationSymbol,Status,Category,CreatedDate,ProductID,BulkShipped
+              new:
+                columns: LabelName,ApplicationID,Source,BrandName,LabelCompany,ConsumerIndustrial,CertificationSymbol,Status,Category,CreatedDate,ProductID,BulkShipped
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Product
+                typescript_name: new_component.jinja
+                visible_columns: LabelName,ApplicationID,Source,BrandName,LabelCompany,ConsumerIndustrial,CertificationSymbol,Status,Category,CreatedDate,ProductID,BulkShipped
+            template_name: module.jinja
+          Sysdiagram:
+            icon: edit_square
+            menu_name: Sysdiagram
+            menu_title: Sysdiagram
+            page:
+              detail:
+                columns: name,version,definition,principal_id,diagram_id
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: Sysdiagram
+                typescript_name: detail_component.jinja
+                visible_columns: name,version,definition,principal_id,diagram_id
+              home:
+                columns: name,version,definition,principal_id,diagram_id
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: Sysdiagram
+                typescript_name: home_template.jinja
+                visible_columns: name,version,definition,principal_id,diagram_id
+              new:
+                columns: name,version,definition,principal_id,diagram_id
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: Sysdiagram
+                typescript_name: new_component.jinja
+                visible_columns: name,version,definition,principal_id,diagram_id
+            template_name: module.jinja
+          TaskDefinition:
+            icon: edit_square
+            menu_name: TaskDefinition
+            menu_title: TaskDefinition
+            page:
+              detail:
+                columns: TaskName,ProcessId,TaskType,TaskCategory,Sequence,IsParallel,AssigneeRole,EstimatedDurationMinutes,AutoComplete,Description,ConfigurationJson,TaskId,IsRequired
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: TaskDefinition
+                typescript_name: detail_component.jinja
+                visible_columns: TaskName,ProcessId,TaskType,TaskCategory,Sequence,IsParallel,AssigneeRole,EstimatedDurationMinutes,AutoComplete,Description,ConfigurationJson,TaskId,IsRequired
+              home:
+                columns: TaskName,ProcessId,TaskType,TaskCategory,Sequence,IsParallel,AssigneeRole,EstimatedDurationMinutes,AutoComplete,Description,ConfigurationJson,TaskId,IsRequired
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: TaskDefinition
+                typescript_name: home_template.jinja
+                visible_columns: TaskName,ProcessId,TaskType,TaskCategory,Sequence,IsParallel,AssigneeRole,EstimatedDurationMinutes,AutoComplete,Description,ConfigurationJson,TaskId,IsRequired
+              new:
+                columns: TaskName,ProcessId,TaskType,TaskCategory,Sequence,IsParallel,AssigneeRole,EstimatedDurationMinutes,AutoComplete,Description,ConfigurationJson,TaskId,IsRequired
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: TaskDefinition
+                typescript_name: new_component.jinja
+                visible_columns: TaskName,ProcessId,TaskType,TaskCategory,Sequence,IsParallel,AssigneeRole,EstimatedDurationMinutes,AutoComplete,Description,ConfigurationJson,TaskId,IsRequired
+            template_name: module.jinja
+          TaskFlow:
+            icon: edit_square
+            menu_name: TaskFlow
+            menu_title: TaskFlow
+            page:
+              detail:
+                columns: FlowId,FromTaskId,ToTaskId,Condition,IsDefault
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: TaskFlow
+                typescript_name: detail_component.jinja
+                visible_columns: FlowId,FromTaskId,ToTaskId,Condition,IsDefault
+              home:
+                columns: FlowId,FromTaskId,ToTaskId,Condition,IsDefault
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: TaskFlow
+                typescript_name: home_template.jinja
+                visible_columns: FlowId,FromTaskId,ToTaskId,Condition,IsDefault
+              new:
+                columns: FlowId,FromTaskId,ToTaskId,Condition,IsDefault
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: TaskFlow
+                typescript_name: new_component.jinja
+                visible_columns: FlowId,FromTaskId,ToTaskId,Condition,IsDefault
+            template_name: module.jinja
+          TaskInstance:
+            icon: edit_square
+            menu_name: TaskInstance
+            menu_title: TaskInstance
+            page:
+              detail:
+                columns: TaskInstanceId,InstanceId,TaskId,Status,AssignedTo,StartedDate,CompletedDate,DurationMinutes,Result,ResultData,ErrorMessage,RetryCount
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: TaskInstance
+                typescript_name: detail_component.jinja
+                visible_columns: TaskInstanceId,InstanceId,TaskId,Status,AssignedTo,StartedDate,CompletedDate,DurationMinutes,Result,ResultData,ErrorMessage,RetryCount
+              home:
+                columns: TaskInstanceId,InstanceId,TaskId,Status,AssignedTo,StartedDate,CompletedDate,DurationMinutes,Result,ResultData,ErrorMessage,RetryCount
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: TaskInstance
+                typescript_name: home_template.jinja
+                visible_columns: TaskInstanceId,InstanceId,TaskId,Status,AssignedTo,StartedDate,CompletedDate,DurationMinutes,Result,ResultData,ErrorMessage,RetryCount
+              new:
+                columns: TaskInstanceId,InstanceId,TaskId,Status,AssignedTo,StartedDate,CompletedDate,DurationMinutes,Result,ResultData,ErrorMessage,RetryCount
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: TaskInstance
+                typescript_name: new_component.jinja
+                visible_columns: TaskInstanceId,InstanceId,TaskId,Status,AssignedTo,StartedDate,CompletedDate,DurationMinutes,Result,ResultData,ErrorMessage,RetryCount
+            template_name: module.jinja
+          ValidationCheck:
+            icon: edit_square
+            menu_name: ValidationCheck
+            menu_title: ValidationCheck
+            page:
+              detail:
+                columns: ValidationID,ApplicationID,CheckType,ValidationMessage,LastCheckedDate,IsValid
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: ValidationCheck
+                typescript_name: detail_component.jinja
+                visible_columns: ValidationID,ApplicationID,CheckType,ValidationMessage,LastCheckedDate,IsValid
+              home:
+                columns: ValidationID,ApplicationID,CheckType,ValidationMessage,LastCheckedDate,IsValid
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: ValidationCheck
+                typescript_name: home_template.jinja
+                visible_columns: ValidationID,ApplicationID,CheckType,ValidationMessage,LastCheckedDate,IsValid
+              new:
+                columns: ValidationID,ApplicationID,CheckType,ValidationMessage,LastCheckedDate,IsValid
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: ValidationCheck
+                typescript_name: new_component.jinja
+                visible_columns: ValidationID,ApplicationID,CheckType,ValidationMessage,LastCheckedDate,IsValid
+            template_name: module.jinja
+          ValidationResult:
+            icon: edit_square
+            menu_name: ValidationResult
+            menu_title: ValidationResult
+            page:
+              detail:
+                columns: ValidationResultId,InstanceId,TaskInstanceId,ValidationId,ValidationMessage,ValidationDate,ValidatedBy,IsValid
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: ValidationResult
+                typescript_name: detail_component.jinja
+                visible_columns: ValidationResultId,InstanceId,TaskInstanceId,ValidationId,ValidationMessage,ValidationDate,ValidatedBy,IsValid
+              home:
+                columns: ValidationResultId,InstanceId,TaskInstanceId,ValidationId,ValidationMessage,ValidationDate,ValidatedBy,IsValid
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: ValidationResult
+                typescript_name: home_template.jinja
+                visible_columns: ValidationResultId,InstanceId,TaskInstanceId,ValidationId,ValidationMessage,ValidationDate,ValidatedBy,IsValid
+              new:
+                columns: ValidationResultId,InstanceId,TaskInstanceId,ValidationId,ValidationMessage,ValidationDate,ValidatedBy,IsValid
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: ValidationResult
+                typescript_name: new_component.jinja
+                visible_columns: ValidationResultId,InstanceId,TaskInstanceId,ValidationId,ValidationMessage,ValidationDate,ValidatedBy,IsValid
+            template_name: module.jinja
+          ValidationRule:
+            icon: edit_square
+            menu_name: ValidationRule
+            menu_title: ValidationRule
+            page:
+              detail:
+                columns: ValidationName,Category,RuleType,ValidationQuery,ErrorMessage,IsActive,CreatedDate,ValidationId
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: ValidationRule
+                typescript_name: detail_component.jinja
+                visible_columns: ValidationName,Category,RuleType,ValidationQuery,ErrorMessage,IsActive,CreatedDate,ValidationId
+              home:
+                columns: ValidationName,Category,RuleType,ValidationQuery,ErrorMessage,IsActive,CreatedDate,ValidationId
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: ValidationRule
+                typescript_name: home_template.jinja
+                visible_columns: ValidationName,Category,RuleType,ValidationQuery,ErrorMessage,IsActive,CreatedDate,ValidationId
+              new:
+                columns: ValidationName,Category,RuleType,ValidationQuery,ErrorMessage,IsActive,CreatedDate,ValidationId
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: ValidationRule
+                typescript_name: new_component.jinja
+                visible_columns: ValidationName,Category,RuleType,ValidationQuery,ErrorMessage,IsActive,CreatedDate,ValidationId
+            template_name: module.jinja
+          WFActivityLog:
+            icon: edit_square
+            menu_name: WFActivityLog
+            menu_title: WFActivityLog
+            page:
+              detail:
+                columns: UserName,ApplicationID,Status,ActionType,ActionDetails,ActivityType,Category,ActivityDate,ActivityID
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFActivityLog
+                typescript_name: detail_component.jinja
+                visible_columns: UserName,ApplicationID,Status,ActionType,ActionDetails,ActivityType,Category,ActivityDate,ActivityID
+              home:
+                columns: UserName,ApplicationID,Status,ActionType,ActionDetails,ActivityType,Category,ActivityDate,ActivityID
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFActivityLog
+                typescript_name: home_template.jinja
+                visible_columns: UserName,ApplicationID,Status,ActionType,ActionDetails,ActivityType,Category,ActivityDate,ActivityID
+              new:
+                columns: UserName,ApplicationID,Status,ActionType,ActionDetails,ActivityType,Category,ActivityDate,ActivityID
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFActivityLog
+                typescript_name: new_component.jinja
+                visible_columns: UserName,ApplicationID,Status,ActionType,ActionDetails,ActivityType,Category,ActivityDate,ActivityID
+            template_name: module.jinja
+          WFActivityStatus:
+            icon: edit_square
+            menu_name: WFActivityStatus
+            menu_title: WFActivityStatus
+            page:
+              detail:
+                columns: StatusCode,StatusDesc
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFActivityStatus
+                typescript_name: detail_component.jinja
+                visible_columns: StatusCode,StatusDesc
+              home:
+                columns: StatusCode,StatusDesc
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFActivityStatus
+                typescript_name: home_template.jinja
+                visible_columns: StatusCode,StatusDesc
+              new:
+                columns: StatusCode,StatusDesc
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFActivityStatus
+                typescript_name: new_component.jinja
+                visible_columns: StatusCode,StatusDesc
+            template_name: module.jinja
+          WFApplication:
+            icon: edit_square
+            menu_name: WFApplication
+            menu_title: WFApplication
+            page:
+              detail:
+                columns: PrimaryContactName,Priority,Status,WFDashboardID,ApplicationNumber,SubmissionDate,Version,CreatedDate,LastUpdatedDate,LastStatusChangeDate,LastStatusChangedBy,ApplicationID,CompanyID,PlantID
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFApplication
+                typescript_name: detail_component.jinja
+                visible_columns: PrimaryContactName,Priority,Status,WFDashboardID,ApplicationNumber,SubmissionDate,Version,CreatedDate,LastUpdatedDate,LastStatusChangeDate,LastStatusChangedBy,ApplicationID,CompanyID,PlantID
+              home:
+                columns: PrimaryContactName,Priority,Status,WFDashboardID,ApplicationNumber,SubmissionDate,Version,CreatedDate,LastUpdatedDate,LastStatusChangeDate,LastStatusChangedBy,ApplicationID,CompanyID,PlantID
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFApplication
+                typescript_name: home_template.jinja
+                visible_columns: PrimaryContactName,Priority,Status,WFDashboardID,ApplicationNumber,SubmissionDate,Version,CreatedDate,LastUpdatedDate,LastStatusChangeDate,LastStatusChangedBy,ApplicationID,CompanyID,PlantID
+              new:
+                columns: PrimaryContactName,Priority,Status,WFDashboardID,ApplicationNumber,SubmissionDate,Version,CreatedDate,LastUpdatedDate,LastStatusChangeDate,LastStatusChangedBy,ApplicationID,CompanyID,PlantID
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFApplication
+                typescript_name: new_component.jinja
+                visible_columns: PrimaryContactName,Priority,Status,WFDashboardID,ApplicationNumber,SubmissionDate,Version,CreatedDate,LastUpdatedDate,LastStatusChangeDate,LastStatusChangedBy,ApplicationID,CompanyID,PlantID
+            template_name: module.jinja
+          WFApplicationStatus:
+            icon: edit_square
+            menu_name: WFApplicationStatus
+            menu_title: WFApplicationStatus
+            page:
+              detail:
+                columns: StatusDescription,StatusCode
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFApplicationStatus
+                typescript_name: detail_component.jinja
+                visible_columns: StatusDescription,StatusCode
+              home:
+                columns: StatusDescription,StatusCode
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFApplicationStatus
+                typescript_name: home_template.jinja
+                visible_columns: StatusDescription,StatusCode
+              new:
+                columns: StatusDescription,StatusCode
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFApplicationStatus
+                typescript_name: new_component.jinja
+                visible_columns: StatusDescription,StatusCode
+            template_name: module.jinja
+          WFComment:
+            icon: edit_square
+            menu_name: WFComment
+            menu_title: WFComment
+            page:
+              detail:
+                columns: CommentID,ApplicationID,Author,CommentText,CommentType,Category,CreatedDate
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFComment
+                typescript_name: detail_component.jinja
+                visible_columns: CommentID,ApplicationID,Author,CommentText,CommentType,Category,CreatedDate
+              home:
+                columns: CommentID,ApplicationID,Author,CommentText,CommentType,Category,CreatedDate
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFComment
+                typescript_name: home_template.jinja
+                visible_columns: CommentID,ApplicationID,Author,CommentText,CommentType,Category,CreatedDate
+              new:
+                columns: CommentID,ApplicationID,Author,CommentText,CommentType,Category,CreatedDate
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFComment
+                typescript_name: new_component.jinja
+                visible_columns: CommentID,ApplicationID,Author,CommentText,CommentType,Category,CreatedDate
+            template_name: module.jinja
+          WFDashboard:
+            icon: edit_square
+            menu_name: WFDashboard
+            menu_title: WFDashboard
+            page:
+              detail:
+                columns: ID,count_new,count_in_progress,count_withdrawn,count_overdue,total_count,count_completed
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFDashboard
+                typescript_name: detail_component.jinja
+                visible_columns: ID,count_new,count_in_progress,count_withdrawn,count_overdue,total_count,count_completed
+              home:
+                columns: ID,count_new,count_in_progress,count_withdrawn,count_overdue,total_count,count_completed
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFDashboard
+                typescript_name: home_template.jinja
+                visible_columns: ID,count_new,count_in_progress,count_withdrawn,count_overdue,total_count,count_completed
+              new:
+                columns: ID,count_new,count_in_progress,count_withdrawn,count_overdue,total_count,count_completed
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFDashboard
+                typescript_name: new_component.jinja
+                visible_columns: ID,count_new,count_in_progress,count_withdrawn,count_overdue,total_count,count_completed
+            template_name: module.jinja
+          WFFile:
+            icon: edit_square
+            menu_name: WFFile
+            menu_title: WFFile
+            page:
+              detail:
+                columns: FileName,ApplicationID,FileType,FileSize,UploadedDate,Tag,RecordCount,FilePath,CreatedDate,FileID,IsProcessed
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFFile
+                typescript_name: detail_component.jinja
+                visible_columns: FileName,ApplicationID,FileType,FileSize,UploadedDate,Tag,RecordCount,FilePath,CreatedDate,FileID,IsProcessed
+              home:
+                columns: FileName,ApplicationID,FileType,FileSize,UploadedDate,Tag,RecordCount,FilePath,CreatedDate,FileID,IsProcessed
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFFile
+                typescript_name: home_template.jinja
+                visible_columns: FileName,ApplicationID,FileType,FileSize,UploadedDate,Tag,RecordCount,FilePath,CreatedDate,FileID,IsProcessed
+              new:
+                columns: FileName,ApplicationID,FileType,FileSize,UploadedDate,Tag,RecordCount,FilePath,CreatedDate,FileID,IsProcessed
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFFile
+                typescript_name: new_component.jinja
+                visible_columns: FileName,ApplicationID,FileType,FileSize,UploadedDate,Tag,RecordCount,FilePath,CreatedDate,FileID,IsProcessed
+            template_name: module.jinja
+          WFFileType:
+            icon: edit_square
+            menu_name: WFFileType
+            menu_title: WFFileType
+            page:
+              detail:
+                columns: FileTypeName,FileType
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFFileType
+                typescript_name: detail_component.jinja
+                visible_columns: FileTypeName,FileType
+              home:
+                columns: FileTypeName,FileType
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFFileType
+                typescript_name: home_template.jinja
+                visible_columns: FileTypeName,FileType
+              new:
+                columns: FileTypeName,FileType
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFFileType
+                typescript_name: new_component.jinja
+                visible_columns: FileTypeName,FileType
+            template_name: module.jinja
+          WFMessage:
+            icon: edit_square
+            menu_name: WFMessage
+            menu_title: WFMessage
+            page:
+              detail:
+                columns: MessageID,ApplicationID,FromUser,ToUser,MessageText,MessageType,Priority,SentDate
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFMessage
+                typescript_name: detail_component.jinja
+                visible_columns: MessageID,ApplicationID,FromUser,ToUser,MessageText,MessageType,Priority,SentDate
+              home:
+                columns: MessageID,ApplicationID,FromUser,ToUser,MessageText,MessageType,Priority,SentDate
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFMessage
+                typescript_name: home_template.jinja
+                visible_columns: MessageID,ApplicationID,FromUser,ToUser,MessageText,MessageType,Priority,SentDate
+              new:
+                columns: MessageID,ApplicationID,FromUser,ToUser,MessageText,MessageType,Priority,SentDate
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFMessage
+                typescript_name: new_component.jinja
+                visible_columns: MessageID,ApplicationID,FromUser,ToUser,MessageText,MessageType,Priority,SentDate
+            template_name: module.jinja
+          WFPriority:
+            icon: edit_square
+            menu_name: WFPriority
+            menu_title: WFPriority
+            page:
+              detail:
+                columns: PriorityDescription,PriorityCode
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFPriority
+                typescript_name: detail_component.jinja
+                visible_columns: PriorityDescription,PriorityCode
+              home:
+                columns: PriorityDescription,PriorityCode
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFPriority
+                typescript_name: home_template.jinja
+                visible_columns: PriorityDescription,PriorityCode
+              new:
+                columns: PriorityDescription,PriorityCode
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFPriority
+                typescript_name: new_component.jinja
+                visible_columns: PriorityDescription,PriorityCode
+            template_name: module.jinja
+          WFProcessPriority:
+            icon: edit_square
+            menu_name: WFProcessPriority
+            menu_title: WFProcessPriority
+            page:
+              detail:
+                columns: PriorityDescription,PriorityCode
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFProcessPriority
+                typescript_name: detail_component.jinja
+                visible_columns: PriorityDescription,PriorityCode
+              home:
+                columns: PriorityDescription,PriorityCode
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFProcessPriority
+                typescript_name: home_template.jinja
+                visible_columns: PriorityDescription,PriorityCode
+              new:
+                columns: PriorityDescription,PriorityCode
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFProcessPriority
+                typescript_name: new_component.jinja
+                visible_columns: PriorityDescription,PriorityCode
+            template_name: module.jinja
+          WFProcessStatus:
+            icon: edit_square
+            menu_name: WFProcessStatus
+            menu_title: WFProcessStatus
+            page:
+              detail:
+                columns: StatusDescription,StatusCode
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFProcessStatus
+                typescript_name: detail_component.jinja
+                visible_columns: StatusDescription,StatusCode
+              home:
+                columns: StatusDescription,StatusCode
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFProcessStatus
+                typescript_name: home_template.jinja
+                visible_columns: StatusDescription,StatusCode
+              new:
+                columns: StatusDescription,StatusCode
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFProcessStatus
+                typescript_name: new_component.jinja
+                visible_columns: StatusDescription,StatusCode
+            template_name: module.jinja
+          WFQuote:
+            icon: edit_square
+            menu_name: WFQuote
+            menu_title: WFQuote
+            page:
+              detail:
+                columns: QuoteID,ApplicationID,Status,QuoteNumber,TotalAmount,ValidUntil,LastUpdatedDate,CreatedDate
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFQuote
+                typescript_name: detail_component.jinja
+                visible_columns: QuoteID,ApplicationID,Status,QuoteNumber,TotalAmount,ValidUntil,LastUpdatedDate,CreatedDate
+              home:
+                columns: QuoteID,ApplicationID,Status,QuoteNumber,TotalAmount,ValidUntil,LastUpdatedDate,CreatedDate
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFQuote
+                typescript_name: home_template.jinja
+                visible_columns: QuoteID,ApplicationID,Status,QuoteNumber,TotalAmount,ValidUntil,LastUpdatedDate,CreatedDate
+              new:
+                columns: QuoteID,ApplicationID,Status,QuoteNumber,TotalAmount,ValidUntil,LastUpdatedDate,CreatedDate
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFQuote
+                typescript_name: new_component.jinja
+                visible_columns: QuoteID,ApplicationID,Status,QuoteNumber,TotalAmount,ValidUntil,LastUpdatedDate,CreatedDate
+            template_name: module.jinja
+          WFQuoteItem:
+            icon: edit_square
+            menu_name: WFQuoteItem
+            menu_title: WFQuoteItem
+            page:
+              detail:
+                columns: Description,QuoteID,Amount,SortOrder,QuoteItemID
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFQuoteItem
+                typescript_name: detail_component.jinja
+                visible_columns: Description,QuoteID,Amount,SortOrder,QuoteItemID
+              home:
+                columns: Description,QuoteID,Amount,SortOrder,QuoteItemID
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFQuoteItem
+                typescript_name: home_template.jinja
+                visible_columns: Description,QuoteID,Amount,SortOrder,QuoteItemID
+              new:
+                columns: Description,QuoteID,Amount,SortOrder,QuoteItemID
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFQuoteItem
+                typescript_name: new_component.jinja
+                visible_columns: Description,QuoteID,Amount,SortOrder,QuoteItemID
+            template_name: module.jinja
+          WFQuoteStatus:
+            icon: edit_square
+            menu_name: WFQuoteStatus
+            menu_title: WFQuoteStatus
+            page:
+              detail:
+                columns: StatusCode,StatusDesc
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFQuoteStatus
+                typescript_name: detail_component.jinja
+                visible_columns: StatusCode,StatusDesc
+              home:
+                columns: StatusCode,StatusDesc
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFQuoteStatus
+                typescript_name: home_template.jinja
+                visible_columns: StatusCode,StatusDesc
+              new:
+                columns: StatusCode,StatusDesc
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFQuoteStatus
+                typescript_name: new_component.jinja
+                visible_columns: StatusCode,StatusDesc
+            template_name: module.jinja
+          WFRole:
+            icon: edit_square
+            menu_name: WFRole
+            menu_title: WFRole
+            page:
+              detail:
+                columns: UserRole,Role,CreatedDate
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFRole
+                typescript_name: detail_component.jinja
+                visible_columns: UserRole,Role,CreatedDate
+              home:
+                columns: UserRole,Role,CreatedDate
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFRole
+                typescript_name: home_template.jinja
+                visible_columns: UserRole,Role,CreatedDate
+              new:
+                columns: UserRole,Role,CreatedDate
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFRole
+                typescript_name: new_component.jinja
+                visible_columns: UserRole,Role,CreatedDate
+            template_name: module.jinja
+          WFUser:
+            icon: edit_square
+            menu_name: WFUser
+            menu_title: WFUser
+            page:
+              detail:
+                columns: Username,Role,FullName,Email,IsActive,CreatedDate,LastLoginDate,UserID
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WFUser
+                typescript_name: detail_component.jinja
+                visible_columns: Username,Role,FullName,Email,IsActive,CreatedDate,LastLoginDate,UserID
+              home:
+                columns: Username,Role,FullName,Email,IsActive,CreatedDate,LastLoginDate,UserID
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WFUser
+                typescript_name: home_template.jinja
+                visible_columns: Username,Role,FullName,Email,IsActive,CreatedDate,LastLoginDate,UserID
+              new:
+                columns: Username,Role,FullName,Email,IsActive,CreatedDate,LastLoginDate,UserID
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WFUser
+                typescript_name: new_component.jinja
+                visible_columns: Username,Role,FullName,Email,IsActive,CreatedDate,LastLoginDate,UserID
+            template_name: module.jinja
+          WorkflowHistory:
+            icon: edit_square
+            menu_name: WorkflowHistory
+            menu_title: WorkflowHistory
+            page:
+              detail:
+                columns: HistoryId,InstanceId,TaskInstanceId,Action,PreviousStatus,NewStatus,ActionBy,ActionDate,ActionReason,Details
+                include_children: true
+                page_name: detail
+                template_name: detail_template.html
+                title: WorkflowHistory
+                typescript_name: detail_component.jinja
+                visible_columns: HistoryId,InstanceId,TaskInstanceId,Action,PreviousStatus,NewStatus,ActionBy,ActionDate,ActionReason,Details
+              home:
+                columns: HistoryId,InstanceId,TaskInstanceId,Action,PreviousStatus,NewStatus,ActionBy,ActionDate,ActionReason,Details
+                include_children: true
+                page_name: home
+                template_name: home_template.html
+                title: WorkflowHistory
+                typescript_name: home_template.jinja
+                visible_columns: HistoryId,InstanceId,TaskInstanceId,Action,PreviousStatus,NewStatus,ActionBy,ActionDate,ActionReason,Details
+              new:
+                columns: HistoryId,InstanceId,TaskInstanceId,Action,PreviousStatus,NewStatus,ActionBy,ActionDate,ActionReason,Details
+                include_children: true
+                page_name: new
+                template_name: new_template.html
+                title: WorkflowHistory
+                typescript_name: new_component.jinja
+                visible_columns: HistoryId,InstanceId,TaskInstanceId,Action,PreviousStatus,NewStatus,ActionBy,ActionDate,ActionReason,Details
+            template_name: module.jinja
+        menu_name: data
+        menu_title: data
+        opened: true
+    name: app
+authentication: '{system-default}'
+entities:
+  Comment:
+    columns:
+    - default: (newid())
+      label: ' Comment Id*'
+      name: CommentId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: InstanceId
+      required: true
+      template: text
+      type: CHAR
+    - name: TaskInstanceId
+      template: text
+      type: CHAR
+    - default: ('Internal')
+      name: CommentType
+      template: text
+      type: VARCHAR
+    - name: CommentText
+      required: true
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - name: Author
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getutcdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: IsVisible
+      required: true
+      type: Boolean
+    favorite: CommentId
+    hidden: {}
+    label: Comment
+    primary_key:
+    - CommentId
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskInstanceId
+      name: TaskInstance
+      resource: TaskInstance
+    type: Comment
+  Company:
+    columns:
+    - label: ' Company Name*'
+      name: CompanyName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: Category
+      template: text
+      type: VARCHAR
+    - name: StreetAddress
+      template: text
+      type: VARCHAR
+    - name: AddressLine2
+      template: text
+      type: VARCHAR
+    - name: City
+      template: text
+      type: VARCHAR
+    - name: State
+      template: text
+      type: VARCHAR
+    - name: Country
+      template: text
+      type: VARCHAR
+    - name: ZipCode
+      template: text
+      type: VARCHAR
+    - name: Website
+      template: text
+      type: VARCHAR
+    - name: CopackerDirectory
+      required: true
+      type: Boolean
+    - name: VeganCertification
+      required: true
+      type: Boolean
+    - default: ((0))
+      name: PlantCount
+      required: true
+      template: integer
+      type: INTEGER
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: (getdate())
+      name: LastUpdatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: CompanyID
+      template: integer
+      type: INTEGER
+    - name: KashrusCompanyID
+      required: true
+      template: text
+      type: VARCHAR
+    - name: CurrentlyCertified
+      required: true
+      type: Boolean
+    - name: EverCertified
+      required: true
+      type: Boolean
+    - name: OwnBrand
+      required: true
+      type: Boolean
+    favorite: CompanyName
+    hidden: {}
+    label: Company
+    primary_key:
+    - CompanyID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Company
+  Contact:
+    columns:
+    - label: ' Full Name*'
+      name: FullName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: ContactType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: JobTitle
+      template: text
+      type: VARCHAR
+    - name: Phone
+      template: text
+      type: VARCHAR
+    - name: Email
+      template: text
+      type: VARCHAR
+    - name: IsPrimary
+      required: true
+      type: Boolean
+    - name: Role
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: ContactID
+      template: integer
+      type: INTEGER
+    favorite: FullName
+    hidden: {}
+    label: Contact
+    primary_key:
+    - ContactID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Contact
+  Ingredient:
+    columns:
+    - label: ' Ingredient Name*'
+      name: IngredientName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: Source
+      template: text
+      type: VARCHAR
+    - name: RMC
+      template: text
+      type: VARCHAR
+    - name: Manufacturer
+      template: text
+      type: VARCHAR
+    - name: Packaging
+      template: text
+      type: VARCHAR
+    - name: CertificationAgency
+      template: text
+      type: VARCHAR
+    - name: AddedDate
+      required: true
+      type: DATE
+    - name: AddedBy
+      template: text
+      type: VARCHAR
+    - default: ('Original')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: IngredientID
+      template: integer
+      type: INTEGER
+    - name: NCRCIngredientID
+      required: true
+      template: text
+      type: VARCHAR
+    - name: UKDID
+      template: text
+      type: VARCHAR
+    - name: Brand
+      template: text
+      type: VARCHAR
+    favorite: IngredientName
+    hidden: {}
+    label: Ingredient
+    primary_key:
+    - IngredientID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Ingredient
+  Message:
+    columns:
+    - default: (newid())
+      label: ' Message Id*'
+      name: MessageId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: InstanceId
+      required: true
+      template: text
+      type: CHAR
+    - name: FromUser
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ToUser
+      template: text
+      type: VARCHAR
+    - name: ToRole
+      template: text
+      type: VARCHAR
+    - default: ('Standard')
+      name: MessageType
+      template: text
+      type: VARCHAR
+    - name: Subject
+      template: text
+      type: VARCHAR
+    - name: MessageBody
+      required: true
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - default: (getutcdate())
+      name: SentDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: ReadDate
+      template: text
+      type: DATETIME2
+    - name: IsRead
+      required: true
+      type: Boolean
+    favorite: MessageId
+    hidden: {}
+    label: Message
+    primary_key:
+    - MessageId
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    type: Message
+  Plant:
+    columns:
+    - label: ' Plant Name*'
+      name: PlantName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: PlantNumber
+      required: true
+      template: text
+      type: VARCHAR
+    - name: StreetAddress
+      template: text
+      type: VARCHAR
+    - name: AddressLine2
+      template: text
+      type: VARCHAR
+    - name: City
+      template: text
+      type: VARCHAR
+    - name: State
+      template: text
+      type: VARCHAR
+    - name: Country
+      template: text
+      type: VARCHAR
+    - name: Province
+      template: text
+      type: VARCHAR
+    - name: Region
+      template: text
+      type: VARCHAR
+    - name: ZipCode
+      template: text
+      type: VARCHAR
+    - name: ContactName
+      template: text
+      type: VARCHAR
+    - name: ContactTitle
+      template: text
+      type: VARCHAR
+    - name: ContactPhone
+      template: text
+      type: VARCHAR
+    - name: ContactEmail
+      template: text
+      type: VARCHAR
+    - name: ManufacturingProcess
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - name: ClosestMajorCity
+      template: text
+      type: VARCHAR
+    - name: HasOtherProducts
+      required: true
+      type: Boolean
+    - name: OtherProductsList
+      template: text
+      type: VARCHAR
+    - name: HasOtherPlants
+      required: true
+      type: Boolean
+    - name: OtherPlantsLocation
+      template: text
+      type: VARCHAR
+    - default: ('Active')
+      name: OperationalStatus
+      required: true
+      template: text
+      type: VARCHAR
+    - name: LastInspection
+      template: text
+      type: VARCHAR
+    - name: ComplianceStatus
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: PlantID
+      template: integer
+      type: INTEGER
+    favorite: PlantName
+    hidden: {}
+    label: Plant
+    primary_key:
+    - PlantID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Plant
+  ProcessDefinition:
+    columns:
+    - label: ' Process Name*'
+      name: ProcessName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - default: ('1.0')
+      name: ProcessVersion
+      required: true
+      template: text
+      type: VARCHAR
+    - name: Description
+      template: text
+      type: VARCHAR
+    - name: IsActive
+      required: true
+      type: Boolean
+    - default: (getutcdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: CreatedBy
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ModifiedDate
+      template: text
+      type: DATETIME2
+    - name: ModifiedBy
+      template: text
+      type: VARCHAR
+    - default: (newid())
+      name: ProcessId
+      required: true
+      template: text
+      type: CHAR
+    favorite: ProcessName
+    hidden: {}
+    label: ProcessDefinition
+    primary_key:
+    - ProcessId
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ProcessId
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    - direction: tomany
+      fks:
+      - ProcessId
+      name: TaskDefinitionList
+      resource: TaskDefinition
+    type: ProcessDefinition
+  ProcessInstance:
+    columns:
+    - default: (newid())
+      label: ' Instance Id*'
+      name: InstanceId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: CurrentTaskId
+      template: text
+      type: CHAR
+    - default: ('NORMAL')
+      name: Priority
+      template: text
+      type: VARCHAR
+    - name: ProcessId
+      required: true
+      template: text
+      type: CHAR
+    - default: ('NEW')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getutcdate())
+      name: StartedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: StartedBy
+      required: true
+      template: text
+      type: VARCHAR
+    - name: CompletedDate
+      template: text
+      type: DATETIME2
+    - name: CompletedBy
+      template: text
+      type: VARCHAR
+    - name: ContextData
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - name: ApplicationId
+      required: true
+      template: text
+      type: VARCHAR
+    favorite: InstanceId
+    hidden: {}
+    label: ProcessInstance
+    primary_key:
+    - InstanceId
+    tab_groups:
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: MessageList
+      resource: Message
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: TaskInstanceList
+      resource: TaskInstance
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: ValidationResultList
+      resource: ValidationResult
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: WorkflowHistoryList
+      resource: WorkflowHistory
+    - direction: toone
+      fks:
+      - CurrentTaskId
+      name: CurrentTask
+      resource: TaskDefinition
+    - direction: toone
+      fks:
+      - Priority
+      name: WF_ProcessPriority
+      resource: WFProcessPriority
+    - direction: toone
+      fks:
+      - ProcessId
+      name: Process
+      resource: ProcessDefinition
+    - direction: toone
+      fks:
+      - Status
+      name: WF_ProcessStatu
+      resource: WFProcessStatus
+    type: ProcessInstance
+  Product:
+    columns:
+    - label: ' Label Name*'
+      name: LabelName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: Source
+      template: text
+      type: VARCHAR
+    - name: BrandName
+      template: text
+      type: VARCHAR
+    - name: LabelCompany
+      template: text
+      type: VARCHAR
+    - name: ConsumerIndustrial
+      template: text
+      type: NCHAR
+    - name: CertificationSymbol
+      template: text
+      type: VARCHAR
+    - default: ('submitted')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - name: Category
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: ProductID
+      template: integer
+      type: INTEGER
+    - name: BulkShipped
+      template: text
+      type: NCHAR
+    favorite: LabelName
+    hidden: {}
+    label: Product
+    primary_key:
+    - ProductID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Product
+  Sysdiagram:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: 'NULL'
+    - name: version
+      template: integer
+      type: INTEGER
+    - name: definition
+      template: textarea
+      type: BLOB
+    - name: principal_id
+      required: true
+      template: integer
+      type: INTEGER
+    - default: '0'
+      name: diagram_id
+      template: integer
+      type: INTEGER
+    favorite: name
+    hidden: {}
+    label: Sysdiagram
+    primary_key:
+    - diagram_id
+    type: Sysdiagram
+  TaskDefinition:
+    columns:
+    - label: ' Task Name*'
+      name: TaskName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ProcessId
+      required: true
+      template: text
+      type: CHAR
+    - name: TaskType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: TaskCategory
+      template: text
+      type: VARCHAR
+    - name: Sequence
+      required: true
+      template: integer
+      type: INTEGER
+    - name: IsParallel
+      required: true
+      type: Boolean
+    - name: AssigneeRole
+      template: text
+      type: VARCHAR
+    - name: EstimatedDurationMinutes
+      template: integer
+      type: INTEGER
+    - name: AutoComplete
+      required: true
+      type: Boolean
+    - name: Description
+      template: text
+      type: VARCHAR
+    - name: ConfigurationJson
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - default: (newid())
+      name: TaskId
+      required: true
+      template: text
+      type: CHAR
+    - name: IsRequired
+      required: true
+      type: Boolean
+    favorite: TaskName
+    hidden: {}
+    label: TaskDefinition
+    primary_key:
+    - TaskId
+    tab_groups:
+    - direction: tomany
+      fks:
+      - CurrentTaskId
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    - direction: tomany
+      fks:
+      - FromTaskId
+      name: TaskFlowList
+      resource: TaskFlow
+    - direction: tomany
+      fks:
+      - ToTaskId
+      name: ToTaskTaskFlowList
+      resource: TaskFlow
+    - direction: tomany
+      fks:
+      - TaskId
+      name: TaskInstanceList
+      resource: TaskInstance
+    - direction: toone
+      fks:
+      - ProcessId
+      name: Process
+      resource: ProcessDefinition
+    type: TaskDefinition
+  TaskFlow:
+    columns:
+    - default: (newid())
+      label: ' Flow Id*'
+      name: FlowId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: FromTaskId
+      template: text
+      type: CHAR
+    - name: ToTaskId
+      required: true
+      template: text
+      type: CHAR
+    - name: Condition
+      template: text
+      type: VARCHAR
+    - name: IsDefault
+      required: true
+      type: Boolean
+    favorite: FlowId
+    hidden: {}
+    label: TaskFlow
+    primary_key:
+    - FlowId
+    tab_groups:
+    - direction: toone
+      fks:
+      - FromTaskId
+      name: FromTask
+      resource: TaskDefinition
+    - direction: toone
+      fks:
+      - ToTaskId
+      name: ToTask
+      resource: TaskDefinition
+    type: TaskFlow
+  TaskInstance:
+    columns:
+    - default: (newid())
+      label: ' Task Instance Id*'
+      name: TaskInstanceId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: InstanceId
+      required: true
+      template: text
+      type: CHAR
+    - name: TaskId
+      required: true
+      template: text
+      type: CHAR
+    - default: ('Pending')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - name: AssignedTo
+      template: text
+      type: VARCHAR
+    - name: StartedDate
+      template: text
+      type: DATETIME2
+    - name: CompletedDate
+      template: text
+      type: DATETIME2
+    - name: DurationMinutes
+      template: integer
+      type: INTEGER
+    - name: Result
+      template: text
+      type: VARCHAR
+    - name: ResultData
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - name: ErrorMessage
+      template: text
+      type: VARCHAR
+    - default: ((0))
+      name: RetryCount
+      template: integer
+      type: INTEGER
+    favorite: TaskInstanceId
+    hidden: {}
+    label: TaskInstance
+    primary_key:
+    - TaskInstanceId
+    tab_groups:
+    - direction: tomany
+      fks:
+      - TaskInstanceId
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - TaskInstanceId
+      name: ValidationResultList
+      resource: ValidationResult
+    - direction: tomany
+      fks:
+      - TaskInstanceId
+      name: WorkflowHistoryList
+      resource: WorkflowHistory
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskId
+      name: Task
+      resource: TaskDefinition
+    type: TaskInstance
+  ValidationCheck:
+    columns:
+    - default: '0'
+      label: ' Validation I D*'
+      name: ValidationID
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: CheckType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ValidationMessage
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: LastCheckedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: IsValid
+      required: true
+      type: Boolean
+    favorite: ValidationID
+    hidden: {}
+    label: ValidationCheck
+    primary_key:
+    - ValidationID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: ValidationCheck
+  ValidationResult:
+    columns:
+    - default: (newid())
+      label: ' Validation Result Id*'
+      name: ValidationResultId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: InstanceId
+      required: true
+      template: text
+      type: CHAR
+    - name: TaskInstanceId
+      template: text
+      type: CHAR
+    - name: ValidationId
+      required: true
+      template: text
+      type: CHAR
+    - name: ValidationMessage
+      template: text
+      type: VARCHAR
+    - default: (getutcdate())
+      name: ValidationDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: ValidatedBy
+      template: text
+      type: VARCHAR
+    - name: IsValid
+      required: true
+      type: Boolean
+    favorite: ValidationResultId
+    hidden: {}
+    label: ValidationResult
+    primary_key:
+    - ValidationResultId
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskInstanceId
+      name: TaskInstance
+      resource: TaskInstance
+    - direction: toone
+      fks:
+      - ValidationId
+      name: Validation
+      resource: ValidationRule
+    type: ValidationResult
+  ValidationRule:
+    columns:
+    - label: ' Validation Name*'
+      name: ValidationName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: Category
+      required: true
+      template: text
+      type: VARCHAR
+    - name: RuleType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ValidationQuery
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - name: ErrorMessage
+      template: text
+      type: VARCHAR
+    - name: IsActive
+      required: true
+      type: Boolean
+    - default: (getutcdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: (newid())
+      name: ValidationId
+      required: true
+      template: text
+      type: CHAR
+    favorite: ValidationName
+    hidden: {}
+    label: ValidationRule
+    primary_key:
+    - ValidationId
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ValidationId
+      name: ValidationResultList
+      resource: ValidationResult
+    type: ValidationRule
+  WFActivityLog:
+    columns:
+    - label: ' User Name*'
+      name: UserName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - default: ('APP')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ActionType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ActionDetails
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - name: ActivityType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: Category
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: ActivityDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: ActivityID
+      template: integer
+      type: INTEGER
+    favorite: UserName
+    hidden: {}
+    label: WFActivityLog
+    primary_key:
+    - ActivityID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    - direction: toone
+      fks:
+      - Status
+      name: WF_ActivityStatu
+      resource: WFActivityStatus
+    type: WFActivityLog
+  WFActivityStatus:
+    columns:
+    - label: ' Status Code*'
+      name: StatusCode
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: StatusDesc
+      template: text
+      type: VARCHAR
+    favorite: StatusCode
+    hidden: {}
+    label: WFActivityStatus
+    primary_key:
+    - StatusCode
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: WFActivityLogList
+      resource: WFActivityLog
+    type: WFActivityStatus
+  WFApplication:
+    columns:
+    - label: ' Primary Contact Name*'
+      name: PrimaryContactName
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - default: ('NORMAL')
+      name: Priority
+      template: text
+      type: VARCHAR
+    - default: ('NEW')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - default: ((1))
+      name: WFDashboardID
+      template: integer
+      type: INTEGER
+    - name: ApplicationNumber
+      required: true
+      template: text
+      type: VARCHAR
+    - name: SubmissionDate
+      required: true
+      type: DATE
+    - default: ('1.0.0')
+      name: Version
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: (getdate())
+      name: LastUpdatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: (getdate())
+      name: LastStatusChangeDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: LastStatusChangedBy
+      template: text
+      type: VARCHAR
+    - default: '0'
+      name: ApplicationID
+      template: integer
+      type: INTEGER
+    - name: CompanyID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: PlantID
+      template: integer
+      type: INTEGER
+    favorite: PrimaryContactName
+    hidden: {}
+    label: WFApplication
+    primary_key:
+    - ApplicationID
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: CompanyList
+      resource: Company
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: ContactList
+      resource: Contact
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: IngredientList
+      resource: Ingredient
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: PlantList
+      resource: Plant
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: ProductList
+      resource: Product
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: ValidationCheckList
+      resource: ValidationCheck
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFActivityLogList
+      resource: WFActivityLog
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFCommentList
+      resource: WFComment
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFFileList
+      resource: WFFile
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFMessageList
+      resource: WFMessage
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFQuoteList
+      resource: WFQuote
+    - direction: toone
+      fks:
+      - Priority
+      name: WF_Priority
+      resource: WFPriority
+    - direction: toone
+      fks:
+      - Status
+      name: WF_ApplicationStatu
+      resource: WFApplicationStatus
+    - direction: toone
+      fks:
+      - WFDashboardID
+      name: WFDashboard
+      resource: WFDashboard
+    type: WFApplication
+  WFApplicationStatus:
+    columns:
+    - label: ' Status Description*'
+      name: StatusDescription
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: StatusCode
+      required: true
+      template: text
+      type: VARCHAR
+    favorite: StatusDescription
+    hidden: {}
+    label: WFApplicationStatus
+    primary_key:
+    - StatusCode
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: WFApplicationList
+      resource: WFApplication
+    type: WFApplicationStatus
+  WFComment:
+    columns:
+    - default: '0'
+      label: ' Comment I D*'
+      name: CommentID
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: Author
+      required: true
+      template: text
+      type: VARCHAR
+    - name: CommentText
+      required: true
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - default: ('internal')
+      name: CommentType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: Category
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    favorite: CommentID
+    hidden: {}
+    label: WFComment
+    primary_key:
+    - CommentID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: WFComment
+  WFDashboard:
+    columns:
+    - default: '0'
+      label: ' I D*'
+      name: ID
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - default: ((0))
+      name: count_new
+      template: integer
+      type: INTEGER
+    - default: ((0))
+      name: count_in_progress
+      template: integer
+      type: INTEGER
+    - default: ((0))
+      name: count_withdrawn
+      template: integer
+      type: INTEGER
+    - default: ((0))
+      name: count_overdue
+      template: integer
+      type: INTEGER
+    - default: ((0))
+      name: total_count
+      template: integer
+      type: INTEGER
+    - default: ((0))
+      name: count_completed
+      template: integer
+      type: INTEGER
+    favorite: ID
+    hidden: {}
+    label: WFDashboard
+    primary_key:
+    - ID
+    tab_groups:
+    - direction: tomany
+      fks:
+      - WFDashboardID
+      name: WFApplicationList
+      resource: WFApplication
+    type: WFDashboard
+  WFFile:
+    columns:
+    - label: ' File Name*'
+      name: FileName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: FileType
+      required: true
+      template: text
+      type: VARCHAR
+    - name: FileSize
+      template: text
+      type: VARCHAR
+    - name: UploadedDate
+      required: true
+      type: DATE
+    - name: Tag
+      template: text
+      type: VARCHAR
+    - name: RecordCount
+      template: integer
+      type: INTEGER
+    - name: FilePath
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: FileID
+      template: integer
+      type: INTEGER
+    - name: IsProcessed
+      required: true
+      type: Boolean
+    favorite: FileName
+    hidden: {}
+    label: WFFile
+    primary_key:
+    - FileID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    - direction: toone
+      fks:
+      - FileType
+      name: WF_FileType
+      resource: WFFileType
+    type: WFFile
+  WFFileType:
+    columns:
+    - label: ' File Type Name*'
+      name: FileTypeName
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: FileType
+      required: true
+      template: text
+      type: VARCHAR
+    favorite: FileTypeName
+    hidden: {}
+    label: WFFileType
+    primary_key:
+    - FileType
+    tab_groups:
+    - direction: tomany
+      fks:
+      - FileType
+      name: WFFileList
+      resource: WFFile
+    type: WFFileType
+  WFMessage:
+    columns:
+    - default: '0'
+      label: ' Message I D*'
+      name: MessageID
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: FromUser
+      required: true
+      template: text
+      type: VARCHAR
+    - name: ToUser
+      required: true
+      template: text
+      type: VARCHAR
+    - name: MessageText
+      required: true
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    - default: ('outgoing')
+      name: MessageType
+      required: true
+      template: text
+      type: VARCHAR
+    - default: ('normal')
+      name: Priority
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: SentDate
+      required: true
+      template: text
+      type: DATETIME2
+    favorite: MessageID
+    hidden: {}
+    label: WFMessage
+    primary_key:
+    - MessageID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: WFMessage
+  WFPriority:
+    columns:
+    - label: ' Priority Description*'
+      name: PriorityDescription
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: PriorityCode
+      required: true
+      template: text
+      type: VARCHAR
+    favorite: PriorityDescription
+    hidden: {}
+    label: WFPriority
+    primary_key:
+    - PriorityCode
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Priority
+      name: WFApplicationList
+      resource: WFApplication
+    type: WFPriority
+  WFProcessPriority:
+    columns:
+    - label: ' Priority Description*'
+      name: PriorityDescription
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: PriorityCode
+      required: true
+      template: text
+      type: VARCHAR
+    favorite: PriorityDescription
+    hidden: {}
+    label: WFProcessPriority
+    primary_key:
+    - PriorityCode
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Priority
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    type: WFProcessPriority
+  WFProcessStatus:
+    columns:
+    - label: ' Status Description*'
+      name: StatusDescription
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: StatusCode
+      required: true
+      template: text
+      type: VARCHAR
+    favorite: StatusDescription
+    hidden: {}
+    label: WFProcessStatus
+    primary_key:
+    - StatusCode
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    type: WFProcessStatus
+  WFQuote:
+    columns:
+    - default: '0'
+      label: ' Quote I D*'
+      name: QuoteID
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: ApplicationID
+      required: true
+      template: integer
+      type: INTEGER
+    - default: ('PEND')
+      name: Status
+      required: true
+      template: text
+      type: VARCHAR
+    - name: QuoteNumber
+      required: true
+      template: text
+      type: VARCHAR
+    - name: TotalAmount
+      required: true
+      template: real
+      type: DECIMAL
+    - name: ValidUntil
+      required: true
+      type: DATE
+    - name: LastUpdatedDate
+      required: true
+      type: DATE
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    favorite: QuoteID
+    hidden: {}
+    label: WFQuote
+    primary_key:
+    - QuoteID
+    tab_groups:
+    - direction: tomany
+      fks:
+      - QuoteID
+      name: WFQuoteItemList
+      resource: WFQuoteItem
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    - direction: toone
+      fks:
+      - Status
+      name: WF_QuoteStatu
+      resource: WFQuoteStatus
+    type: WFQuote
+  WFQuoteItem:
+    columns:
+    - label: ' Description*'
+      name: Description
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: QuoteID
+      required: true
+      template: integer
+      type: INTEGER
+    - name: Amount
+      required: true
+      template: real
+      type: DECIMAL
+    - default: ((1))
+      name: SortOrder
+      required: true
+      template: integer
+      type: INTEGER
+    - default: '0'
+      name: QuoteItemID
+      template: integer
+      type: INTEGER
+    favorite: Description
+    hidden: {}
+    label: WFQuoteItem
+    primary_key:
+    - QuoteItemID
+    tab_groups:
+    - direction: toone
+      fks:
+      - QuoteID
+      name: Quote
+      resource: WFQuote
+    type: WFQuoteItem
+  WFQuoteStatus:
+    columns:
+    - label: ' Status Code*'
+      name: StatusCode
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: StatusDesc
+      template: text
+      type: VARCHAR
+    favorite: StatusCode
+    hidden: {}
+    label: WFQuoteStatus
+    primary_key:
+    - StatusCode
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: WFQuoteList
+      resource: WFQuote
+    type: WFQuoteStatus
+  WFRole:
+    columns:
+    - label: ' User Role*'
+      name: UserRole
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: Role
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    favorite: UserRole
+    hidden: {}
+    label: WFRole
+    primary_key:
+    - UserRole
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Role
+      name: WFUserList
+      resource: WFUser
+    type: WFRole
+  WFUser:
+    columns:
+    - label: ' Username*'
+      name: Username
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - default: ('ADMIN')
+      name: Role
+      required: true
+      template: text
+      type: VARCHAR
+    - name: FullName
+      required: true
+      template: text
+      type: VARCHAR
+    - name: Email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: IsActive
+      required: true
+      type: Boolean
+    - default: (getdate())
+      name: CreatedDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: LastLoginDate
+      template: text
+      type: DATETIME2
+    - default: '0'
+      name: UserID
+      template: integer
+      type: INTEGER
+    favorite: Username
+    hidden: {}
+    label: WFUser
+    primary_key:
+    - UserID
+    tab_groups:
+    - direction: toone
+      fks:
+      - Role
+      name: WF_Role
+      resource: WFRole
+    type: WFUser
+  WorkflowHistory:
+    columns:
+    - default: (newid())
+      label: ' History Id*'
+      name: HistoryId
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: CHAR
+    - name: InstanceId
+      required: true
+      template: text
+      type: CHAR
+    - name: TaskInstanceId
+      template: text
+      type: CHAR
+    - name: Action
+      required: true
+      template: text
+      type: VARCHAR
+    - name: PreviousStatus
+      template: text
+      type: VARCHAR
+    - name: NewStatus
+      template: text
+      type: VARCHAR
+    - name: ActionBy
+      required: true
+      template: text
+      type: VARCHAR
+    - default: (getutcdate())
+      name: ActionDate
+      required: true
+      template: text
+      type: DATETIME2
+    - name: ActionReason
+      template: text
+      type: VARCHAR
+    - name: Details
+      template: text
+      type: VARCHAR COLLATE "SQL_LATIN1_GENERAL_CP1_CI_AS"
+    favorite: HistoryId
+    hidden: {}
+    label: WorkflowHistory
+    primary_key:
+    - HistoryId
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskInstanceId
+      name: TaskInstance
+      resource: TaskInstance
+    type: WorkflowHistory
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    api_endpoint: http://localhost:5656/api
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: YYYY-MM-DD
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: JSONAPI
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

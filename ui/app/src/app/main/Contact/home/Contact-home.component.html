@@ -1,0 +1,59 @@
+<o-form-layout-manager attr="Contact" mode="tab" title="CONTACT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ContactTable" 
+            service="Contact" 
+            entity="Contact" 
+            title="CONTACT"
+            keys="ContactID"
+            columns="FullName;ApplicationID;ContactType;JobTitle;Phone;Email;IsPrimary;Role;CreatedDate;ContactID" 
+            header-actions="R;D"
+            visible-columns="FullName;ApplicationID;ContactType;JobTitle;Phone;Email;IsPrimary;Role;CreatedDate;ContactID"  
+            sort-columns="FullName" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #FullName attr="FullName" title=" Full Name" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="ApplicationID" title="ApplicationID">
+    <o-table-cell-renderer-service attr="ApplicationID" 
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        parent-keys="ContactID:ApplicationID"
+        value-column="PrimaryContactName" keys="ApplicationID"
+        visible-columns="PrimaryContactName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #ContactType attr="ContactType" title="ContactType" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #JobTitle attr="JobTitle" title="JobTitle" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Phone attr="Phone" title="Phone" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Email attr="Email" title="Email" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="IsPrimary" title="IsPrimary">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-column #Role attr="Role" title="Role" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+            
+            <o-table-column #ContactID attr="ContactID" title="ContactID" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

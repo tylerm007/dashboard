@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="ValidationCheck" mode="tab" title="VALIDATIONCHECK">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ValidationCheckTable" 
+            service="ValidationCheck" 
+            entity="ValidationCheck" 
+            title="VALIDATIONCHECK"
+            keys="ValidationID"
+            columns="ValidationID;ApplicationID;CheckType;ValidationMessage;LastCheckedDate;IsValid" 
+            header-actions="R;D"
+            visible-columns="ValidationID;ApplicationID;CheckType;ValidationMessage;LastCheckedDate;IsValid"  
+            sort-columns="ValidationID" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #ValidationID attr="ValidationID" title=" Validation I D" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="ApplicationID" title="ApplicationID">
+    <o-table-cell-renderer-service attr="ApplicationID" 
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        parent-keys="ValidationID:ApplicationID"
+        value-column="PrimaryContactName" keys="ApplicationID"
+        visible-columns="PrimaryContactName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #CheckType attr="CheckType" title="CheckType" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #ValidationMessage attr="ValidationMessage" title="ValidationMessage" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #LastCheckedDate attr="LastCheckedDate" title="LastCheckedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+            
+            <o-table-column attr="IsValid" title="IsValid">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

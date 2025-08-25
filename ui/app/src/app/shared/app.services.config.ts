@@ -1,0 +1,35 @@
+export const SERVICE_CONFIG ={ 'Comment': { 'path': '/Comment' }
+,'Company': { 'path': '/Company' }
+,'Contact': { 'path': '/Contact' }
+,'Ingredient': { 'path': '/Ingredient' }
+,'Message': { 'path': '/Message' }
+,'Plant': { 'path': '/Plant' }
+,'ProcessDefinition': { 'path': '/ProcessDefinition' }
+,'ProcessInstance': { 'path': '/ProcessInstance' }
+,'Product': { 'path': '/Product' }
+,'Sysdiagram': { 'path': '/Sysdiagram' }
+,'TaskDefinition': { 'path': '/TaskDefinition' }
+,'TaskFlow': { 'path': '/TaskFlow' }
+,'TaskInstance': { 'path': '/TaskInstance' }
+,'ValidationCheck': { 'path': '/ValidationCheck' }
+,'ValidationResult': { 'path': '/ValidationResult' }
+,'ValidationRule': { 'path': '/ValidationRule' }
+,'WFActivityLog': { 'path': '/WFActivityLog' }
+,'WFActivityStatus': { 'path': '/WFActivityStatus' }
+,'WFApplication': { 'path': '/WFApplication' }
+,'WFApplicationStatus': { 'path': '/WFApplicationStatus' }
+,'WFComment': { 'path': '/WFComment' }
+,'WFDashboard': { 'path': '/WFDashboard' }
+,'WFFile': { 'path': '/WFFile' }
+,'WFFileType': { 'path': '/WFFileType' }
+,'WFMessage': { 'path': '/WFMessage' }
+,'WFPriority': { 'path': '/WFPriority' }
+,'WFProcessPriority': { 'path': '/WFProcessPriority' }
+,'WFProcessStatus': { 'path': '/WFProcessStatus' }
+,'WFQuote': { 'path': '/WFQuote' }
+,'WFQuoteItem': { 'path': '/WFQuoteItem' }
+,'WFQuoteStatus': { 'path': '/WFQuoteStatus' }
+,'WFRole': { 'path': '/WFRole' }
+,'WFUser': { 'path': '/WFUser' }
+,'WorkflowHistory': { 'path': '/WorkflowHistory' }
+ };

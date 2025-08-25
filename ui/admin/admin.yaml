@@ -1,0 +1,1177 @@
+about:
+  date: August 25, 2025 10:54:05
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 38
+  number_tables: 35
+info_toggle_checked: true
+resources:
+  Comment:
+    attributes:
+    - label: ' Comment Id*'
+      name: CommentId
+      required: true
+      search: true
+      sort: true
+    - name: InstanceId
+      required: true
+    - name: TaskInstanceId
+    - name: CommentType
+    - name: CommentText
+      required: true
+    - name: Author
+      required: true
+    - name: CreatedDate
+      required: true
+    - name: IsVisible
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskInstanceId
+      name: TaskInstance
+      resource: TaskInstance
+    type: Comment
+    user_key: CommentId
+  Company:
+    attributes:
+    - label: ' Company Name*'
+      name: CompanyName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: Category
+    - name: StreetAddress
+    - name: AddressLine2
+    - name: City
+    - name: State
+    - name: Country
+    - name: ZipCode
+    - name: Website
+    - name: CopackerDirectory
+      required: true
+      type: Boolean
+    - name: VeganCertification
+      required: true
+      type: Boolean
+    - name: PlantCount
+      required: true
+    - name: CreatedDate
+      required: true
+    - name: LastUpdatedDate
+      required: true
+    - name: CompanyID
+    - name: KashrusCompanyID
+      required: true
+    - name: CurrentlyCertified
+      required: true
+      type: Boolean
+    - name: EverCertified
+      required: true
+      type: Boolean
+    - name: OwnBrand
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Company
+    user_key: CompanyName
+  Contact:
+    attributes:
+    - label: ' Full Name*'
+      name: FullName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: ContactType
+      required: true
+    - name: JobTitle
+    - name: Phone
+    - name: Email
+    - name: IsPrimary
+      required: true
+      type: Boolean
+    - name: Role
+    - name: CreatedDate
+      required: true
+    - name: ContactID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Contact
+    user_key: FullName
+  Ingredient:
+    attributes:
+    - label: ' Ingredient Name*'
+      name: IngredientName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: Source
+    - name: RMC
+    - name: Manufacturer
+    - name: Packaging
+    - name: CertificationAgency
+    - name: AddedDate
+      required: true
+      type: DATE
+    - name: AddedBy
+    - name: Status
+      required: true
+    - name: CreatedDate
+      required: true
+    - name: IngredientID
+    - name: NCRCIngredientID
+      required: true
+    - name: UKDID
+    - name: Brand
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Ingredient
+    user_key: IngredientName
+  LaneDefinition:
+    attributes:
+    - label: ' Lane Name*'
+      name: LaneName
+      required: true
+      search: true
+      sort: true
+    - name: ProcessId
+      required: true
+    - name: LaneDescription
+    - name: EstimatedDurationDays
+    - name: CreatedDate
+      required: true
+    - name: CreatedBy
+      required: true
+    - name: LaneId
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - LaneId
+      name: TaskDefinitionList
+      resource: TaskDefinition
+    - direction: toone
+      fks:
+      - ProcessId
+      name: Process
+      resource: ProcessDefinition
+    type: LaneDefinition
+    user_key: LaneName
+  Message:
+    attributes:
+    - label: ' Message Id*'
+      name: MessageId
+      required: true
+      search: true
+      sort: true
+    - name: InstanceId
+      required: true
+    - name: FromUser
+      required: true
+    - name: ToUser
+    - name: ToRole
+    - name: MessageType
+    - name: Subject
+    - name: MessageBody
+      required: true
+    - name: SentDate
+      required: true
+    - name: ReadDate
+    - name: IsRead
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    type: Message
+    user_key: MessageId
+  Plant:
+    attributes:
+    - label: ' Plant Name*'
+      name: PlantName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: PlantNumber
+      required: true
+    - name: StreetAddress
+    - name: AddressLine2
+    - name: City
+    - name: State
+    - name: Country
+    - name: Province
+    - name: Region
+    - name: ZipCode
+    - name: ContactName
+    - name: ContactTitle
+    - name: ContactPhone
+    - name: ContactEmail
+    - name: ManufacturingProcess
+    - name: ClosestMajorCity
+    - name: HasOtherProducts
+      required: true
+      type: Boolean
+    - name: OtherProductsList
+    - name: HasOtherPlants
+      required: true
+      type: Boolean
+    - name: OtherPlantsLocation
+    - name: OperationalStatus
+      required: true
+    - name: LastInspection
+    - name: ComplianceStatus
+    - name: CreatedDate
+      required: true
+    - name: PlantID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Plant
+    user_key: PlantName
+  ProcessDefinition:
+    attributes:
+    - label: ' Process Name*'
+      name: ProcessName
+      required: true
+      search: true
+      sort: true
+    - name: ProcessVersion
+      required: true
+    - name: Description
+    - name: IsActive
+      required: true
+      type: Boolean
+    - name: CreatedDate
+      required: true
+    - name: CreatedBy
+      required: true
+    - name: ModifiedDate
+    - name: ModifiedBy
+    - name: ProcessId
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ProcessId
+      name: LaneDefinitionList
+      resource: LaneDefinition
+    - direction: tomany
+      fks:
+      - ProcessId
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    - direction: tomany
+      fks:
+      - ProcessId
+      name: TaskDefinitionList
+      resource: TaskDefinition
+    type: ProcessDefinition
+    user_key: ProcessName
+  ProcessInstance:
+    attributes:
+    - label: ' Instance Id*'
+      name: InstanceId
+      required: true
+      search: true
+      sort: true
+    - name: CurrentTaskId
+    - name: Priority
+    - name: ProcessId
+      required: true
+    - name: Status
+      required: true
+    - name: StartedDate
+      required: true
+    - name: StartedBy
+      required: true
+    - name: CompletedDate
+    - name: CompletedBy
+    - name: ContextData
+    - name: ApplicationId
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: MessageList
+      resource: Message
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: TaskInstanceList
+      resource: TaskInstance
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: ValidationResultList
+      resource: ValidationResult
+    - direction: tomany
+      fks:
+      - InstanceId
+      name: WorkflowHistoryList
+      resource: WorkflowHistory
+    - direction: toone
+      fks:
+      - CurrentTaskId
+      name: CurrentTask
+      resource: TaskDefinition
+    - direction: toone
+      fks:
+      - Priority
+      name: WF_ProcessPriority
+      resource: WFProcessPriority
+    - direction: toone
+      fks:
+      - ProcessId
+      name: Process
+      resource: ProcessDefinition
+    - direction: toone
+      fks:
+      - Status
+      name: WF_ProcessStatus
+      resource: WFProcessStatus
+    type: ProcessInstance
+    user_key: InstanceId
+  Product:
+    attributes:
+    - label: ' Label Name*'
+      name: LabelName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: Source
+    - name: BrandName
+    - name: LabelCompany
+    - name: ConsumerIndustrial
+    - name: CertificationSymbol
+    - name: Status
+      required: true
+    - name: Category
+    - name: CreatedDate
+      required: true
+    - name: ProductID
+    - name: BulkShipped
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: Product
+    user_key: LabelName
+  Sysdiagram:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: version
+    - name: definition
+      type: Text
+    - name: principal_id
+      required: true
+    - name: diagram_id
+    type: Sysdiagram
+    user_key: name
+  TaskDefinition:
+    attributes:
+    - label: ' Task Name*'
+      name: TaskName
+      required: true
+      search: true
+      sort: true
+    - name: LaneId
+    - name: ProcessId
+      required: true
+    - name: TaskType
+      required: true
+    - name: TaskCategory
+    - name: Sequence
+      required: true
+    - name: IsParallel
+      required: true
+      type: Boolean
+    - name: AssigneeRole
+    - name: EstimatedDurationMinutes
+    - name: AutoComplete
+      required: true
+      type: Boolean
+    - name: Description
+    - name: ConfigurationJson
+    - name: TaskId
+      required: true
+    - name: IsRequired
+      required: true
+      type: Boolean
+  
+    tab_groups:
+    - direction: tomany
+      fks:
+      - CurrentTaskId
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    - direction: tomany
+      fks:
+      - FromTaskId
+      name: TaskFlowList
+      resource: TaskFlow
+    - direction: tomany
+      fks:
+      - ToTaskId
+      name: ToTaskTaskFlowList
+      resource: TaskFlow
+    - direction: tomany
+      fks:
+      - TaskId
+      name: TaskInstanceList
+      resource: TaskInstance
+    - direction: toone
+      fks:
+      - ProcessId
+      name: Process
+      resource: ProcessDefinition
+    type: TaskDefinition
+    user_key: TaskName
+  TaskFlow:
+    attributes:
+    - label: ' Flow Id*'
+      name: FlowId
+      required: false
+      search: true
+      sort: true
+    - name: FromTaskId
+    - name: ToTaskId
+      required: true
+    - name: Condition
+    - name: IsDefault
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - FromTaskId
+      name: FromTask
+      resource: TaskDefinition
+    - direction: toone
+      fks:
+      - ToTaskId
+      name: ToTask
+      resource: TaskDefinition
+    type: TaskFlow
+    user_key: FlowId
+  TaskInstance:
+    attributes:
+    - label: ' Task Instance Id*'
+      name: TaskInstanceId
+      required: true
+      search: true
+      sort: true
+    - name: InstanceId
+      required: true
+    - name: TaskId
+      required: true
+    - name: Status
+      required: true
+    - name: AssignedTo
+    - name: StartedDate
+    - name: CompletedDate
+    - name: DurationMinutes
+    - name: Result
+    - name: ResultData
+    - name: ErrorMessage
+    - name: RetryCount
+    tab_groups:
+    - direction: tomany
+      fks:
+      - TaskInstanceId
+      name: CommentList
+      resource: Comment
+    - direction: tomany
+      fks:
+      - TaskInstanceId
+      name: ValidationResultList
+      resource: ValidationResult
+    - direction: tomany
+      fks:
+      - TaskInstanceId
+      name: WorkflowHistoryList
+      resource: WorkflowHistory
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskId
+      name: Task
+      resource: TaskDefinition
+    type: TaskInstance
+    user_key: TaskInstanceId
+  ValidationCheck:
+    attributes:
+    - label: ' Validation I D*'
+      name: ValidationID
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: CheckType
+      required: true
+    - name: ValidationMessage
+    - name: LastCheckedDate
+      required: true
+    - name: IsValid
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: ValidationCheck
+    user_key: ValidationID
+  ValidationResult:
+    attributes:
+    - label: ' Validation Result Id*'
+      name: ValidationResultId
+      required: true
+      search: true
+      sort: true
+    - name: InstanceId
+      required: true
+    - name: TaskInstanceId
+    - name: ValidationId
+      required: true
+    - name: ValidationMessage
+    - name: ValidationDate
+      required: true
+    - name: ValidatedBy
+    - name: IsValid
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskInstanceId
+      name: TaskInstance
+      resource: TaskInstance
+    - direction: toone
+      fks:
+      - ValidationId
+      name: Validation
+      resource: ValidationRule
+    type: ValidationResult
+    user_key: ValidationResultId
+  ValidationRule:
+    attributes:
+    - label: ' Validation Name*'
+      name: ValidationName
+      required: true
+      search: true
+      sort: true
+    - name: Category
+      required: true
+    - name: RuleType
+      required: true
+    - name: ValidationQuery
+    - name: ErrorMessage
+    - name: IsActive
+      required: true
+      type: Boolean
+    - name: CreatedDate
+      required: true
+    - name: ValidationId
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ValidationId
+      name: ValidationResultList
+      resource: ValidationResult
+    type: ValidationRule
+    user_key: ValidationName
+  WFActivityLog:
+    attributes:
+    - label: ' User Name*'
+      name: UserName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: Status
+      required: true
+    - name: ActionType
+      required: true
+    - name: ActionDetails
+    - name: ActivityType
+      required: true
+    - name: Category
+    - name: ActivityDate
+      required: true
+    - name: ActivityID
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    - direction: toone
+      fks:
+      - Status
+      name: WF_ActivityStatu
+      resource: WFActivityStatus
+    type: WFActivityLog
+    user_key: UserName
+  WFActivityStatus:
+    attributes:
+    - label: ' Status Code*'
+      name: StatusCode
+      required: true
+      search: true
+      sort: true
+    - name: StatusDesc
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: WFActivityLogList
+      resource: WFActivityLog
+    type: WFActivityStatus
+    user_key: StatusCode
+  WFApplication:
+    attributes:
+    - label: ' Primary Contact Name*'
+      name: PrimaryContactName
+      search: true
+      sort: true
+    - name: Priority
+    - name: Status
+      required: true
+    - name: WFDashboardID
+    - name: ApplicationNumber
+      required: true
+    - name: SubmissionDate
+      required: true
+      type: DATE
+    - name: Version
+      required: true
+    - name: CreatedDate
+      required: true
+    - name: LastUpdatedDate
+      required: true
+    - name: LastStatusChangeDate
+      required: true
+    - name: LastStatusChangedBy
+    - name: ApplicationID
+    - name: CompanyID
+      required: true
+    - name: PlantID
+    tab_groups:
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: CompanyList
+      resource: Company
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: ContactList
+      resource: Contact
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: IngredientList
+      resource: Ingredient
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: PlantList
+      resource: Plant
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: ProductList
+      resource: Product
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: ValidationCheckList
+      resource: ValidationCheck
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFActivityLogList
+      resource: WFActivityLog
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFCommentList
+      resource: WFComment
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFFileList
+      resource: WFFile
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFMessageList
+      resource: WFMessage
+    - direction: tomany
+      fks:
+      - ApplicationID
+      name: WFQuoteList
+      resource: WFQuote
+    - direction: toone
+      fks:
+      - Priority
+      name: WF_Priority
+      resource: WFPriority
+    - direction: toone
+      fks:
+      - Status
+      name: WF_ApplicationStatu
+      resource: WFApplicationStatus
+    - direction: toone
+      fks:
+      - WFDashboardID
+      name: WFDashboard
+      resource: WFDashboard
+    type: WFApplication
+    user_key: PrimaryContactName
+  WFApplicationStatus:
+    attributes:
+    - label: ' Status Description*'
+      name: StatusDescription
+      required: true
+      search: true
+      sort: true
+    - name: StatusCode
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: WFApplicationList
+      resource: WFApplication
+    type: WFApplicationStatus
+    user_key: StatusDescription
+  WFComment:
+    attributes:
+    - label: ' Comment I D*'
+      name: CommentID
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: Author
+      required: true
+    - name: CommentText
+      required: true
+    - name: CommentType
+      required: true
+    - name: Category
+    - name: CreatedDate
+      required: true
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: WFComment
+    user_key: CommentID
+  WFDashboard:
+    attributes:
+    - label: ' I D*'
+      name: ID
+      search: true
+      sort: true
+    - name: count_new
+    - name: count_in_progress
+    - name: count_withdrawn
+    - name: count_overdue
+    - name: total_count
+    - name: count_completed
+    tab_groups:
+    - direction: tomany
+      fks:
+      - WFDashboardID
+      name: WFApplicationList
+      resource: WFApplication
+    type: WFDashboard
+    user_key: ID
+  WFFile:
+    attributes:
+    - label: ' File Name*'
+      name: FileName
+      required: true
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: FileType
+      required: true
+    - name: FileSize
+    - name: UploadedDate
+      required: true
+      type: DATE
+    - name: Tag
+    - name: RecordCount
+    - name: FilePath
+    - name: CreatedDate
+      required: true
+    - name: FileID
+    - name: IsProcessed
+      required: true
+      type: Boolean
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    - direction: toone
+      fks:
+      - FileType
+      name: WF_FileType
+      resource: WFFileType
+    type: WFFile
+    user_key: FileName
+  WFFileType:
+    attributes:
+    - label: ' File Type Name*'
+      name: FileTypeName
+      required: true
+      search: true
+      sort: true
+    - name: FileType
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - FileType
+      name: WFFileList
+      resource: WFFile
+    type: WFFileType
+    user_key: FileTypeName
+  WFMessage:
+    attributes:
+    - label: ' Message I D*'
+      name: MessageID
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: FromUser
+      required: true
+    - name: ToUser
+      required: true
+    - name: MessageText
+      required: true
+    - name: MessageType
+      required: true
+    - name: Priority
+      required: true
+    - name: SentDate
+      required: true
+    tab_groups:
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    type: WFMessage
+    user_key: MessageID
+  WFPriority:
+    attributes:
+    - label: ' Priority Description*'
+      name: PriorityDescription
+      required: true
+      search: true
+      sort: true
+    - name: PriorityCode
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Priority
+      name: WFApplicationList
+      resource: WFApplication
+    type: WFPriority
+    user_key: PriorityDescription
+  WFProcessPriority:
+    attributes:
+    - label: ' Priority Description*'
+      name: PriorityDescription
+      required: true
+      search: true
+      sort: true
+    - name: PriorityCode
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Priority
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    type: WFProcessPriority
+    user_key: PriorityDescription
+  WFProcessStatus:
+    attributes:
+    - label: ' Status Description*'
+      name: StatusDescription
+      required: true
+      search: true
+      sort: true
+    - name: StatusCode
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: ProcessInstanceList
+      resource: ProcessInstance
+    type: WFProcessStatus
+    user_key: StatusDescription
+  WFQuote:
+    attributes:
+    - label: ' Quote I D*'
+      name: QuoteID
+      search: true
+      sort: true
+    - name: ApplicationID
+      required: true
+    - name: Status
+      required: true
+    - name: QuoteNumber
+      required: true
+    - name: TotalAmount
+      required: true
+    - name: ValidUntil
+      required: true
+      type: DATE
+    - name: LastUpdatedDate
+      required: true
+      type: DATE
+    - name: CreatedDate
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - QuoteID
+      name: WFQuoteItemList
+      resource: WFQuoteItem
+    - direction: toone
+      fks:
+      - ApplicationID
+      name: Application
+      resource: WFApplication
+    - direction: toone
+      fks:
+      - Status
+      name: WF_QuoteStatu
+      resource: WFQuoteStatus
+    type: WFQuote
+    user_key: QuoteID
+  WFQuoteItem:
+    attributes:
+    - label: ' Description*'
+      name: Description
+      required: true
+      search: true
+      sort: true
+    - name: QuoteID
+      required: true
+    - name: Amount
+      required: true
+    - name: SortOrder
+      required: true
+    - name: QuoteItemID
+    tab_groups:
+    - direction: toone
+      fks:
+      - QuoteID
+      name: Quote
+      resource: WFQuote
+    type: WFQuoteItem
+    user_key: Description
+  WFQuoteStatus:
+    attributes:
+    - label: ' Status Code*'
+      name: StatusCode
+      required: true
+      search: true
+      sort: true
+    - name: StatusDesc
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: WFQuoteList
+      resource: WFQuote
+    type: WFQuoteStatus
+    user_key: StatusCode
+  WFRole:
+    attributes:
+    - label: ' User Role*'
+      name: UserRole
+      required: true
+      search: true
+      sort: true
+    - name: Role
+      required: true
+    - name: CreatedDate
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Role
+      name: WFUserList
+      resource: WFUser
+    type: WFRole
+    user_key: UserRole
+  WFUser:
+    attributes:
+    - label: ' Username*'
+      name: Username
+      required: true
+      search: true
+      sort: true
+    - name: Role
+      required: true
+    - name: FullName
+      required: true
+    - name: Email
+      required: true
+    - name: IsActive
+      required: true
+      type: Boolean
+    - name: CreatedDate
+      required: true
+    - name: LastLoginDate
+    - name: UserID
+    tab_groups:
+    - direction: toone
+      fks:
+      - Role
+      name: WF_Role
+      resource: WFRole
+    type: WFUser
+    user_key: Username
+  WorkflowHistory:
+    attributes:
+    - label: ' History Id*'
+      name: HistoryId
+      required: true
+      search: true
+      sort: true
+    - name: InstanceId
+      required: true
+    - name: TaskInstanceId
+    - name: Action
+      required: true
+    - name: PreviousStatus
+    - name: NewStatus
+    - name: ActionBy
+      required: true
+    - name: ActionDate
+      required: true
+    - name: ActionReason
+    - name: Details
+    tab_groups:
+    - direction: toone
+      fks:
+      - InstanceId
+      name: Instance
+      resource: ProcessInstance
+    - direction: toone
+      fks:
+      - TaskInstanceId
+      name: TaskInstance
+      resource: TaskInstance
+    type: WorkflowHistory
+    user_key: HistoryId
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '2'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: JSONAPI
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

@@ -1,0 +1,48 @@
+<o-form-layout-manager attr="ValidationResult" mode="tab" title="VALIDATIONRESULT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ValidationResultTable" 
+            service="ValidationResult" 
+            entity="ValidationResult" 
+            title="VALIDATIONRESULT"
+            keys="ValidationResultId"
+            columns="ValidationResultId;InstanceId;TaskInstanceId;ValidationId;ValidationMessage;ValidationDate;ValidatedBy;IsValid" 
+            header-actions="R;D"
+            visible-columns="ValidationResultId;InstanceId;TaskInstanceId;ValidationId;ValidationMessage;ValidationDate;ValidatedBy;IsValid"  
+            sort-columns="ValidationResultId" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #ValidationResultId attr="ValidationResultId" title=" Validation Result Id" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ValidationId attr="ValidationId" title="ValidationId" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #ValidationMessage attr="ValidationMessage" title="ValidationMessage" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ValidationDate attr="ValidationDate" title="ValidationDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+            
+            <o-table-column #ValidatedBy attr="ValidatedBy" title="ValidatedBy" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="IsValid" title="IsValid">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

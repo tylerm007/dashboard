@@ -1,0 +1,83 @@
+<o-form #PlantForm attr="Plant_form_insert" service="Plant" entity="Plant"
+keys="PlantID" fxLayout="column" show-header="yes" header-actions="I"
+horizontal-scroll="yes"
+after-insert-mode="new" class="standalone-form-container" >
+
+<o-row attr="row1" layout-align="start stretch">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+    
+        <o-text-input #PlantName attr="PlantName" label=" Plant Name" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-list-picker 
+        attr="ApplicationID"
+        service="WFApplication" 
+        entity="WFApplicationType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="ApplicationID" 
+        value-column-type="INTEGER"  
+        keys="ApplicationID" 
+        columns="ApplicationID;ApplicationID;PrimaryContactName" 
+        title="ApplicationID"
+        visible-columns="ApplicationID;PrimaryContactName" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+        <o-text-input #PlantNumber attr="PlantNumber" label="PlantNumber" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #StreetAddress attr="StreetAddress" label="StreetAddress" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #AddressLine2 attr="AddressLine2" label="AddressLine2" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #City attr="City" label="City" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #State attr="State" label="State" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #Country attr="Country" label="Country" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #Province attr="Province" label="Province" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #Region attr="Region" label="Region" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ZipCode attr="ZipCode" label="ZipCode" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ContactName attr="ContactName" label="ContactName" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ContactTitle attr="ContactTitle" label="ContactTitle" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ContactPhone attr="ContactPhone" label="ContactPhone" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ContactEmail attr="ContactEmail" label="ContactEmail" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ManufacturingProcess attr="ManufacturingProcess" label="ManufacturingProcess" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ClosestMajorCity attr="ClosestMajorCity" label="ClosestMajorCity" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-checkbox #HasOtherProducts attr="HasOtherProducts" label="HasOtherProducts" read-only="no" enabled="yes"></o-checkbox>
+      
+        <o-text-input #OtherProductsList attr="OtherProductsList" label="OtherProductsList" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-checkbox #HasOtherPlants attr="HasOtherPlants" label="HasOtherPlants" read-only="no" enabled="yes"></o-checkbox>
+      
+        <o-text-input #OtherPlantsLocation attr="OtherPlantsLocation" label="OtherPlantsLocation" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #OperationalStatus attr="OperationalStatus" label="OperationalStatus" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #LastInspection attr="LastInspection" label="LastInspection" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-text-input #ComplianceStatus attr="ComplianceStatus" label="ComplianceStatus" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-date-input #CreatedDate attr="CreatedDate" value-type="string" label="CreatedDate" editable="no" required="yes" format="YYYY-MM-DD hh:mm:ss" fxFlex="20%" class="form-field"></o-date-input>
+      
+        <o-integer-input #PlantID attr="PlantID" label="PlantID" type="integer" editable="no" required="no" ></o-integer-input>
+      
+</div>
+</o-row>
+
+<div layout-padding></div>
+
+</o-form>

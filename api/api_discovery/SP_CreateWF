@@ -1,0 +1,59 @@
+USE [dashboard]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_StartWorkflowInstance]    Script Date: 8/24/2025 9:25:41 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Stored Procedures for Workflow Management
+-- =============================================
+
+-- Procedure: Start New Workflow Instance
+CREATE PROCEDURE [dbo].[sp_StartWorkflowInstance]
+    @ProcessName NVARCHAR(100),
+    @ApplicationId NVARCHAR(50),
+    @StartedBy NVARCHAR(100),
+    @Priority NVARCHAR(20) = 'Normal'
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @ProcessId UNIQUEIDENTIFIER;
+    DECLARE @InstanceId UNIQUEIDENTIFIER = NEWID();
+    DECLARE @StartTaskId UNIQUEIDENTIFIER;
+    
+    -- Get Process ID
+    SELECT @ProcessId = ProcessId 
+    FROM ProcessDefinitions 
+    WHERE ProcessName = @ProcessName AND IsActive = 1;
+    
+    IF @ProcessId IS NULL
+    BEGIN
+        RAISERROR('Process definition not found: %s', 16, 1, @ProcessName);
+        RETURN;
+    END
+    
+    -- Get Start Task
+    SELECT TOP 1 @StartTaskId = TaskId 
+    FROM TaskDefinitions 
+    WHERE ProcessId = @ProcessId AND TaskType = 'Event' AND TaskCategory = 'Start'
+    ORDER BY Sequence;
+    
+    -- Create Process Instance
+    INSERT INTO ProcessInstances (InstanceId, ProcessId, ApplicationId, CurrentTaskId, StartedBy, Priority)
+    VALUES (@InstanceId, @ProcessId, @ApplicationId, @StartTaskId, @StartedBy, @Priority);
+    
+    -- Log History
+    INSERT INTO WorkflowHistory (InstanceId, Action, NewStatus, ActionBy, ActionReason)
+    VALUES (@InstanceId, 'Workflow Started', 'Active', @StartedBy, 'New application submitted for processing');
+    
+    SELECT @InstanceId AS InstanceId;
+END;
+GO
+
+

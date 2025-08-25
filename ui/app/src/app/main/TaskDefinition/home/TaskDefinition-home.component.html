@@ -1,0 +1,64 @@
+<o-form-layout-manager attr="TaskDefinition" mode="tab" title="TASKDEFINITION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="TaskDefinitionTable" 
+            service="TaskDefinition" 
+            entity="TaskDefinition" 
+            title="TASKDEFINITION"
+            keys="TaskId"
+            columns="TaskName;ProcessId;TaskType;TaskCategory;Sequence;IsParallel;AssigneeRole;EstimatedDurationMinutes;AutoComplete;Description;ConfigurationJson;TaskId;IsRequired" 
+            header-actions="R;D"
+            visible-columns="TaskName;ProcessId;TaskType;TaskCategory;Sequence;IsParallel;AssigneeRole;EstimatedDurationMinutes;AutoComplete;Description;ConfigurationJson;TaskId;IsRequired"  
+            sort-columns="TaskName" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #TaskName attr="TaskName" title=" Task Name" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #ProcessId attr="ProcessId" title="ProcessId" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #TaskType attr="TaskType" title="TaskType" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #TaskCategory attr="TaskCategory" title="TaskCategory" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Sequence attr="Sequence" title="Sequence" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
+            
+            <o-table-column attr="IsParallel" title="IsParallel">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-column #AssigneeRole attr="AssigneeRole" title="AssigneeRole" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #EstimatedDurationMinutes attr="EstimatedDurationMinutes" title="EstimatedDurationMinutes" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="AutoComplete" title="AutoComplete">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-column #Description attr="Description" title="Description" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ConfigurationJson attr="ConfigurationJson" title="ConfigurationJson" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #TaskId attr="TaskId" title="TaskId" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="IsRequired" title="IsRequired">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

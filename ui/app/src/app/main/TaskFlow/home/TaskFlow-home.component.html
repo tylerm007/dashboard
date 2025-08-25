@@ -1,0 +1,42 @@
+<o-form-layout-manager attr="TaskFlow" mode="tab" title="TASKFLOW">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="TaskFlowTable" 
+            service="TaskFlow" 
+            entity="TaskFlow" 
+            title="TASKFLOW"
+            keys="FlowId"
+            columns="FlowId;FromTaskId;ToTaskId;Condition;IsDefault" 
+            header-actions="R;D"
+            visible-columns="FlowId;FromTaskId;ToTaskId;Condition;IsDefault"  
+            sort-columns="FlowId" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #FlowId attr="FlowId" title=" Flow Id" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #FromTaskId attr="FromTaskId" title="FromTaskId" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ToTaskId attr="ToTaskId" title="ToTaskId" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #Condition attr="Condition" title="Condition" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="IsDefault" title="IsDefault">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

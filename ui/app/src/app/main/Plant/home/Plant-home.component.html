@@ -1,0 +1,94 @@
+<o-form-layout-manager attr="Plant" mode="tab" title="PLANT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="PlantTable" 
+            service="Plant" 
+            entity="Plant" 
+            title="PLANT"
+            keys="PlantID"
+            columns="PlantName;ApplicationID;PlantNumber;StreetAddress;AddressLine2;City;State;Country;Province;Region;ZipCode;ContactName;ContactTitle;ContactPhone;ContactEmail;ManufacturingProcess;ClosestMajorCity;HasOtherProducts;OtherProductsList;HasOtherPlants;OtherPlantsLocation;OperationalStatus;LastInspection;ComplianceStatus;CreatedDate;PlantID" 
+            header-actions="R;D"
+            visible-columns="PlantName;ApplicationID;PlantNumber;StreetAddress;AddressLine2;City;State;Country;Province;Region;ZipCode;ContactName;ContactTitle;ContactPhone;ContactEmail;ManufacturingProcess;ClosestMajorCity;HasOtherProducts;OtherProductsList;HasOtherPlants;OtherPlantsLocation;OperationalStatus;LastInspection;ComplianceStatus;CreatedDate;PlantID"  
+            sort-columns="PlantName" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #PlantName attr="PlantName" title=" Plant Name" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="ApplicationID" title="ApplicationID">
+    <o-table-cell-renderer-service attr="ApplicationID" 
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        parent-keys="PlantID:ApplicationID"
+        value-column="PrimaryContactName" keys="ApplicationID"
+        visible-columns="PrimaryContactName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #PlantNumber attr="PlantNumber" title="PlantNumber" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #StreetAddress attr="StreetAddress" title="StreetAddress" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #AddressLine2 attr="AddressLine2" title="AddressLine2" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #City attr="City" title="City" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #State attr="State" title="State" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Country attr="Country" title="Country" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Province attr="Province" title="Province" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Region attr="Region" title="Region" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ZipCode attr="ZipCode" title="ZipCode" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ContactName attr="ContactName" title="ContactName" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ContactTitle attr="ContactTitle" title="ContactTitle" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ContactPhone attr="ContactPhone" title="ContactPhone" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ContactEmail attr="ContactEmail" title="ContactEmail" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ManufacturingProcess attr="ManufacturingProcess" title="ManufacturingProcess" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ClosestMajorCity attr="ClosestMajorCity" title="ClosestMajorCity" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="HasOtherProducts" title="HasOtherProducts">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-column #OtherProductsList attr="OtherProductsList" title="OtherProductsList" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="HasOtherPlants" title="HasOtherPlants">
+    <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+        render-type="icon" boolean-type="boolean" true-value="true" false-value="false"></o-table-cell-renderer-boolean>
+</o-table-column>
+            
+            <o-table-column #OtherPlantsLocation attr="OtherPlantsLocation" title="OtherPlantsLocation" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #OperationalStatus attr="OperationalStatus" title="OperationalStatus" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #LastInspection attr="LastInspection" title="LastInspection" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ComplianceStatus attr="ComplianceStatus" title="ComplianceStatus" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+            
+            <o-table-column #PlantID attr="PlantID" title="PlantID" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

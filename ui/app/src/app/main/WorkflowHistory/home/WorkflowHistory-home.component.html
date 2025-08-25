@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="WorkflowHistory" mode="tab" title="WORKFLOWHISTORY">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="WorkflowHistoryTable" 
+            service="WorkflowHistory" 
+            entity="WorkflowHistory" 
+            title="WORKFLOWHISTORY"
+            keys="HistoryId"
+            columns="HistoryId;InstanceId;TaskInstanceId;Action;PreviousStatus;NewStatus;ActionBy;ActionDate;ActionReason;Details" 
+            header-actions="R;D"
+            visible-columns="HistoryId;InstanceId;TaskInstanceId;Action;PreviousStatus;NewStatus;ActionBy;ActionDate;ActionReason;Details"  
+            sort-columns="HistoryId" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #HistoryId attr="HistoryId" title=" History Id" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Action attr="Action" title="Action" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #PreviousStatus attr="PreviousStatus" title="PreviousStatus" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #NewStatus attr="NewStatus" title="NewStatus" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #ActionBy attr="ActionBy" title="ActionBy" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #ActionDate attr="ActionDate" title="ActionDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+            
+            <o-table-column #ActionReason attr="ActionReason" title="ActionReason" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #Details attr="Details" title="Details" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
