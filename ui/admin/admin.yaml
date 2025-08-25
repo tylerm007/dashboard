@@ -1,12 +1,12 @@
 about:
-  date: August 25, 2025 10:54:05
+  date: August 25, 2025 14:57:10
   recent_changes: works with modified safrs-react-admin
   version: 0.0.0
 api_root: '{http_type}://{swagger_host}:{port}/{api}'
 authentication: '{system-default}'
 info:
-  number_relationships: 38
-  number_tables: 35
+  number_relationships: 41
+  number_tables: 36
 info_toggle_checked: true
 resources:
   Comment:
@@ -176,6 +176,11 @@ resources:
     - direction: tomany
       fks:
       - LaneId
+      name: StageInstanceList
+      resource: StageInstance
+    - direction: tomany
+      fks:
+      - LaneId
       name: TaskDefinitionList
       resource: TaskDefinition
     - direction: toone
@@ -338,6 +343,11 @@ resources:
       resource: Message
     - direction: tomany
       fks:
+      - ProcessInstanceId
+      name: StageInstanceList
+      resource: StageInstance
+    - direction: tomany
+      fks:
       - InstanceId
       name: TaskInstanceList
       resource: TaskInstance
@@ -402,6 +412,43 @@ resources:
       resource: WFApplication
     type: Product
     user_key: LabelName
+  StageInstance:
+    attributes:
+    - label: ' Stage Instance Id*'
+      name: StageInstanceId
+      required: true
+      search: true
+      sort: true
+    - name: LaneId
+      required: true
+    - name: ProcessInstanceId
+      required: true
+    - name: Status
+      required: true
+    - name: StartedDate
+    - name: CompletedDate
+    - name: DurationMinutes
+    - name: RetryCount
+    - name: CompletedCount
+    - name: TotalCount
+    tab_groups:
+    - direction: tomany
+      fks:
+      - StageId
+      name: TaskInstanceList
+      resource: TaskInstance
+    - direction: toone
+      fks:
+      - LaneId
+      name: Lane
+      resource: LaneDefinition
+    - direction: toone
+      fks:
+      - ProcessInstanceId
+      name: ProcessInstance
+      resource: ProcessInstance
+    type: StageInstance
+    user_key: StageInstanceId
   Sysdiagram:
     attributes:
     - label: ' name*'
@@ -411,7 +458,6 @@ resources:
       sort: true
     - name: version
     - name: definition
-      type: Text
     - name: principal_id
       required: true
     - name: diagram_id
@@ -447,7 +493,6 @@ resources:
     - name: IsRequired
       required: true
       type: Boolean
-  
     tab_groups:
     - direction: tomany
       fks:
@@ -471,6 +516,11 @@ resources:
       resource: TaskInstance
     - direction: toone
       fks:
+      - LaneId
+      name: Lane
+      resource: LaneDefinition
+    - direction: toone
+      fks:
       - ProcessId
       name: Process
       resource: ProcessDefinition
@@ -480,7 +530,7 @@ resources:
     attributes:
     - label: ' Flow Id*'
       name: FlowId
-      required: false
+      required: true
       search: true
       sort: true
     - name: FromTaskId
@@ -512,6 +562,7 @@ resources:
       sort: true
     - name: InstanceId
       required: true
+    - name: StageId
     - name: TaskId
       required: true
     - name: Status
@@ -545,6 +596,11 @@ resources:
       - InstanceId
       name: Instance
       resource: ProcessInstance
+    - direction: toone
+      fks:
+      - StageId
+      name: Stage
+      resource: StageInstance
     - direction: toone
       fks:
       - TaskId

@@ -112,12 +112,19 @@ def declare_logic():
         
         
     Rule.after_flush_row_event(on_class=models.WFApplication, calling=start_workflow)
+
+    
+
     #WF Application Dashboard
     Rule.count(derive=models.WFDashboard.count_completed,as_count_of=models.WFApplication, where=lambda row: row.status == 'COMP')
     Rule.count(derive=models.WFDashboard.count_in_progress,as_count_of=models.WFApplication, where=lambda row: row.status == 'INP')
     Rule.count(derive=models.WFDashboard.count_new,as_count_of=models.WFApplication, where=lambda row: row.status == 'NEW') 
     Rule.count(derive=models.WFDashboard.count_withdrawn,as_count_of=models.WFApplication, where=lambda row: row.status == 'WTH')
     Rule.count(derive=models.WFDashboard.total_count,as_count_of=models.WFApplication)
+ 
+
+    Rule.count(derive=models.StageInstance.TotalCount, as_count_of=models.TaskInstance)
+    Rule.count(derive=models.StageInstance.CompletedCount, as_count_of=models.TaskInstance, where=lambda row: row.Status == 'COMP')
     '''
     app_logger.debug("..logic/declare_logic.py (logic == rules + code)")
 

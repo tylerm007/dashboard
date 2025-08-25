@@ -1,10 +1,8 @@
 from asyncio import Task
 from datetime import datetime
-from tracemalloc import start
-from database.models import ProcessDefinition, TaskInstance
+from database.models import ProcessDefinition, TaskDefinition, ProcessInstance, WorkflowHistory, StageInstance, TaskInstance, LaneDefinition
 from flask import request, jsonify, session
 import logging
-import pyodbc
 import uuid
 import safrs
 
@@ -17,24 +15,6 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
     global _project_dir
     _project_dir = project_dir
     pass
-
-    @app.route('/hello_service')
-    def hello_service():
-        """        
-        Illustrates:
-        * Use standard Flask, here for non-database endpoints.
-
-        Test it with PowerShell POST:
-        
-        $body = @{
-            user = "ApiLogicServer"
-        } | ConvertTo-Json
-        
-        Invoke-RestMethod -Uri "http://localhost:5656/hello_service" -Method POST -Body $body -ContentType "application/json"
-        """
-        user = request.args.get('user')
-        app_logger.info(f'{user}')
-        return jsonify({"result": f'hello from new_service! from {user}'})
 
     @app.route('/start_workflow', methods=['POST','OPTIONS'])
     def start_workflow():
@@ -64,7 +44,6 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
 
     def _start_workflow(process_name:str, application_id:int, started_by:str, priority:str):
 
-        from database.models import ProcessDefinition, TaskDefinition, ProcessInstance, WorkflowHistory
         # Get ProcessId
         row = ProcessDefinition.query.filter_by(ProcessName=process_name, IsActive=True).first()
         if not row:
@@ -77,7 +56,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         row = TaskDefinition.query.filter_by(ProcessId=process_id, TaskType='Event', TaskCategory='Start').order_by(TaskDefinition.Sequence).first()
         start_task_id = str(row.TaskId) if row else None
 
-        # Create new InstanceId
+        # Create new Process InstanceId for this Application
         instance_id = str(uuid.uuid4())
         process_instance = ProcessInstance(
             InstanceId=instance_id,
@@ -105,21 +84,37 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         )
         #session.add(wf_history)
         #session.commit()
-        print(f'New InstanceId: {instance_id}')
+     
         # TODO - use TaskFlow to only create starting tasks?
-        rows = TaskDefinition.query.filter_by(ProcessId=process_id).all()
-        for row in rows:
-            print(f'TaskDefinition: {row.TaskName}')
-            instance_id = str(uuid.uuid4())
-            task_instance = TaskInstance(
-                TaskInstanceId=instance_id,
-                InstanceId=process_instance_id,
-                TaskId=str(row.TaskId),
-                LaneId=str(row.LaneId),
-                Status='PEND',
-                CreatedDate=datetime.utcnow(),
-                CreatedBy=started_by
-            )
-            session.add(task_instance)
-            session.commit()
+        lanes = LaneDefinition.query.filter_by(ProcessId=process_id).all()
+        for lane in lanes:
+                print(f'LaneDefinition: {lane.LaneName}')
+                stage_instance_id = str(uuid.uuid4())
+                lane_instance = StageInstance(
+                    StageInstanceId=stage_instance_id,
+                    ProcessInstanceId=process_instance_id,
+                    LaneId=str(lane.LaneId),
+                    Status='Pending',
+                    CreatedDate=datetime.utcnow(),
+                    CreatedBy=started_by
+                )
+                session.add(lane_instance)
+                session.commit()
+               
+                rows = TaskDefinition.query.filter_by(ProcessId=process_id, LaneId=str(lane.LaneId)).all()
+                for row in rows:
+                        print(f'TaskDefinition: {row.TaskName}')
+                        instance_id = str(uuid.uuid4())
+                        task_instance = TaskInstance(
+                                TaskInstanceId=instance_id,
+                                InstanceId=process_instance_id,
+                                TaskId=str(row.TaskId),
+                                LaneId=str(row.LaneId),
+                                StageId=str(stage_instance_id),
+                                Status='PEND',
+                                CreatedDate=datetime.utcnow(),
+                                CreatedBy=started_by
+                        )
+                        session.add(task_instance)
+                        session.commit()
         return instance_id
