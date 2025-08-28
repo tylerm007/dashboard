@@ -20,7 +20,6 @@ from sqlalchemy.ext.declarative import declarative_base
 ########################################################################################################################
  
 from database.system.SAFRSBaseX import SAFRSBaseX, TestBase
-from flask_login import UserMixin
 import safrs, flask_sqlalchemy, os
 from safrs import jsonapi_attr
 from flask_sqlalchemy import SQLAlchemy
@@ -51,14 +50,14 @@ class ProcessDefinition(Base):  # type: ignore
     _s_collection_name = 'ProcessDefinition'  # type: ignore
 
     ProcessId = Column(Integer, autoincrement=True, primary_key=True)
-    ProcessName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    ProcessVersion = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text("1.0"), nullable=False)
-    Description = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    ProcessName = Column(Unicode(100), nullable=False)
+    ProcessVersion = Column(Unicode(10), server_default=text("1.0"), nullable=False)
+    Description = Column(Unicode(500))
     IsActive = Column(Boolean, server_default=text("1"), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
-    CreatedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('system'), nullable=False)
+    CreatedBy = Column(Unicode(100), server_default=text('system'), nullable=False)
     ModifiedDate = Column(DATETIME2)
-    ModifiedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    ModifiedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
 
@@ -73,8 +72,8 @@ class ProcessMessageType(Base):  # type: ignore
     __tablename__ = 'ProcessMessageTypes'
     _s_collection_name = 'ProcessMessageType'  # type: ignore
 
-    MessageTypeCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    MessageTypeDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    MessageTypeCode = Column(Unicode(20), primary_key=True)
+    MessageTypeDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -86,8 +85,8 @@ class ProcessMessageType(Base):  # type: ignore
 
 t_ProcessOverview = Table(
     'ProcessOverview', metadata,
-    Column('ProcessId', Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('ProcessName', Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
+    Column('ProcessId', Unicode(100), nullable=False),
+    Column('ProcessName', Unicode(255), nullable=False),
     Column('IsExecutable', Boolean, nullable=False),
     Column('LaneCount', Integer),
     Column('NodeCount', Integer),
@@ -99,8 +98,8 @@ class ProcessPriority(Base):  # type: ignore
     __tablename__ = 'ProcessPriorities'
     _s_collection_name = 'ProcessPriority'  # type: ignore
 
-    PriorityCode = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    PriorityDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    PriorityCode = Column(Unicode(10), primary_key=True)
+    PriorityDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -114,8 +113,8 @@ class ProcessStatus(Base):  # type: ignore
     __tablename__ = 'ProcessStatus'
     _s_collection_name = 'ProcessStatus'  # type: ignore
 
-    StatusCode = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    StatusDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    StatusCode = Column(Unicode(10), primary_key=True)
+    StatusDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -129,8 +128,8 @@ class StageStatus(Base):  # type: ignore
     __tablename__ = 'StageStatus'
     _s_collection_name = 'StageStatus'  # type: ignore
 
-    StatusCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    StatusDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    StatusCode = Column(Unicode(20), primary_key=True)
+    StatusDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -142,8 +141,8 @@ class TaskCategory(Base):  # type: ignore
     __tablename__ = 'TaskCategories'
     _s_collection_name = 'TaskCategory'  # type: ignore
 
-    TaskCategoryCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    TaskCategoryDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    TaskCategoryCode = Column(Unicode(20), primary_key=True)
+    TaskCategoryDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -157,8 +156,8 @@ class TaskCommentType(Base):  # type: ignore
     __tablename__ = 'TaskCommentTypes'
     _s_collection_name = 'TaskCommentType'  # type: ignore
 
-    CommentTypeCode = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    CommentTypeDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    CommentTypeCode = Column(Unicode(10), primary_key=True)
+    CommentTypeDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -172,8 +171,8 @@ class TaskType(Base):  # type: ignore
     __tablename__ = 'TaskTypes'
     _s_collection_name = 'TaskType'  # type: ignore
 
-    TaskTypeCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    TaskTypeDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    TaskTypeCode = Column(Unicode(20), primary_key=True)
+    TaskTypeDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -185,11 +184,11 @@ class ValidationRule(Base):  # type: ignore
     _s_collection_name = 'ValidationRule'  # type: ignore
 
     ValidationId = Column(Integer, autoincrement=True, primary_key=True)
-    ValidationName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    Category = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    RuleType = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    ValidationName = Column(Unicode(100), nullable=False)
+    Category = Column(Unicode(50), nullable=False)
+    RuleType = Column(Unicode(50), nullable=False)
     ValidationQuery = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
-    ErrorMessage = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    ErrorMessage = Column(Unicode(500))
     IsActive = Column(Boolean, server_default=text("1"), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
 
@@ -204,8 +203,8 @@ class WFActivityStatus(Base):  # type: ignore
     __tablename__ = 'WF_ActivityStatus'
     _s_collection_name = 'WFActivityStatus'  # type: ignore
 
-    StatusCode = Column(Unicode(5, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    StatusDesc = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    StatusCode = Column(Unicode(5), primary_key=True)
+    StatusDesc = Column(Unicode(50))
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -219,8 +218,8 @@ class WFApplicationStatus(Base):  # type: ignore
     __tablename__ = 'WF_ApplicationStatus'
     _s_collection_name = 'WFApplicationStatus'  # type: ignore
 
-    StatusCode = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    StatusDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    StatusCode = Column(Unicode(50), primary_key=True)
+    StatusDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -253,8 +252,8 @@ class WFFileType(Base):  # type: ignore
     __tablename__ = 'WF_FileTypes'
     _s_collection_name = 'WFFileType'  # type: ignore
 
-    FileType = Column(Unicode(5, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    FileTypeName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    FileType = Column(Unicode(5), primary_key=True)
+    FileTypeName = Column(Unicode(100), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -268,8 +267,8 @@ class WFPriority(Base):  # type: ignore
     __tablename__ = 'WF_Priorities'
     _s_collection_name = 'WFPriority'  # type: ignore
 
-    PriorityCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    PriorityDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    PriorityCode = Column(Unicode(20), primary_key=True)
+    PriorityDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -283,8 +282,8 @@ class WFQuoteStatus(Base):  # type: ignore
     __tablename__ = 'WF_QuoteStatus'
     _s_collection_name = 'WFQuoteStatus'  # type: ignore
 
-    StatusCode = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    StatusDesc = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    StatusCode = Column(Unicode(10), primary_key=True)
+    StatusDesc = Column(Unicode(50))
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -298,8 +297,8 @@ class WFRole(Base):  # type: ignore
     __tablename__ = 'WF_Roles'
     _s_collection_name = 'WFRole'  # type: ignore
 
-    UserRole = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    Role = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    UserRole = Column(Unicode(10), primary_key=True)
+    Role = Column(Unicode(50), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
     allow_client_generated_ids = True
 
@@ -313,22 +312,22 @@ class WFRole(Base):  # type: ignore
 t_vw_ActiveWorkflows = Table(
     'vw_ActiveWorkflows', metadata,
     Column('InstanceId', Integer, nullable=False),
-    Column('ApplicationId', Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('ProcessName', Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('Status', Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('CurrentTask', Unicode(100, 'SQL_Latin1_General_CP1_CI_AS')),
+    Column('ApplicationId', Unicode(50), nullable=False),
+    Column('ProcessName', Unicode(100), nullable=False),
+    Column('Status', Unicode(10), nullable=False),
+    Column('CurrentTask', Unicode(100)),
     Column('StartedDate', DATETIME2, nullable=False),
-    Column('StartedBy', Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('Priority', Unicode(10, 'SQL_Latin1_General_CP1_CI_AS')),
+    Column('StartedBy', Unicode(100), nullable=False),
+    Column('Priority', Unicode(10)),
     Column('HoursActive', Integer)
 )
 
 
 t_vw_TaskPerformance = Table(
     'vw_TaskPerformance', metadata,
-    Column('TaskName', Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('TaskType', Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
-    Column('TaskCategory', Unicode(50, 'SQL_Latin1_General_CP1_CI_AS')),
+    Column('TaskName', Unicode(100), nullable=False),
+    Column('TaskType', Unicode(50), nullable=False),
+    Column('TaskCategory', Unicode(50)),
     Column('TotalExecutions', Integer),
     Column('AvgDurationMinutes', Float(53)),
     Column('EstimatedDurationMinutes', Integer),
@@ -341,19 +340,19 @@ t_vw_TaskPerformance = Table(
 t_vw_ValidationStatus = Table(
     'vw_ValidationStatus', metadata,
     Column('InstanceId', Integer, nullable=False),
-    Column('ApplicationId', Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
+    Column('ApplicationId', Unicode(50), nullable=False),
     Column('TotalValidations', Integer),
     Column('PassedValidations', Integer),
     Column('FailedValidations', Integer),
-    Column('ValidationStatus', String(12, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Column('ValidationStatus', String(12), nullable=False)
 )
 
 
 t_vw_WorkflowDashboard = Table(
     'vw_WorkflowDashboard', metadata,
-    Column('Metric', String(25, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False),
+    Column('Metric', String(25), nullable=False),
     Column('Value', Float(53)),
-    Column('Unit', String(5, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Column('Unit', String(5), nullable=False)
 )
 
 
@@ -363,13 +362,13 @@ class LaneDefinition(Base):  # type: ignore
 
     LaneId = Column(Integer, autoincrement=True, primary_key=True)
     ProcessId = Column(ForeignKey('ProcessDefinitions.ProcessId'), nullable=False)
-    LaneName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    LaneDescription = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    LaneName = Column(Unicode(100), nullable=False)
+    LaneDescription = Column(Unicode(500))
     EstimatedDurationDays = Column(Integer)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
-    CreatedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('system'), nullable=False)
+    CreatedBy = Column(Unicode(100), server_default=text('system'), nullable=False)
     ModifiedDate = Column(DATETIME2)
-    ModifiedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    ModifiedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
     Process : Mapped["ProcessDefinition"] = relationship(back_populates=("LaneDefinitionList"))
@@ -386,17 +385,17 @@ class TaskDefinition(Base):  # type: ignore
 
     TaskId = Column(Integer, autoincrement=True, primary_key=True)
     ProcessId = Column(ForeignKey('ProcessDefinitions.ProcessId'), nullable=False)
-    TaskName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    TaskName = Column(Unicode(100), nullable=False)
     TaskType = Column(ForeignKey('TaskTypes.TaskTypeCode'), nullable=False)
     TaskCategory = Column(ForeignKey('TaskCategories.TaskCategoryCode'))
     Sequence = Column(Integer, nullable=False)
     LaneId = Column(ForeignKey('LaneDefinitions.LaneId'), nullable=False)
     IsParallel = Column(Boolean, server_default=text("0"), nullable=False)
-    AssigneeRole = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    AssigneeRole = Column(Unicode(50))
     EstimatedDurationMinutes = Column(Integer)
     IsRequired = Column(Boolean, server_default=text("1"), nullable=False)
     AutoComplete = Column(Boolean, server_default=text("0"), nullable=False)
-    Description = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    Description = Column(Unicode(500))
     ConfigurationJson = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
 
     # parent relationships (access parent)
@@ -418,18 +417,18 @@ class WFApplication(Base):  # type: ignore
     _s_collection_name = 'WFApplication'  # type: ignore
 
     ApplicationID = Column(Integer, autoincrement=True, primary_key=True, index=True)
-    ApplicationNumber = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, unique=True)
+    ApplicationNumber = Column(Unicode(50), nullable=False, unique=True)
     CompanyID = Column(Integer, nullable=False, index=True)
     PlantID = Column(Integer)
     SubmissionDate = Column(Date, nullable=False)
     Status = Column(ForeignKey('WF_ApplicationStatus.StatusCode'), server_default=text("NEW"), nullable=False, index=True)
     Priority = Column(ForeignKey('WF_Priorities.PriorityCode'), server_default=text('NORMAL'))
-    PrimaryContactName = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'))
-    Version = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('1.0.0'), nullable=False)
+    PrimaryContactName = Column(Unicode(200))
+    Version = Column(Unicode(20), server_default=text('1.0.0'), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
     LastUpdatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
     LastStatusChangeDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
-    LastStatusChangedBy = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'))
+    LastStatusChangedBy = Column(Unicode(200))
     WFDashboardID = Column(ForeignKey('WF_Dashboard.ID'), server_default=text("1"))
 
     # parent relationships (access parent)
@@ -456,9 +455,9 @@ class WFUser(Base):  # type: ignore
     _s_collection_name = 'WFUser'  # type: ignore
 
     UserID = Column(Integer, autoincrement=True, primary_key=True)
-    Username = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, unique=True)
-    FullName = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    Email = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, unique=True)
+    Username = Column(Unicode(100), nullable=False, unique=True)
+    FullName = Column(Unicode(200), nullable=False)
+    Email = Column(Unicode(255), nullable=False, unique=True)
     Role = Column(ForeignKey('WF_Roles.UserRole'), server_default=text('ADMIN'), nullable=False)
     IsActive = Column(Boolean, server_default=text("1"), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
@@ -477,13 +476,13 @@ class ProcessInstance(Base):  # type: ignore
 
     InstanceId = Column(Integer, autoincrement=True, primary_key=True)
     ProcessId = Column(ForeignKey('ProcessDefinitions.ProcessId'), nullable=False)
-    ApplicationId = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    ApplicationId = Column(Unicode(50), nullable=False, index=True)
     Status = Column(ForeignKey('ProcessStatus.StatusCode'), server_default=text("NEW"), nullable=False, index=True)
     CurrentTaskId = Column(ForeignKey('TaskDefinitions.TaskId'))
     StartedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False, index=True)
-    StartedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    StartedBy = Column(Unicode(100), nullable=False)
     CompletedDate = Column(DATETIME2)
-    CompletedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    CompletedBy = Column(Unicode(100))
     Priority = Column(ForeignKey('ProcessPriorities.PriorityCode'), server_default=text('NORMAL'))
     ContextData = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
 
@@ -510,7 +509,7 @@ class TaskFlow(Base):  # type: ignore
     FlowId = Column(Integer, autoincrement=True, primary_key=True)
     FromTaskId = Column(ForeignKey('TaskDefinitions.TaskId'))
     ToTaskId = Column(ForeignKey('TaskDefinitions.TaskId'), nullable=False)
-    Condition = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    Condition = Column(Unicode(500))
     IsDefault = Column(Boolean, server_default=text("0"), nullable=False)
 
     # parent relationships (access parent)
@@ -527,12 +526,12 @@ class WFActivityLog(Base):  # type: ignore
 
     ActivityID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    ActionType = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    ActionType = Column(Unicode(200), nullable=False)
     ActionDetails = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
-    UserName = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    ActivityType = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    UserName = Column(Unicode(200), nullable=False)
+    ActivityType = Column(Unicode(100), nullable=False)
     Status = Column(ForeignKey('WF_ActivityStatus.StatusCode'), server_default=text('APP'), nullable=False)
-    Category = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    Category = Column(Unicode(100))
     ActivityDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False, index=True)
 
     # parent relationships (access parent)
@@ -549,10 +548,10 @@ class WFApplicationComment(Base):  # type: ignore
 
     CommentID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    Author = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Author = Column(Unicode(200), nullable=False)
     CommentText = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    CommentType = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('internal'), nullable=False)
-    Category = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    CommentType = Column(Unicode(50), server_default=text('internal'), nullable=False)
+    Category = Column(Unicode(100))
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
 
     # parent relationships (access parent)
@@ -568,11 +567,11 @@ class WFApplicationMessage(Base):  # type: ignore
 
     MessageID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    FromUser = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    ToUser = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    FromUser = Column(Unicode(200), nullable=False)
+    ToUser = Column(Unicode(200), nullable=False)
     MessageText = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    MessageType = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('outgoing'), nullable=False)
-    Priority = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('normal'), nullable=False)
+    MessageType = Column(Unicode(50), server_default=text('outgoing'), nullable=False)
+    Priority = Column(Unicode(20), server_default=text('normal'), nullable=False)
     SentDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
 
     # parent relationships (access parent)
@@ -588,7 +587,7 @@ class WFCompany(Base):  # type: ignore
 
     CompanyID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False)
-    KashrusCompanyID = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    KashrusCompanyID = Column(Unicode(50), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
 
     # parent relationships (access parent)
@@ -619,14 +618,14 @@ class WFFile(Base):  # type: ignore
 
     FileID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    FileName = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    FileName = Column(Unicode(500), nullable=False)
     FileType = Column(ForeignKey('WF_FileTypes.FileType'), nullable=False)
-    FileSize = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'))
+    FileSize = Column(Unicode(20))
     UploadedDate = Column(Date, nullable=False)
-    Tag = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'))
+    Tag = Column(Unicode(200))
     IsProcessed = Column(Boolean, server_default=text("0"), nullable=False)
     RecordCount = Column(Integer)
-    FilePath = Column(Unicode(1000, 'SQL_Latin1_General_CP1_CI_AS'))
+    FilePath = Column(Unicode(1000))
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
 
     # parent relationships (access parent)
@@ -643,7 +642,7 @@ class WFPlant(Base):  # type: ignore
 
     PlantID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    PlantNumber = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    PlantNumber = Column(Unicode(50))
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
 
     # parent relationships (access parent)
@@ -660,7 +659,7 @@ class WFQuote(Base):  # type: ignore
 
     QuoteID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    QuoteNumber = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, unique=True)
+    QuoteNumber = Column(Unicode(50), nullable=False, unique=True)
     TotalAmount : DECIMAL = Column(DECIMAL(10, 2), nullable=False)
     ValidUntil = Column(Date, nullable=False)
     Status = Column(ForeignKey('WF_QuoteStatus.StatusCode'), server_default=text('PEND'), nullable=False)
@@ -682,11 +681,11 @@ class ProcessMessage(Base):  # type: ignore
 
     MessageId = Column(Integer, autoincrement=True, primary_key=True)
     InstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False)
-    FromUser = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    ToUser = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), index=True)
-    ToRole = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    FromUser = Column(Unicode(100), nullable=False)
+    ToUser = Column(Unicode(100), index=True)
+    ToRole = Column(Unicode(50))
     MessageType = Column(ForeignKey('ProcessMessageTypes.MessageTypeCode'), server_default=text('Standard'))
-    Subject = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'))
+    Subject = Column(Unicode(200))
     MessageBody = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), nullable=False)
     SentDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
     ReadDate = Column(DATETIME2)
@@ -715,9 +714,9 @@ class StageInstance(Base):  # type: ignore
     CompletedCount = Column(Integer)
     TotalCount = Column(Integer)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
-    CreatedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), default_text=text('system'), nullable=False)
+    CreatedBy = Column(Unicode(100), default_text=text('system'), nullable=False)
     ModifiedDate = Column(DATETIME2)
-    ModifiedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    ModifiedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
     Lane : Mapped["LaneDefinition"] = relationship(back_populates=("StageInstanceList"))
@@ -735,14 +734,14 @@ class TaskInstance(Base):  # type: ignore
     TaskInstanceId = Column(Integer, autoincrement=True, primary_key=True)
     InstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False)
     TaskId = Column(ForeignKey('TaskDefinitions.TaskId'), nullable=False)
-    Status = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('Pending'), nullable=False, index=True)
-    AssignedTo = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), index=True)
+    Status = Column(Unicode(50), server_default=text('Pending'), nullable=False, index=True)
+    AssignedTo = Column(Unicode(100), index=True)
     StartedDate = Column(DATETIME2, index=True)
     CompletedDate = Column(DATETIME2)
     DurationMinutes = Column(Integer, Computed('(datediff(minute,[StartedDate],[CompletedDate]))', persisted=False))
-    Result = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    Result = Column(Unicode(50))
     ResultData = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
-    ErrorMessage = Column(Unicode(1000, 'SQL_Latin1_General_CP1_CI_AS'))
+    ErrorMessage = Column(Unicode(1000))
     RetryCount = Column(Integer, server_default=text("0"))
 
     # parent relationships (access parent)
@@ -763,7 +762,7 @@ class WFProduct(Base):  # type: ignore
     ProductID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
     PlantID = Column(ForeignKey('WF_Plants.PlantID'))
-    ProductNumber = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    ProductNumber = Column(Unicode(50))
     CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
 
     # parent relationships (access parent)
@@ -781,7 +780,7 @@ class WFQuoteItem(Base):  # type: ignore
 
     QuoteItemID = Column(Integer, autoincrement=True, primary_key=True)
     QuoteID = Column(ForeignKey('WF_Quotes.QuoteID'), nullable=False)
-    Description = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Description = Column(Unicode(500), nullable=False)
     Amount : DECIMAL = Column(DECIMAL(10, 2), nullable=False)
     SortOrder = Column(Integer, server_default=text("1"), nullable=False)
 
@@ -801,7 +800,7 @@ class TaskComment(Base):  # type: ignore
     TaskInstanceId = Column(ForeignKey('TaskInstances.TaskInstanceId'))
     CommentType = Column(ForeignKey('TaskCommentTypes.CommentTypeCode'), server_default=text('Internal'))
     CommentText = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    Author = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Author = Column(Unicode(100), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
     IsVisible = Column(Boolean, server_default=text("1"), nullable=False)
 
@@ -823,9 +822,9 @@ class ValidationResult(Base):  # type: ignore
     ValidationId = Column(ForeignKey('ValidationRules.ValidationId'), nullable=False)
     TaskInstanceId = Column(ForeignKey('TaskInstances.TaskInstanceId'))
     IsValid = Column(Boolean, nullable=False, index=True)
-    ValidationMessage = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    ValidationMessage = Column(Unicode(500))
     ValidationDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
-    ValidatedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    ValidatedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
     Instance : Mapped["ProcessInstance"] = relationship(back_populates=("ValidationResultList"))
@@ -843,7 +842,7 @@ class WFIngredient(Base):  # type: ignore
     IngredientID = Column(Integer, autoincrement=True, primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
     ProductID = Column(ForeignKey('WF_Products.ProductID'))
-    NCRCIngredientID = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), index=True)
+    NCRCIngredientID = Column(Unicode(50), index=True)
 
     # parent relationships (access parent)
     Application : Mapped["WFApplication"] = relationship(back_populates=("WFIngredientList"))
@@ -860,12 +859,12 @@ class WorkflowHistory(Base):  # type: ignore
     HistoryId = Column(Integer, autoincrement=True, primary_key=True)
     InstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False, index=True)
     TaskInstanceId = Column(ForeignKey('TaskInstances.TaskInstanceId'))
-    Action = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    PreviousStatus = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
-    NewStatus = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
-    ActionBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text('system'), nullable=False)
+    Action = Column(Unicode(100), nullable=False)
+    PreviousStatus = Column(Unicode(50))
+    NewStatus = Column(Unicode(50))
+    ActionBy = Column(Unicode(100), server_default=text('system'), nullable=False)
     ActionDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False, index=True)
-    ActionReason = Column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+    ActionReason = Column(Unicode(500))
     Details = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
 
     # parent relationships (access parent)
@@ -874,7 +873,7 @@ class WorkflowHistory(Base):  # type: ignore
 
     # child relationships (access children)
 #======== ou_kash tables===========================================
-
+'''
 class CompanyApplication(Base):  # type: ignore
     __tablename__ = 'CompanyApplicationWebRequestFromAPI'
     _s_collection_name = 'CompanyApplication'   # type: ignore
@@ -882,23 +881,23 @@ class CompanyApplication(Base):  # type: ignore
     http_methods = ['GET']
 
     ID = Column(Integer, server_default=text("0"), primary_key=True, nullable=False)
-    PreviousCertification = Column(NCHAR(1, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text("N"))
-    OUCertified = Column(NCHAR(1, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text("N"))
-    CurrentlyCertified = Column(NCHAR(1, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text("N"))
+    PreviousCertification = Column(NCHAR(1), server_default=text("N"))
+    OUCertified = Column(NCHAR(1), server_default=text("N"))
+    CurrentlyCertified = Column(NCHAR(1), server_default=text("N"))
     CompanyID = Column(Integer, server_default=text("0"), index=True)
-    CompanyName = Column(Unicode(120, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    PlantName = Column(Unicode(120, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    Street1 = Column(Unicode(60, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    Street2 = Column(Unicode(60, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    City = Column(Unicode(40, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    State = Column(Unicode(25, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    Zip = Column(Unicode(18, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    Country = Column(Unicode(25, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    title = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    FirstName = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    LastName = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    email = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
-    phone = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
+    CompanyName = Column(Unicode(120), server_default=text(''))
+    PlantName = Column(Unicode(120), server_default=text(''))
+    Street1 = Column(Unicode(60), server_default=text(''))
+    Street2 = Column(Unicode(60), server_default=text(''))
+    City = Column(Unicode(40), server_default=text(''))
+    State = Column(Unicode(25), server_default=text(''))
+    Zip = Column(Unicode(18), server_default=text(''))
+    Country = Column(Unicode(25), server_default=text(''))
+    title = Column(Unicode(50), server_default=text(''))
+    FirstName = Column(Unicode(50), server_default=text(''))
+    LastName = Column(Unicode(50), server_default=text(''))
+    email = Column(Unicode(100), server_default=text(''))
+    phone = Column(Unicode(50), server_default=text(''))
     NatureOfProducts = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
     HowHeardAboutUs = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
     Comments = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
@@ -910,8 +909,8 @@ class CompanyApplication(Base):  # type: ignore
     utm_campaign = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), server_default=text(''))
     dateSubmitted = Column(DATETIME, server_default=text("(getdate())"))
     Utm_Term = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
-    Version = Column(Unicode(60, 'SQL_Latin1_General_CP1_CI_AS'))
-    Language = Column(Unicode(60, 'SQL_Latin1_General_CP1_CI_AS'))
+    Version = Column(Unicode(60))
+    Language = Column(Unicode(60))
     Oukosher_source = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
     JotFormSubmissionID = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
 
@@ -1074,3 +1073,4 @@ class OWNSTB(Base):  # type: ignore
     COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("OWNSTBList"))
     PLANT_TB : Mapped["PLANTTB"] = relationship(back_populates=("OWNSTBList"))
     #PERSON_JOB_TB : Mapped["PERSONJOBTB"] = relationship(back_populates=("OWNSTBList"))
+'''

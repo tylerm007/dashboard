@@ -28,13 +28,14 @@ resources:
     - name: ModifiedBy
     - name: LaneId
     tab_groups:
+    - direction: tomany
       fks:
-      - LaneId
+        - LaneId
       name: TaskDefinitionList
       resource: TaskDefinition
     - direction: toone
       fks:
-      - ProcessId
+        - ProcessId
       name: Process
       resource: ProcessDefinition
     type: LaneDefinition
@@ -514,6 +515,7 @@ resources:
       sort: true
     - name: version
     - name: definition
+      type: image
     - name: principal_id
       required: true
     - name: diagram_id
