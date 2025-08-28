@@ -873,7 +873,7 @@ class WorkflowHistory(Base):  # type: ignore
     TaskInstance : Mapped["TaskInstance"] = relationship(back_populates=("WorkflowHistoryList"))
 
     # child relationships (access children)
-======== ou_kash tables===========================================
+#======== ou_kash tables===========================================
 
 class CompanyApplication(Base):  # type: ignore
     __tablename__ = 'CompanyApplicationWebRequestFromAPI'
@@ -979,8 +979,10 @@ class COMPANYTB(Base):  # type: ignore
     ChometzEmailSentDate = Column(DATETIME2)
     allow_client_generated_ids = True
 
+    # Child relationships (access children)
+    #CompanyApplicationList : Mapped[List["CompanyApplication"]] = relationship(back_populates="ApplicationCompany")
     PLANTTBList : Mapped[List["PLANTTB"]] = relationship(back_populates="COMPANY_TB")
-    
+    OWNSTBList : Mapped[List["OWNSTB"]] = relationship(back_populates="COMPANY_TB")
 
 class PLANTTB(Base):  # type: ignore
     __tablename__ = 'PLANT_TB'
@@ -1015,3 +1017,60 @@ class PLANTTB(Base):  # type: ignore
     #PERSON_JOB_TB : Mapped["PERSONJOBTB"] = relationship(foreign_keys='[PLANTTB.DesignatedRFR]', back_populates=("PLANTTBList"))
     #PERSON_JOB_TB1 : Mapped["PERSONJOBTB"] = relationship(foreign_keys='[PLANTTB.DesignatedRFR]', back_populates=("PLANTTBList1"), overlaps="PERSON_JOB_TB,PLANTTBList")
     COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("PLANTTBList"))
+
+    # child relationships (access children)
+    OWNSTBList : Mapped[List["OWNSTB"]] = relationship(back_populates="PLANT_TB")
+
+
+class OWNSTB(Base):  # type: ignore
+    __tablename__ = 'OWNS_TB'
+    _s_collection_name = 'OWNSTB'  # type: ignore
+    __table_args__ = (
+        Index('setupby', 'STATUS', 'ACTIVE'),
+        Index('XOWNS', 'PLANT_ID', 'STATUS', 'ID', 'ACTIVE', 'Setup_By'),
+        Index('idxCompID', 'COMPANY_ID', 'ACTIVE', 'PLANT_ID', unique=True)
+    )
+    __bind_key__ = 'ou'
+
+    COMPANY_ID = Column(ForeignKey('COMPANY_TB.COMPANY_ID'), nullable=False)
+    PLANT_ID = Column(ForeignKey('PLANT_TB.PLANT_ID'), nullable=False)
+    START_DATE = Column(DATETIME)
+    END_DATE = Column(DATETIME)
+    TYPE = Column(String(10))
+    VISIT_FREQUENCY = Column(SMALLINT)
+    INVOICE_TYPE = Column(String(20))
+    INVOICE_FREQUENCY = Column(String(20))
+    INVOICE_DTL = Column(String(20))
+    HOLD = Column(String(1))
+    ROYALTIES = Column(String(1))
+    SPECIAL_TICKET = Column(String(1))
+    STATUS = Column(String(40))
+    ID = Column(Integer, server_default=text("0"), primary_key=True, unique=True)
+    ACTIVE = Column(Integer)
+    Setup_By = Column(ForeignKey('PERSON_JOB_TB.PERSON_JOB_ID'))
+    AcquiredFrom = Column(String(50))
+    NoRFRneeded = Column(String(1), server_default=text("('N')"), nullable=False)
+    LOCtext = Column(String(collation='SQL_Latin1_General_CP1_CI_AS'))
+    MoveToGP = Column(String(1), server_default=text("('N')"))
+    DefaultPO = Column(String(75), server_default=text("('')"))
+    VisitBilling = Column(String(10), server_default=text("('')"))
+    PlantName = Column(String(100), server_default=text("('')"))
+    ShareAB = Column(String(1), server_default=text("('N')"))
+    POexpiry = Column(Date)
+    BillingName = Column(String(100))
+    PLANT_BILL_TO_NAME = Column(String(80), server_default=text("('')"))
+    AutoCertification = Column(Boolean, server_default=text("((0))"), nullable=False)
+    primaryCompany = Column(Integer)
+    Override = Column(Boolean, server_default=text("((0))"), nullable=False)
+    VisitPO = Column(String(75), server_default=text("('')"))
+    VisitPOexpiry = Column(DATETIME)
+    ValidFromTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'1900-01-01 00:00:00'))"), nullable=False)
+    ValidToTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'9999-12-31 23:59:59.9999999'))"), nullable=False)
+    CHANGESET_ID = Column(Integer, index=True)
+    BoilerplateInvoiceComment = Column(String(collation='SQL_Latin1_General_CP1_CI_AS'))
+    IsCertBillingOverride = Column(Boolean, server_default=text("((0))"), nullable=False)
+
+    # parent relationships (access parent)
+    COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("OWNSTBList"))
+    PLANT_TB : Mapped["PLANTTB"] = relationship(back_populates=("OWNSTBList"))
+    #PERSON_JOB_TB : Mapped["PERSONJOBTB"] = relationship(back_populates=("OWNSTBList"))
