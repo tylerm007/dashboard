@@ -14,7 +14,7 @@
   <o-row attr="row1" layout-align="start stretch">
     <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
       
-      <o-text-input #FlowId attr="FlowId" label=" Flow Id" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      <o-integer-input #FlowId attr="FlowId" label=" Flow Id" type="integer" editable="no" required="no" ></o-integer-input>
       
       <o-list-picker 
         attr="FromTaskId"
@@ -27,7 +27,7 @@
         enabled="yes" 
         filter="yes"
         value-column="TaskId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="TaskId" 
         columns="TaskId;FromTaskId;TaskName" 
         title="FromTask"
@@ -46,7 +46,7 @@
         enabled="yes" 
         filter="yes"
         value-column="TaskId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="TaskId" 
         columns="TaskId;ToTaskId;TaskName" 
         title="ToTask"

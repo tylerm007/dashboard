@@ -14,7 +14,7 @@
   <o-row attr="row1" layout-align="start stretch">
     <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
       
-      <o-text-input #TaskInstanceId attr="TaskInstanceId" label=" Task Instance Id" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      <o-integer-input #TaskInstanceId attr="TaskInstanceId" label=" Task Instance Id" type="integer" editable="no" required="no" ></o-integer-input>
       
       <o-list-picker 
         attr="InstanceId"
@@ -27,7 +27,7 @@
         enabled="yes" 
         filter="yes"
         value-column="InstanceId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="InstanceId" 
         columns="InstanceId;InstanceId;InstanceId" 
         title="Instance"
@@ -46,7 +46,7 @@
         enabled="yes" 
         filter="yes"
         value-column="TaskId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="TaskId" 
         columns="TaskId;TaskId;TaskName" 
         title="Task"
@@ -77,19 +77,19 @@
       
       <mat-tab-group fxFill>
         
-        <mat-tab label="COMMENT-TaskInstanceId">
+        <mat-tab label="TASKCOMMENT-TaskInstanceId">
     <div layout-padding>
       <o-table 
-        attr="CommentTable" 
-        service="Comment" 
-        entity="Comment" 
+        attr="TaskCommentTable" 
+        service="TaskComment" 
+        entity="TaskComment" 
         keys="CommentId"
         parent-keys="TaskInstanceId:TaskInstanceId"
-        columns="CommentId;InstanceId;TaskInstanceId;CommentType;CommentText;Author;CreatedDate;IsVisible"  
+        columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         horizontal-scroll="yes"
-        detail-form-route="Comment" 
-        edit-form-route="Comment"
-        visible-columns="CommentId;InstanceId;TaskInstanceId;CommentType;CommentText;Author;CreatedDate;IsVisible"  
+        detail-form-route="TaskComment" 
+        edit-form-route="TaskComment"
+        visible-columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         sort-columns="CommentId" 
         query-rows="25" 
         quick-filter="yes"
@@ -105,13 +105,27 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #CommentId attr="CommentId" title=" Comment Id" editable="no" required="yes" content-align="left"></o-table-column>
-        
-          <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
-        
-          <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column #CommentId attr="CommentId" title=" Comment Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
           <o-table-column #CommentType attr="CommentType" title="CommentType" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="InstanceId" title="Instance">
+    <o-table-cell-renderer-service attr="InstanceId" 
+        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
+        parent-keys="TaskInstanceId:InstanceId"
+        value-column="InstanceId" keys="InstanceId"
+        visible-columns="InstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="TaskInstanceId" title="TaskInstance">
+    <o-table-cell-renderer-service attr="TaskInstanceId" 
+        service="TaskInstance" entity="TaskInstanceType" columns="TaskInstanceId;TaskInstanceId"
+        parent-keys="TaskInstanceId:TaskInstanceId"
+        value-column="TaskInstanceId" keys="TaskInstanceId"
+        visible-columns="TaskInstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #CommentText attr="CommentText" title="CommentText" editable="no" required="yes" content-align="left"></o-table-column>
         
@@ -157,13 +171,34 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #ValidationResultId attr="ValidationResultId" title=" Validation Result Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #ValidationResultId attr="ValidationResultId" title=" Validation Result Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="InstanceId" title="Instance">
+    <o-table-cell-renderer-service attr="InstanceId" 
+        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
+        parent-keys="TaskInstanceId:InstanceId"
+        value-column="InstanceId" keys="InstanceId"
+        visible-columns="InstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
-          <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column attr="TaskInstanceId" title="TaskInstance">
+    <o-table-cell-renderer-service attr="TaskInstanceId" 
+        service="TaskInstance" entity="TaskInstanceType" columns="TaskInstanceId;TaskInstanceId"
+        parent-keys="TaskInstanceId:TaskInstanceId"
+        value-column="TaskInstanceId" keys="TaskInstanceId"
+        visible-columns="TaskInstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
-          <o-table-column #ValidationId attr="ValidationId" title="ValidationId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="ValidationId" title="Validation">
+    <o-table-cell-renderer-service attr="ValidationId" 
+        service="ValidationRule" entity="ValidationRuleType" columns="ValidationId;ValidationName"
+        parent-keys="TaskInstanceId:ValidationId"
+        value-column="ValidationName" keys="ValidationId"
+        visible-columns="ValidationName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #ValidationMessage attr="ValidationMessage" title="ValidationMessage" editable="no" required="no" content-align="left"></o-table-column>
         
@@ -209,11 +244,25 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #HistoryId attr="HistoryId" title=" History Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #HistoryId attr="HistoryId" title=" History Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="InstanceId" title="Instance">
+    <o-table-cell-renderer-service attr="InstanceId" 
+        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
+        parent-keys="TaskInstanceId:InstanceId"
+        value-column="InstanceId" keys="InstanceId"
+        visible-columns="InstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
-          <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column attr="TaskInstanceId" title="TaskInstance">
+    <o-table-cell-renderer-service attr="TaskInstanceId" 
+        service="TaskInstance" entity="TaskInstanceType" columns="TaskInstanceId;TaskInstanceId"
+        parent-keys="TaskInstanceId:TaskInstanceId"
+        value-column="TaskInstanceId" keys="TaskInstanceId"
+        visible-columns="TaskInstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Action attr="Action" title="Action" editable="no" required="yes" content-align="left"></o-table-column>
         

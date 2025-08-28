@@ -1,0 +1,53 @@
+<o-form-layout-manager attr="WFProduct" mode="tab" title="WFPRODUCT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="WFProductTable" 
+            service="WFProduct" 
+            entity="WFProduct" 
+            title="WFPRODUCT"
+            keys="ProductID"
+            columns="ProductID;ApplicationID;PlantID;ProductNumber;CreatedDate" 
+            header-actions="R;D"
+            visible-columns="ProductID;ApplicationID;PlantID;ProductNumber;CreatedDate"  
+            sort-columns="ProductID" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #ProductID attr="ProductID" title=" Product I D" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="ApplicationID" title="ApplicationID">
+    <o-table-cell-renderer-service attr="ApplicationID" 
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        parent-keys="ProductID:ApplicationID"
+        value-column="PrimaryContactName" keys="ApplicationID"
+        visible-columns="PrimaryContactName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="PlantID" title="PlantID">
+    <o-table-cell-renderer-service attr="PlantID" 
+        service="WFPlant" entity="WFPlantType" columns="PlantID;PlantID"
+        parent-keys="ProductID:PlantID"
+        value-column="PlantID" keys="PlantID"
+        visible-columns="PlantID" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #ProductNumber attr="ProductNumber" title="ProductNumber" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

@@ -6,7 +6,7 @@ after-insert-mode="new" class="standalone-form-container" >
 <o-row attr="row1" layout-align="start stretch">
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
     
-        <o-text-input #InstanceId attr="InstanceId" label=" Instance Id" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+        <o-integer-input #InstanceId attr="InstanceId" label=" Instance Id" type="integer" editable="no" required="no" ></o-integer-input>
       
         <o-list-picker 
         attr="CurrentTaskId"
@@ -19,7 +19,7 @@ after-insert-mode="new" class="standalone-form-container" >
         enabled="yes" 
         filter="yes"
         value-column="TaskId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="TaskId" 
         columns="TaskId;CurrentTaskId;TaskName" 
         title="CurrentTask"
@@ -29,8 +29,8 @@ after-insert-mode="new" class="standalone-form-container" >
       
         <o-list-picker 
         attr="Priority"
-        service="WFProcessPriority" 
-        entity="WFProcessPriorityType"
+        service="ProcessPriority" 
+        entity="ProcessPriorityType"
         fxFlex="30" 
         query-on-init="no" 
         query-on-bind="yes" 
@@ -57,7 +57,7 @@ after-insert-mode="new" class="standalone-form-container" >
         enabled="yes" 
         filter="yes"
         value-column="ProcessId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="ProcessId" 
         columns="ProcessId;ProcessId;ProcessName" 
         title="Process"
@@ -67,8 +67,8 @@ after-insert-mode="new" class="standalone-form-container" >
       
         <o-list-picker 
         attr="Status"
-        service="WFProcessStatus" 
-        entity="WFProcessStatusType"
+        service="ProcessStatus" 
+        entity="ProcessStatusType"
         fxFlex="30" 
         query-on-init="no" 
         query-on-bind="yes" 

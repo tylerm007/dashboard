@@ -2,11 +2,11 @@
     "tool_type": "json-api",
     "schema_version": "1.0",
     "base_url": "http://localhost:5656/api",
-    "description": "API Logic Project: dashboard",
+    "description": "API Logic Project: foo",
     "resources": [
         {
-            "name": "Comment",
-            "path": "/Comment",
+            "name": "LaneDefinition",
+            "path": "/LaneDefinition",
             "methods": [
                 "GET",
                 "PATCH",
@@ -14,24 +14,58 @@
                 "DELETE"
             ],
             "fields": [
-                "CommentId",
-                "InstanceId",
-                "TaskInstanceId",
-                "CommentType",
-                "CommentText",
-                "Author",
+                "LaneId",
+                "ProcessId",
+                "LaneName",
+                "LaneDescription",
+                "EstimatedDurationDays",
                 "CreatedDate",
-                "IsVisible"
+                "CreatedBy",
+                "ModifiedDate",
+                "ModifiedBy"
             ],
             "filterable": [
-                "CommentId",
-                "InstanceId",
-                "TaskInstanceId",
-                "CommentType",
-                "CommentText",
-                "Author",
+                "LaneId",
+                "ProcessId",
+                "LaneName",
+                "LaneDescription",
+                "EstimatedDurationDays",
                 "CreatedDate",
-                "IsVisible"
+                "CreatedBy",
+                "ModifiedDate",
+                "ModifiedBy"
+            ]
+        },
+        {
+            "name": "ProcessDefinition",
+            "path": "/ProcessDefinition",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "ProcessId",
+                "ProcessName",
+                "ProcessVersion",
+                "Description",
+                "IsActive",
+                "CreatedDate",
+                "CreatedBy",
+                "ModifiedDate",
+                "ModifiedBy"
+            ],
+            "filterable": [
+                "ProcessId",
+                "ProcessName",
+                "ProcessVersion",
+                "Description",
+                "IsActive",
+                "CreatedDate",
+                "CreatedBy",
+                "ModifiedDate",
+                "ModifiedBy"
             ]
         },
         {
@@ -68,352 +102,6 @@
                 "CompletedBy",
                 "Priority",
                 "ContextData"
-            ]
-        },
-        {
-            "name": "TaskInstance",
-            "path": "/TaskInstance",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "TaskInstanceId",
-                "InstanceId",
-                "TaskId",
-                "Status",
-                "AssignedTo",
-                "StartedDate",
-                "CompletedDate",
-                "DurationMinutes",
-                "Result",
-                "ResultData",
-                "ErrorMessage",
-                "RetryCount"
-            ],
-            "filterable": [
-                "TaskInstanceId",
-                "InstanceId",
-                "TaskId",
-                "Status",
-                "AssignedTo",
-                "StartedDate",
-                "CompletedDate",
-                "DurationMinutes",
-                "Result",
-                "ResultData",
-                "ErrorMessage",
-                "RetryCount"
-            ]
-        },
-        {
-            "name": "Company",
-            "path": "/Company",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "CompanyID",
-                "ApplicationID",
-                "KashrusCompanyID",
-                "CompanyName",
-                "Category",
-                "CurrentlyCertified",
-                "EverCertified",
-                "StreetAddress",
-                "AddressLine2",
-                "City",
-                "State",
-                "Country",
-                "ZipCode",
-                "Website",
-                "OwnBrand",
-                "CopackerDirectory",
-                "VeganCertification",
-                "PlantCount",
-                "CreatedDate",
-                "LastUpdatedDate"
-            ],
-            "filterable": [
-                "CompanyID",
-                "ApplicationID",
-                "KashrusCompanyID",
-                "CompanyName",
-                "Category",
-                "CurrentlyCertified",
-                "EverCertified",
-                "StreetAddress",
-                "AddressLine2",
-                "City",
-                "State",
-                "Country",
-                "ZipCode",
-                "Website",
-                "OwnBrand",
-                "CopackerDirectory",
-                "VeganCertification",
-                "PlantCount",
-                "CreatedDate",
-                "LastUpdatedDate"
-            ]
-        },
-        {
-            "name": "WFApplication",
-            "path": "/WFApplication",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "ApplicationID",
-                "ApplicationNumber",
-                "CompanyID",
-                "PlantID",
-                "SubmissionDate",
-                "Status",
-                "Priority",
-                "PrimaryContactName",
-                "Version",
-                "CreatedDate",
-                "LastUpdatedDate",
-                "LastStatusChangeDate",
-                "LastStatusChangedBy",
-                "WFDashboardID"
-            ],
-            "filterable": [
-                "ApplicationID",
-                "ApplicationNumber",
-                "CompanyID",
-                "PlantID",
-                "SubmissionDate",
-                "Status",
-                "Priority",
-                "PrimaryContactName",
-                "Version",
-                "CreatedDate",
-                "LastUpdatedDate",
-                "LastStatusChangeDate",
-                "LastStatusChangedBy",
-                "WFDashboardID"
-            ]
-        },
-        {
-            "name": "Contact",
-            "path": "/Contact",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "ContactID",
-                "ApplicationID",
-                "ContactType",
-                "FullName",
-                "JobTitle",
-                "Phone",
-                "Email",
-                "IsPrimary",
-                "Role",
-                "CreatedDate"
-            ],
-            "filterable": [
-                "ContactID",
-                "ApplicationID",
-                "ContactType",
-                "FullName",
-                "JobTitle",
-                "Phone",
-                "Email",
-                "IsPrimary",
-                "Role",
-                "CreatedDate"
-            ]
-        },
-        {
-            "name": "Ingredient",
-            "path": "/Ingredient",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "IngredientID",
-                "ApplicationID",
-                "NCRCIngredientID",
-                "Source",
-                "UKDID",
-                "RMC",
-                "IngredientName",
-                "Manufacturer",
-                "Brand",
-                "Packaging",
-                "CertificationAgency",
-                "AddedDate",
-                "AddedBy",
-                "Status",
-                "CreatedDate"
-            ],
-            "filterable": [
-                "IngredientID",
-                "ApplicationID",
-                "NCRCIngredientID",
-                "Source",
-                "UKDID",
-                "RMC",
-                "IngredientName",
-                "Manufacturer",
-                "Brand",
-                "Packaging",
-                "CertificationAgency",
-                "AddedDate",
-                "AddedBy",
-                "Status",
-                "CreatedDate"
-            ]
-        },
-        {
-            "name": "Message",
-            "path": "/Message",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "MessageId",
-                "InstanceId",
-                "FromUser",
-                "ToUser",
-                "ToRole",
-                "MessageType",
-                "Subject",
-                "MessageBody",
-                "SentDate",
-                "ReadDate",
-                "IsRead"
-            ],
-            "filterable": [
-                "MessageId",
-                "InstanceId",
-                "FromUser",
-                "ToUser",
-                "ToRole",
-                "MessageType",
-                "Subject",
-                "MessageBody",
-                "SentDate",
-                "ReadDate",
-                "IsRead"
-            ]
-        },
-        {
-            "name": "Plant",
-            "path": "/Plant",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "PlantID",
-                "ApplicationID",
-                "PlantNumber",
-                "PlantName",
-                "StreetAddress",
-                "AddressLine2",
-                "City",
-                "State",
-                "Country",
-                "Province",
-                "Region",
-                "ZipCode",
-                "ContactName",
-                "ContactTitle",
-                "ContactPhone",
-                "ContactEmail",
-                "ManufacturingProcess",
-                "ClosestMajorCity",
-                "HasOtherProducts",
-                "OtherProductsList",
-                "HasOtherPlants",
-                "OtherPlantsLocation",
-                "OperationalStatus",
-                "LastInspection",
-                "ComplianceStatus",
-                "CreatedDate"
-            ],
-            "filterable": [
-                "PlantID",
-                "ApplicationID",
-                "PlantNumber",
-                "PlantName",
-                "StreetAddress",
-                "AddressLine2",
-                "City",
-                "State",
-                "Country",
-                "Province",
-                "Region",
-                "ZipCode",
-                "ContactName",
-                "ContactTitle",
-                "ContactPhone",
-                "ContactEmail",
-                "ManufacturingProcess",
-                "ClosestMajorCity",
-                "HasOtherProducts",
-                "OtherProductsList",
-                "HasOtherPlants",
-                "OtherPlantsLocation",
-                "OperationalStatus",
-                "LastInspection",
-                "ComplianceStatus",
-                "CreatedDate"
-            ]
-        },
-        {
-            "name": "ProcessDefinition",
-            "path": "/ProcessDefinition",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "ProcessId",
-                "ProcessName",
-                "ProcessVersion",
-                "Description",
-                "IsActive",
-                "CreatedDate",
-                "CreatedBy",
-                "ModifiedDate",
-                "ModifiedBy"
-            ],
-            "filterable": [
-                "ProcessId",
-                "ProcessName",
-                "ProcessVersion",
-                "Description",
-                "IsActive",
-                "CreatedDate",
-                "CreatedBy",
-                "ModifiedDate",
-                "ModifiedBy"
             ]
         },
         {
@@ -457,8 +145,8 @@
             ]
         },
         {
-            "name": "WFProcessPriority",
-            "path": "/WFProcessPriority",
+            "name": "ProcessPriority",
+            "path": "/ProcessPriority",
             "methods": [
                 "GET",
                 "PATCH",
@@ -475,8 +163,8 @@
             ]
         },
         {
-            "name": "WFProcessStatus",
-            "path": "/WFProcessStatus",
+            "name": "ProcessStatus",
+            "path": "/ProcessStatus",
             "methods": [
                 "GET",
                 "PATCH",
@@ -493,8 +181,8 @@
             ]
         },
         {
-            "name": "Product",
-            "path": "/Product",
+            "name": "ProcessMessage",
+            "path": "/ProcessMessage",
             "methods": [
                 "GET",
                 "PATCH",
@@ -502,32 +190,108 @@
                 "DELETE"
             ],
             "fields": [
-                "ProductID",
-                "ApplicationID",
-                "Source",
-                "LabelName",
-                "BrandName",
-                "LabelCompany",
-                "ConsumerIndustrial",
-                "BulkShipped",
-                "CertificationSymbol",
-                "Status",
-                "Category",
-                "CreatedDate"
+                "MessageId",
+                "InstanceId",
+                "FromUser",
+                "ToUser",
+                "ToRole",
+                "MessageType",
+                "Subject",
+                "MessageBody",
+                "SentDate",
+                "ReadDate",
+                "IsRead"
             ],
             "filterable": [
-                "ProductID",
-                "ApplicationID",
-                "Source",
-                "LabelName",
-                "BrandName",
-                "LabelCompany",
-                "ConsumerIndustrial",
-                "BulkShipped",
-                "CertificationSymbol",
+                "MessageId",
+                "InstanceId",
+                "FromUser",
+                "ToUser",
+                "ToRole",
+                "MessageType",
+                "Subject",
+                "MessageBody",
+                "SentDate",
+                "ReadDate",
+                "IsRead"
+            ]
+        },
+        {
+            "name": "ProcessMessageType",
+            "path": "/ProcessMessageType",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "MessageTypeCode",
+                "MessageTypeDescription"
+            ],
+            "filterable": [
+                "MessageTypeCode",
+                "MessageTypeDescription"
+            ]
+        },
+        {
+            "name": "StageInstance",
+            "path": "/StageInstance",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "StageInstanceId",
+                "ProcessInstanceId",
+                "LaneId",
                 "Status",
-                "Category",
-                "CreatedDate"
+                "StartedDate",
+                "CompletedDate",
+                "DurationDays",
+                "RetryCount",
+                "CompletedCount",
+                "TotalCount",
+                "CreatedDate",
+                "CreatedBy",
+                "ModifiedDate",
+                "ModifiedBy"
+            ],
+            "filterable": [
+                "StageInstanceId",
+                "ProcessInstanceId",
+                "LaneId",
+                "Status",
+                "StartedDate",
+                "CompletedDate",
+                "DurationDays",
+                "RetryCount",
+                "CompletedCount",
+                "TotalCount",
+                "CreatedDate",
+                "CreatedBy",
+                "ModifiedDate",
+                "ModifiedBy"
+            ]
+        },
+        {
+            "name": "StageStatus",
+            "path": "/StageStatus",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "StatusCode",
+                "StatusDescription"
+            ],
+            "filterable": [
+                "StatusCode",
+                "StatusDescription"
             ]
         },
         {
@@ -555,6 +319,92 @@
             ]
         },
         {
+            "name": "TaskComment",
+            "path": "/TaskComment",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "CommentId",
+                "InstanceId",
+                "TaskInstanceId",
+                "CommentType",
+                "CommentText",
+                "Author",
+                "CreatedDate",
+                "IsVisible"
+            ],
+            "filterable": [
+                "CommentId",
+                "InstanceId",
+                "TaskInstanceId",
+                "CommentType",
+                "CommentText",
+                "Author",
+                "CreatedDate",
+                "IsVisible"
+            ]
+        },
+        {
+            "name": "TaskCommentType",
+            "path": "/TaskCommentType",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "CommentTypeCode",
+                "CommentTypeDescription"
+            ],
+            "filterable": [
+                "CommentTypeCode",
+                "CommentTypeDescription"
+            ]
+        },
+        {
+            "name": "TaskInstance",
+            "path": "/TaskInstance",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "TaskInstanceId",
+                "InstanceId",
+                "TaskId",
+                "Status",
+                "AssignedTo",
+                "StartedDate",
+                "CompletedDate",
+                "DurationMinutes",
+                "Result",
+                "ResultData",
+                "ErrorMessage",
+                "RetryCount"
+            ],
+            "filterable": [
+                "TaskInstanceId",
+                "InstanceId",
+                "TaskId",
+                "Status",
+                "AssignedTo",
+                "StartedDate",
+                "CompletedDate",
+                "DurationMinutes",
+                "Result",
+                "ResultData",
+                "ErrorMessage",
+                "RetryCount"
+            ]
+        },
+        {
             "name": "TaskFlow",
             "path": "/TaskFlow",
             "methods": [
@@ -576,32 +426,6 @@
                 "ToTaskId",
                 "Condition",
                 "IsDefault"
-            ]
-        },
-        {
-            "name": "ValidationCheck",
-            "path": "/ValidationCheck",
-            "methods": [
-                "GET",
-                "PATCH",
-                "POST",
-                "DELETE"
-            ],
-            "fields": [
-                "ValidationID",
-                "ApplicationID",
-                "CheckType",
-                "IsValid",
-                "ValidationMessage",
-                "LastCheckedDate"
-            ],
-            "filterable": [
-                "ValidationID",
-                "ApplicationID",
-                "CheckType",
-                "IsValid",
-                "ValidationMessage",
-                "LastCheckedDate"
             ]
         },
         {
@@ -697,6 +521,48 @@
             ]
         },
         {
+            "name": "WFApplication",
+            "path": "/WFApplication",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "ApplicationID",
+                "ApplicationNumber",
+                "CompanyID",
+                "PlantID",
+                "SubmissionDate",
+                "Status",
+                "Priority",
+                "PrimaryContactName",
+                "Version",
+                "CreatedDate",
+                "LastUpdatedDate",
+                "LastStatusChangeDate",
+                "LastStatusChangedBy",
+                "WFDashboardID"
+            ],
+            "filterable": [
+                "ApplicationID",
+                "ApplicationNumber",
+                "CompanyID",
+                "PlantID",
+                "SubmissionDate",
+                "Status",
+                "Priority",
+                "PrimaryContactName",
+                "Version",
+                "CreatedDate",
+                "LastUpdatedDate",
+                "LastStatusChangeDate",
+                "LastStatusChangedBy",
+                "WFDashboardID"
+            ]
+        },
+        {
             "name": "WFActivityStatus",
             "path": "/WFActivityStatus",
             "methods": [
@@ -779,8 +645,8 @@
             ]
         },
         {
-            "name": "WFComment",
-            "path": "/WFComment",
+            "name": "WFApplicationComment",
+            "path": "/WFApplicationComment",
             "methods": [
                 "GET",
                 "PATCH",
@@ -803,6 +669,78 @@
                 "CommentText",
                 "CommentType",
                 "Category",
+                "CreatedDate"
+            ]
+        },
+        {
+            "name": "WFApplicationMessage",
+            "path": "/WFApplicationMessage",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "MessageID",
+                "ApplicationID",
+                "FromUser",
+                "ToUser",
+                "MessageText",
+                "MessageType",
+                "Priority",
+                "SentDate"
+            ],
+            "filterable": [
+                "MessageID",
+                "ApplicationID",
+                "FromUser",
+                "ToUser",
+                "MessageText",
+                "MessageType",
+                "Priority",
+                "SentDate"
+            ]
+        },
+        {
+            "name": "WFCompany",
+            "path": "/WFCompany",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "CompanyID",
+                "ApplicationID",
+                "KashrusCompanyID",
+                "CreatedDate"
+            ],
+            "filterable": [
+                "CompanyID",
+                "ApplicationID",
+                "KashrusCompanyID",
+                "CreatedDate"
+            ]
+        },
+        {
+            "name": "WFContact",
+            "path": "/WFContact",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "ContactID",
+                "ApplicationID",
+                "CreatedDate"
+            ],
+            "filterable": [
+                "ContactID",
+                "ApplicationID",
                 "CreatedDate"
             ]
         },
@@ -861,8 +799,8 @@
             ]
         },
         {
-            "name": "WFMessage",
-            "path": "/WFMessage",
+            "name": "WFIngredient",
+            "path": "/WFIngredient",
             "methods": [
                 "GET",
                 "PATCH",
@@ -870,24 +808,62 @@
                 "DELETE"
             ],
             "fields": [
-                "MessageID",
+                "IngredientID",
                 "ApplicationID",
-                "FromUser",
-                "ToUser",
-                "MessageText",
-                "MessageType",
-                "Priority",
-                "SentDate"
+                "ProductID",
+                "NCRCIngredientID"
             ],
             "filterable": [
-                "MessageID",
+                "IngredientID",
                 "ApplicationID",
-                "FromUser",
-                "ToUser",
-                "MessageText",
-                "MessageType",
-                "Priority",
-                "SentDate"
+                "ProductID",
+                "NCRCIngredientID"
+            ]
+        },
+        {
+            "name": "WFProduct",
+            "path": "/WFProduct",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "ProductID",
+                "ApplicationID",
+                "PlantID",
+                "ProductNumber",
+                "CreatedDate"
+            ],
+            "filterable": [
+                "ProductID",
+                "ApplicationID",
+                "PlantID",
+                "ProductNumber",
+                "CreatedDate"
+            ]
+        },
+        {
+            "name": "WFPlant",
+            "path": "/WFPlant",
+            "methods": [
+                "GET",
+                "PATCH",
+                "POST",
+                "DELETE"
+            ],
+            "fields": [
+                "PlantID",
+                "ApplicationID",
+                "PlantNumber",
+                "CreatedDate"
+            ],
+            "filterable": [
+                "PlantID",
+                "ApplicationID",
+                "PlantNumber",
+                "CreatedDate"
             ]
         },
         {

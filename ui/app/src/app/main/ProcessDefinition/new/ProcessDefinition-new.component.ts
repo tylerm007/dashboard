@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class ProcessDefinitionNewComponent {
   @ViewChild("ProcessDefinitionForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'ProcessVersion': "('1.0')", 'CreatedDate': '(getutcdate())', 'ProcessId': '(newid())'}
+    const default_values = {'ProcessVersion': "('1.0')", 'CreatedDate': '(getutcdate())', 'ProcessId': '0'}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

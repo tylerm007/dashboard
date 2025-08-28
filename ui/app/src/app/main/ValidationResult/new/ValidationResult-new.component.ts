@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class ValidationResultNewComponent {
   @ViewChild("ValidationResultForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'ValidationResultId': '(newid())', 'ValidationDate': '(getutcdate())'}
+    const default_values = {'ValidationResultId': '0', 'ValidationDate': '(getutcdate())'}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

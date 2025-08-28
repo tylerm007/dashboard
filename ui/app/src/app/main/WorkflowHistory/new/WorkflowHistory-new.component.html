@@ -6,7 +6,7 @@ after-insert-mode="new" class="standalone-form-container" >
 <o-row attr="row1" layout-align="start stretch">
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
     
-        <o-text-input #HistoryId attr="HistoryId" label=" History Id" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+        <o-integer-input #HistoryId attr="HistoryId" label=" History Id" type="integer" editable="no" required="no" ></o-integer-input>
       
         <o-list-picker 
         attr="InstanceId"
@@ -19,7 +19,7 @@ after-insert-mode="new" class="standalone-form-container" >
         enabled="yes" 
         filter="yes"
         value-column="InstanceId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="InstanceId" 
         columns="InstanceId;InstanceId;InstanceId" 
         title="Instance"
@@ -38,7 +38,7 @@ after-insert-mode="new" class="standalone-form-container" >
         enabled="yes" 
         filter="yes"
         value-column="TaskInstanceId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="TaskInstanceId" 
         columns="TaskInstanceId;TaskInstanceId;TaskInstanceId" 
         title="TaskInstance"

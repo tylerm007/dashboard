@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class ProcessInstanceNewComponent {
   @ViewChild("ProcessInstanceForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'InstanceId': '(newid())', 'Priority': "('NORMAL')", 'Status': "('NEW')", 'StartedDate': '(getutcdate())'}
+    const default_values = {'InstanceId': '0', 'Priority': "('NORMAL')", 'Status': "('NEW')", 'StartedDate': '(getutcdate())'}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

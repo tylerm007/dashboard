@@ -2,15 +2,28 @@
 // Or, https://databasediagram.com/app
 // Or, view in VSCode with extension: "DBML Live Preview"
 
-Table Comment {
-    CommentId CHAR(32) [primary key]
-    InstanceId CHAR(32) 
-    TaskInstanceId CHAR(32) 
-    CommentType VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CommentText VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Author VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+Table LaneDefinition {
+    LaneId CHAR(32) [primary key]
+    ProcessId CHAR(32) 
+    LaneName VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    LaneDescription VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    EstimatedDurationDays INTEGER 
     CreatedDate DATETIME2 
-    IsVisible BOOLEAN 
+    CreatedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ModifiedDate DATETIME2 
+    ModifiedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    }
+
+Table ProcessDefinition {
+    ProcessId CHAR(32) [primary key]
+    ProcessName VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ProcessVersion VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    Description VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    IsActive BOOLEAN 
+    CreatedDate DATETIME2 
+    CreatedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ModifiedDate DATETIME2 
+    ModifiedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
 Table ProcessInstance {
@@ -25,147 +38,6 @@ Table ProcessInstance {
     CompletedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     Priority VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     ContextData VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    }
-
-Table TaskInstance {
-    TaskInstanceId CHAR(32) [primary key]
-    InstanceId CHAR(32) 
-    TaskId CHAR(32) 
-    Status VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    AssignedTo VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    StartedDate DATETIME2 
-    CompletedDate DATETIME2 
-    DurationMinutes INTEGER 
-    Result VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ResultData VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ErrorMessage VARCHAR(1000) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    RetryCount INTEGER 
-    }
-
-Table Company {
-    CompanyID INTEGER [primary key]
-    ApplicationID INTEGER 
-    KashrusCompanyID VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CompanyName VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Category VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CurrentlyCertified BOOLEAN 
-    EverCertified BOOLEAN 
-    StreetAddress VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    AddressLine2 VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    City VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    State VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Country VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ZipCode VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Website VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    OwnBrand BOOLEAN 
-    CopackerDirectory BOOLEAN 
-    VeganCertification BOOLEAN 
-    PlantCount INTEGER 
-    CreatedDate DATETIME2 
-    LastUpdatedDate DATETIME2 
-    }
-
-Table WFApplication {
-    ApplicationID INTEGER [primary key]
-    ApplicationNumber VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CompanyID INTEGER 
-    PlantID INTEGER 
-    SubmissionDate DATE 
-    Status VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Priority VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    PrimaryContactName VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Version VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CreatedDate DATETIME2 
-    LastUpdatedDate DATETIME2 
-    LastStatusChangeDate DATETIME2 
-    LastStatusChangedBy VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    WFDashboardID INTEGER 
-    }
-
-Table Contact {
-    ContactID INTEGER [primary key]
-    ApplicationID INTEGER 
-    ContactType VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    FullName VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    JobTitle VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Phone VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Email VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    IsPrimary BOOLEAN 
-    Role VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CreatedDate DATETIME2 
-    }
-
-Table Ingredient {
-    IngredientID INTEGER [primary key]
-    ApplicationID INTEGER 
-    NCRCIngredientID VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Source VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    UKDID VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    RMC VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    IngredientName VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Manufacturer VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Brand VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Packaging VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CertificationAgency VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    AddedDate DATE 
-    AddedBy VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Status VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CreatedDate DATETIME2 
-    }
-
-Table Message {
-    MessageId CHAR(32) [primary key]
-    InstanceId CHAR(32) 
-    FromUser VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ToUser VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ToRole VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    MessageType VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Subject VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    MessageBody VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    SentDate DATETIME2 
-    ReadDate DATETIME2 
-    IsRead BOOLEAN 
-    }
-
-Table Plant {
-    PlantID INTEGER [primary key]
-    ApplicationID INTEGER 
-    PlantNumber VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    PlantName VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    StreetAddress VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    AddressLine2 VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    City VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    State VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Country VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Province VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Region VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ZipCode VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ContactName VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ContactTitle VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ContactPhone VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ContactEmail VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ManufacturingProcess VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ClosestMajorCity VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    HasOtherProducts BOOLEAN 
-    OtherProductsList VARCHAR(1000) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    HasOtherPlants BOOLEAN 
-    OtherPlantsLocation VARCHAR(1000) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    OperationalStatus VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    LastInspection VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ComplianceStatus VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CreatedDate DATETIME2 
-    }
-
-Table ProcessDefinition {
-    ProcessId CHAR(32) [primary key]
-    ProcessName VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ProcessVersion VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Description VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    IsActive BOOLEAN 
-    CreatedDate DATETIME2 
-    CreatedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ModifiedDate DATETIME2 
-    ModifiedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
 Table TaskDefinition {
@@ -184,29 +56,55 @@ Table TaskDefinition {
     ConfigurationJson VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
-Table WFProcessPriority {
+Table ProcessPriority {
     PriorityCode VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" [primary key]
     PriorityDescription VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
-Table WFProcessStatus {
+Table ProcessStatus {
     StatusCode VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" [primary key]
     StatusDescription VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
-Table Product {
-    ProductID INTEGER [primary key]
-    ApplicationID INTEGER 
-    Source VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    LabelName VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    BrandName VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    LabelCompany VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ConsumerIndustrial NCHAR(1) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    BulkShipped NCHAR(1) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    CertificationSymbol VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Status VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Category VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+Table ProcessMessage {
+    MessageId CHAR(32) [primary key]
+    InstanceId CHAR(32) 
+    FromUser VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ToUser VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ToRole VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    MessageType VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    Subject VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    MessageBody VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    SentDate DATETIME2 
+    ReadDate DATETIME2 
+    IsRead BOOLEAN 
+    }
+
+Table ProcessMessageType {
+    MessageTypeCode VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" [primary key]
+    MessageTypeDescription VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    }
+
+Table StageInstance {
+    StageInstanceId CHAR(32) [primary key]
+    ProcessInstanceId CHAR(32) 
+    LaneId CHAR(32) 
+    Status VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    StartedDate DATETIME2 
+    CompletedDate DATETIME2 
+    DurationDays INTEGER 
+    RetryCount INTEGER 
+    CompletedCount INTEGER 
+    TotalCount INTEGER 
     CreatedDate DATETIME2 
+    CreatedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ModifiedDate DATETIME2 
+    ModifiedBy VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    }
+
+Table StageStatus {
+    StatusCode VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" [primary key]
+    StatusDescription VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
 Table Sysdiagram {
@@ -217,21 +115,43 @@ Table Sysdiagram {
     definition BLOB 
     }
 
+Table TaskComment {
+    CommentId CHAR(32) [primary key]
+    InstanceId CHAR(32) 
+    TaskInstanceId CHAR(32) 
+    CommentType VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CommentText VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    Author VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CreatedDate DATETIME2 
+    IsVisible BOOLEAN 
+    }
+
+Table TaskCommentType {
+    CommentTypeCode VARCHAR(10) COLLATE "SQL_Latin1_General_CP1_CI_AS" [primary key]
+    CommentTypeDescription VARCHAR(255) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    }
+
+Table TaskInstance {
+    TaskInstanceId CHAR(32) [primary key]
+    InstanceId CHAR(32) 
+    TaskId CHAR(32) 
+    Status VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    AssignedTo VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    StartedDate DATETIME2 
+    CompletedDate DATETIME2 
+    DurationMinutes INTEGER 
+    Result VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ResultData VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ErrorMessage VARCHAR(1000) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    RetryCount INTEGER 
+    }
+
 Table TaskFlow {
     FlowId CHAR(32) [primary key]
     FromTaskId CHAR(32) 
     ToTaskId CHAR(32) 
     Condition VARCHAR(500) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     IsDefault BOOLEAN 
-    }
-
-Table ValidationCheck {
-    ValidationID INTEGER [primary key]
-    ApplicationID INTEGER 
-    CheckType VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    IsValid BOOLEAN 
-    ValidationMessage VARCHAR(1000) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    LastCheckedDate DATETIME2 
     }
 
 Table ValidationResult {
@@ -268,6 +188,23 @@ Table WFActivityLog {
     ActivityDate DATETIME2 
     }
 
+Table WFApplication {
+    ApplicationID INTEGER [primary key]
+    ApplicationNumber VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CompanyID INTEGER 
+    PlantID INTEGER 
+    SubmissionDate DATE 
+    Status VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    Priority VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    PrimaryContactName VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    Version VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CreatedDate DATETIME2 
+    LastUpdatedDate DATETIME2 
+    LastStatusChangeDate DATETIME2 
+    LastStatusChangedBy VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    WFDashboardID INTEGER 
+    }
+
 Table WFActivityStatus {
     StatusCode VARCHAR(5) COLLATE "SQL_Latin1_General_CP1_CI_AS" [primary key]
     StatusDesc VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
@@ -293,13 +230,37 @@ Table WFDashboard {
     total_count INTEGER 
     }
 
-Table WFComment {
+Table WFApplicationComment {
     CommentID INTEGER [primary key]
     ApplicationID INTEGER 
     Author VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     CommentText VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     CommentType VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     Category VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CreatedDate DATETIME2 
+    }
+
+Table WFApplicationMessage {
+    MessageID INTEGER [primary key]
+    ApplicationID INTEGER 
+    FromUser VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    ToUser VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    MessageText VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    MessageType VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    Priority VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    SentDate DATETIME2 
+    }
+
+Table WFCompany {
+    CompanyID INTEGER [primary key]
+    ApplicationID INTEGER 
+    KashrusCompanyID VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CreatedDate DATETIME2 
+    }
+
+Table WFContact {
+    ContactID INTEGER [primary key]
+    ApplicationID INTEGER 
     CreatedDate DATETIME2 
     }
 
@@ -322,15 +283,26 @@ Table WFFileType {
     FileTypeName VARCHAR(100) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
     }
 
-Table WFMessage {
-    MessageID INTEGER [primary key]
+Table WFIngredient {
+    IngredientID INTEGER [primary key]
     ApplicationID INTEGER 
-    FromUser VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    ToUser VARCHAR(200) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    MessageText VARCHAR COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    MessageType VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    Priority VARCHAR(20) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
-    SentDate DATETIME2 
+    ProductID INTEGER 
+    NCRCIngredientID VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    }
+
+Table WFProduct {
+    ProductID INTEGER [primary key]
+    ApplicationID INTEGER 
+    PlantID INTEGER 
+    ProductNumber VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CreatedDate DATETIME2 
+    }
+
+Table WFPlant {
+    PlantID INTEGER [primary key]
+    ApplicationID INTEGER 
+    PlantNumber VARCHAR(50) COLLATE "SQL_Latin1_General_CP1_CI_AS" 
+    CreatedDate DATETIME2 
     }
 
 Table WFQuote {
@@ -390,36 +362,43 @@ Table WorkflowHistory {
 
 
 // Relationships
-    Ref: Comment.(InstanceId) < ProcessInstance.(InstanceId)
-    Ref: Comment.(TaskInstanceId) < TaskInstance.(TaskInstanceId)
+    Ref: LaneDefinition.(ProcessId) < ProcessDefinition.(ProcessId)
     Ref: ProcessInstance.(CurrentTaskId) < TaskDefinition.(TaskId)
-    Ref: ProcessInstance.(Priority) < WFProcessPriority.(PriorityCode)
+    Ref: ProcessInstance.(Priority) < ProcessPriority.(PriorityCode)
     Ref: ProcessInstance.(ProcessId) < ProcessDefinition.(ProcessId)
-    Ref: ProcessInstance.(Status) < WFProcessStatus.(StatusCode)
+    Ref: ProcessInstance.(Status) < ProcessStatus.(StatusCode)
+    Ref: TaskDefinition.(ProcessId) < ProcessDefinition.(ProcessId)
+    Ref: ProcessMessage.(InstanceId) < ProcessInstance.(InstanceId)
+    Ref: ProcessMessage.(MessageType) < ProcessMessageType.(MessageTypeCode)
+    Ref: StageInstance.(LaneId) < LaneDefinition.(LaneId)
+    Ref: StageInstance.(ProcessInstanceId) < ProcessInstance.(InstanceId)
+    Ref: StageInstance.(Status) < StageStatus.(StatusCode)
+    Ref: TaskComment.(CommentType) < TaskCommentType.(CommentTypeCode)
+    Ref: TaskComment.(InstanceId) < ProcessInstance.(InstanceId)
+    Ref: TaskComment.(TaskInstanceId) < TaskInstance.(TaskInstanceId)
     Ref: TaskInstance.(InstanceId) < ProcessInstance.(InstanceId)
     Ref: TaskInstance.(TaskId) < TaskDefinition.(TaskId)
-    Ref: Company.(ApplicationID) < WFApplication.(ApplicationID)
-    Ref: WFApplication.(Priority) < WFPriority.(PriorityCode)
-    Ref: WFApplication.(Status) < WFApplicationStatus.(StatusCode)
-    Ref: WFApplication.(WFDashboardID) < WFDashboard.(ID)
-    Ref: Contact.(ApplicationID) < WFApplication.(ApplicationID)
-    Ref: Ingredient.(ApplicationID) < WFApplication.(ApplicationID)
-    Ref: Message.(InstanceId) < ProcessInstance.(InstanceId)
-    Ref: Plant.(ApplicationID) < WFApplication.(ApplicationID)
-    Ref: TaskDefinition.(ProcessId) < ProcessDefinition.(ProcessId)
-    Ref: Product.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: TaskFlow.(FromTaskId) < TaskDefinition.(TaskId)
     Ref: TaskFlow.(ToTaskId) < TaskDefinition.(TaskId)
-    Ref: ValidationCheck.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: ValidationResult.(InstanceId) < ProcessInstance.(InstanceId)
     Ref: ValidationResult.(TaskInstanceId) < TaskInstance.(TaskInstanceId)
     Ref: ValidationResult.(ValidationId) < ValidationRule.(ValidationId)
     Ref: WFActivityLog.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: WFActivityLog.(Status) < WFActivityStatus.(StatusCode)
-    Ref: WFComment.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFApplication.(Priority) < WFPriority.(PriorityCode)
+    Ref: WFApplication.(Status) < WFApplicationStatus.(StatusCode)
+    Ref: WFApplication.(WFDashboardID) < WFDashboard.(ID)
+    Ref: WFApplicationComment.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFApplicationMessage.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFCompany.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFContact.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: WFFile.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: WFFile.(FileType) < WFFileType.(FileType)
-    Ref: WFMessage.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFIngredient.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFIngredient.(ProductID) < WFProduct.(ProductID)
+    Ref: WFProduct.(ApplicationID) < WFApplication.(ApplicationID)
+    Ref: WFProduct.(PlantID) < WFPlant.(PlantID)
+    Ref: WFPlant.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: WFQuote.(ApplicationID) < WFApplication.(ApplicationID)
     Ref: WFQuote.(Status) < WFQuoteStatus.(StatusCode)
     Ref: WFQuoteItem.(QuoteID) < WFQuote.(QuoteID)

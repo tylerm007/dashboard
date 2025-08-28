@@ -14,17 +14,24 @@ const routes: Routes = [
       }
     }
   },{
-    path: ':InstanceId/Comment', loadChildren: () => import('../Comment/Comment.module').then(m => m.CommentModule),
+    path: ':InstanceId/ProcessMessage', loadChildren: () => import('../ProcessMessage/ProcessMessage.module').then(m => m.ProcessMessageModule),
     data: {
         oPermission: {
-            permissionId: 'Comment-detail-permissions'
+            permissionId: 'ProcessMessage-detail-permissions'
         }
     }
 },{
-    path: ':InstanceId/Message', loadChildren: () => import('../Message/Message.module').then(m => m.MessageModule),
+    path: ':ProcessInstanceId/StageInstance', loadChildren: () => import('../StageInstance/StageInstance.module').then(m => m.StageInstanceModule),
     data: {
         oPermission: {
-            permissionId: 'Message-detail-permissions'
+            permissionId: 'StageInstance-detail-permissions'
+        }
+    }
+},{
+    path: ':InstanceId/TaskComment', loadChildren: () => import('../TaskComment/TaskComment.module').then(m => m.TaskCommentModule),
+    data: {
+        oPermission: {
+            permissionId: 'TaskComment-detail-permissions'
         }
     }
 },{

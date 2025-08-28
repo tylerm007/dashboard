@@ -22,11 +22,25 @@
             show-title="yes"
             export-button="yes">
             
-            <o-table-column #HistoryId attr="HistoryId" title=" History Id" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column #HistoryId attr="HistoryId" title=" History Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
             
-            <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column attr="InstanceId" title="Instance">
+    <o-table-cell-renderer-service attr="InstanceId" 
+        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
+        parent-keys="HistoryId:InstanceId"
+        value-column="InstanceId" keys="InstanceId"
+        visible-columns="InstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
             
-            <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+            <o-table-column attr="TaskInstanceId" title="TaskInstance">
+    <o-table-cell-renderer-service attr="TaskInstanceId" 
+        service="TaskInstance" entity="TaskInstanceType" columns="TaskInstanceId;TaskInstanceId"
+        parent-keys="HistoryId:TaskInstanceId"
+        value-column="TaskInstanceId" keys="TaskInstanceId"
+        visible-columns="TaskInstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
             
             <o-table-column #Action attr="Action" title="Action" editable="no" required="yes" content-align="left"></o-table-column>
             

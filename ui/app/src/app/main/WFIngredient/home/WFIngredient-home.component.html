@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="WFIngredient" mode="tab" title="WFINGREDIENT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="WFIngredientTable" 
+            service="WFIngredient" 
+            entity="WFIngredient" 
+            title="WFINGREDIENT"
+            keys="IngredientID"
+            columns="IngredientID;ApplicationID;ProductID;NCRCIngredientID" 
+            header-actions="R;D"
+            visible-columns="IngredientID;ApplicationID;ProductID;NCRCIngredientID"  
+            sort-columns="IngredientID" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #IngredientID attr="IngredientID" title=" Ingredient I D" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="ApplicationID" title="ApplicationID">
+    <o-table-cell-renderer-service attr="ApplicationID" 
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        parent-keys="IngredientID:ApplicationID"
+        value-column="PrimaryContactName" keys="ApplicationID"
+        visible-columns="PrimaryContactName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="ProductID" title="ProductID">
+    <o-table-cell-renderer-service attr="ProductID" 
+        service="WFProduct" entity="WFProductType" columns="ProductID;ProductID"
+        parent-keys="IngredientID:ProductID"
+        value-column="ProductID" keys="ProductID"
+        visible-columns="ProductID" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #NCRCIngredientID attr="NCRCIngredientID" title="NCRCIngredientID" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

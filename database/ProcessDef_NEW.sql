@@ -47,6 +47,8 @@ IF OBJECT_ID('TaskInstances', 'U') IS NOT NULL DROP TABLE TaskInstances;
 IF OBJECT_ID('ProcessInstances', 'U') IS NOT NULL DROP TABLE ProcessInstances;
 IF OBJECT_ID('TaskFlow', 'U') IS NOT NULL DROP TABLE TaskFlow;
 IF OBJECT_ID('TaskDefinitions', 'U') IS NOT NULL DROP TABLE TaskDefinitions;
+IF OBJECT_ID('TaskCategories', 'U') IS NOT NULL DROP TABLE TaskCategories;
+IF OBJECT_ID('TaskTypes', 'U') IS NOT NULL DROP TABLE TaskTypes;
 IF OBJECT_ID('LaneDefinitions', 'U') IS NOT NULL DROP TABLE LaneDefinitions;
 
 -- Drop parent tables (tables with primary keys referenced by others)
@@ -61,7 +63,7 @@ IF OBJECT_ID('ProcessPriorities', 'U') IS NOT NULL DROP TABLE IF EXISTS ProcessP
 PRINT 'All tables, views, procedures, functions, and triggers dropped successfully.';
 -- Workflow Process Definitions
 CREATE TABLE ProcessDefinitions (
-    ProcessId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    ProcessId INT IDENTITY(1,1) PRIMARY KEY,
     ProcessName NVARCHAR(100) NOT NULL,
     ProcessVersion NVARCHAR(10) NOT NULL DEFAULT '1.0',
     Description NVARCHAR(500),
@@ -73,8 +75,8 @@ CREATE TABLE ProcessDefinitions (
 );
 
 CREATE TABLE LaneDefinitions(
-	LaneId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	ProcessId uniqueidentifier NOT NULL,
+	LaneId INT IDENTITY(1,1) PRIMARY KEY,
+	ProcessId INT NOT NULL,
 	LaneName nvarchar(100) NOT NULL,
 	LaneDescription nvarchar(500) NULL,
 	EstimatedDurationDays int NULL,
@@ -85,14 +87,37 @@ CREATE TABLE LaneDefinitions(
     FOREIGN KEY (ProcessId) REFERENCES ProcessDefinitions(ProcessId)
 );
 
+CREATE TABLE TaskTypes (
+    TaskTypeCode NVARCHAR(20) NOT NULL PRIMARY KEY,
+    TaskTypeDescription NVARCHAR(255) NOT NULL
+);
+INSERT INTO TaskTypes (TaskTypeCode, TaskTypeDescription) VALUES
+('UserTask', 'Task performed by a user'),
+('ServiceTask', 'Automated service task'),
+('ScriptTask', 'Script execution task'),
+('Gateway', 'Decision point in the workflow'),
+('Event', 'Start or end event');
+
+CREATE TABLE TaskCategories (
+    TaskCategoryCode NVARCHAR(20) NOT NULL PRIMARY KEY,
+    TaskCategoryDescription NVARCHAR(255) NOT NULL
+);  
+
+INSERT INTO TaskCategories (TaskCategoryCode, TaskCategoryDescription) VALUES
+('Validation', 'Data validation task'),
+('Action', 'Action task'),
+('Decision', 'Decision gateway'),
+('Notification', 'Notification task');
+
 -- Task Definitions within Processes
 CREATE TABLE TaskDefinitions (
-    TaskId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    ProcessId UNIQUEIDENTIFIER NOT NULL,
+    TaskId INT IDENTITY(1,1) PRIMARY KEY,
+    ProcessId INT NOT NULL,
     TaskName NVARCHAR(100) NOT NULL,
-    TaskType NVARCHAR(50) NOT NULL, -- 'UserTask', 'ServiceTask', 'ScriptTask', 'Gateway', 'Event'
-    TaskCategory NVARCHAR(50), -- 'Validation', 'Action', 'Decision', 'Notification'
+    TaskType NVARCHAR(20) NOT NULL, -- 'UserTask', 'ServiceTask', 'ScriptTask', 'Gateway', 'Event'
+    TaskCategory NVARCHAR(20), -- 'Validation', 'Action', 'Decision', 'Notification'
     Sequence INT NOT NULL,
+    LaneId INT NOT NULL,
     IsParallel BIT NOT NULL DEFAULT 0,
     AssigneeRole NVARCHAR(50),
     EstimatedDurationMinutes INT,
@@ -100,14 +125,17 @@ CREATE TABLE TaskDefinitions (
     AutoComplete BIT NOT NULL DEFAULT 0,
     Description NVARCHAR(500),
     ConfigurationJson NVARCHAR(MAX), -- JSON configuration for task-specific settings
+    FOREIGN KEY (TaskCategory) REFERENCES TaskCategories(TaskCategoryCode),
+    FOREIGN KEY (TaskType) REFERENCES TaskTypes(TaskTypeCode),
+    FOREIGN KEY (LaneId) REFERENCES LaneDefinitions(LaneId),
     FOREIGN KEY (ProcessId) REFERENCES ProcessDefinitions(ProcessId)
 );
 
 -- Task Dependencies and Flow
 CREATE TABLE TaskFlow (
-    FlowId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    FromTaskId UNIQUEIDENTIFIER,
-    ToTaskId UNIQUEIDENTIFIER NOT NULL,
+    FlowId INT IDENTITY(1,1) PRIMARY KEY,
+    FromTaskId INT,
+    ToTaskId INT NOT NULL,
     Condition NVARCHAR(500), -- Conditional logic for flow
     IsDefault BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (FromTaskId) REFERENCES TaskDefinitions(TaskId),
@@ -143,11 +171,11 @@ INSERT INTO ProcessPriorities (PriorityCode, PriorityDescription) VALUES
 
 -- Application Workflow Instances
 CREATE TABLE ProcessInstances (
-    InstanceId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    ProcessId UNIQUEIDENTIFIER NOT NULL,
+    InstanceId INT IDENTITY(1,1) PRIMARY KEY,
+    ProcessId INT NOT NULL,
     ApplicationId NVARCHAR(50) NOT NULL, -- External application reference
     Status NVARCHAR(10) NOT NULL DEFAULT 'NEW', -- 'Active', 'Completed', 'Suspended', 'Terminated'
-    CurrentTaskId UNIQUEIDENTIFIER,
+    CurrentTaskId INT,
     StartedDate DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     StartedBy NVARCHAR(100) NOT NULL,
     CompletedDate DATETIME2,
@@ -173,9 +201,9 @@ INSERT INTO StageStatus (StatusCode, StatusDescription) VALUES
 ('COMPLETED', 'Stage has been completed');
 
 CREATE TABLE StageInstance(
-    StageInstanceId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    ProcessInstanceId uniqueidentifier NOT NULL,
-    LaneId uniqueidentifier NOT NULL,
+    StageInstanceId INT IDENTITY(1,1) PRIMARY KEY,
+    ProcessInstanceId INT NOT NULL,
+    LaneId INT NOT NULL,
     Status nvarchar(20) NOT NULL DEFAULT 'NEW',
     StartedDate datetime2(7) NULL,
     CompletedDate datetime2(7) NULL,
@@ -195,9 +223,9 @@ CREATE TABLE StageInstance(
 
 -- Task Instance Execution
 CREATE TABLE TaskInstances (
-    TaskInstanceId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    InstanceId UNIQUEIDENTIFIER NOT NULL, -- ProcessInstance
-    TaskId UNIQUEIDENTIFIER NOT NULL, -- TaskDefinition
+    TaskInstanceId INT IDENTITY(1,1) PRIMARY KEY,
+    InstanceId INT NOT NULL, -- ProcessInstance
+    TaskId INT NOT NULL, -- TaskDefinition
     Status NVARCHAR(50) NOT NULL DEFAULT 'Pending', -- 'Pending', 'InProgress', 'Completed', 'Failed', 'Skipped'
     AssignedTo NVARCHAR(100),
     StartedDate DATETIME2,
@@ -217,7 +245,7 @@ CREATE TABLE TaskInstances (
 
 -- Validation Rules
 CREATE TABLE ValidationRules (
-    ValidationId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    ValidationId INT IDENTITY(1,1) PRIMARY KEY,
     ValidationName NVARCHAR(100) NOT NULL,
     Category NVARCHAR(50) NOT NULL, -- 'Company', 'Plant', 'Contacts', 'Products', 'Ingredients', 'Quote', 'Documentation'
     RuleType NVARCHAR(50) NOT NULL, -- 'Required', 'Format', 'Business', 'CrossReference'
@@ -229,10 +257,10 @@ CREATE TABLE ValidationRules (
 
 -- Validation Results
 CREATE TABLE ValidationResults (
-    ValidationResultId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    InstanceId UNIQUEIDENTIFIER NOT NULL,
-    ValidationId UNIQUEIDENTIFIER NOT NULL,
-    TaskInstanceId UNIQUEIDENTIFIER,
+    ValidationResultId INT IDENTITY(1,1) PRIMARY KEY,
+    InstanceId INT NOT NULL,
+    ValidationId INT NOT NULL,
+    TaskInstanceId INT,
     IsValid BIT NOT NULL,
     ValidationMessage NVARCHAR(500),
     ValidationDate DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
@@ -258,8 +286,8 @@ INSERT INTO ProcessMessageTypes (MessageTypeCode, MessageTypeDescription) VALUES
 ('Notification', 'Notification message');
 -- ProcessMessages
 CREATE TABLE ProcessMessages (
-    MessageId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    InstanceId UNIQUEIDENTIFIER NOT NULL,
+    MessageId INT IDENTITY(1,1) PRIMARY KEY,
+    InstanceId INT NOT NULL,
     FromUser NVARCHAR(100) NOT NULL,
     ToUser NVARCHAR(100),
     ToRole NVARCHAR(50),
@@ -286,9 +314,9 @@ INSERT INTO TaskCommentTypes (CommentTypeCode, CommentTypeDescription) VALUES
 
 -- TaskComments
 CREATE TABLE TaskComments (
-    CommentId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    InstanceId UNIQUEIDENTIFIER NOT NULL,
-    TaskInstanceId UNIQUEIDENTIFIER,
+    CommentId INT IDENTITY(1,1) PRIMARY KEY,
+    InstanceId INT NOT NULL,
+    TaskInstanceId INT,
     CommentType NVARCHAR(10) DEFAULT 'Internal', -- 'Internal', 'External', 'System'
     CommentText NVARCHAR(MAX) NOT NULL,
     Author NVARCHAR(100) NOT NULL,
@@ -305,9 +333,9 @@ CREATE TABLE TaskComments (
 
 -- Workflow History
 CREATE TABLE WorkflowHistory (
-    HistoryId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    InstanceId UNIQUEIDENTIFIER NOT NULL,
-    TaskInstanceId UNIQUEIDENTIFIER,
+    HistoryId INT IDENTITY(1,1) PRIMARY KEY,
+    InstanceId INT NOT NULL,
+    TaskInstanceId INT,
     Action NVARCHAR(100) NOT NULL,
     PreviousStatus NVARCHAR(50),
     NewStatus NVARCHAR(50),
@@ -345,99 +373,57 @@ CREATE INDEX IX_WorkflowHistory_ActionDate ON WorkflowHistory(ActionDate);
 -- =============================================
 GO
 -- Insert the Admin Completion Workflow Process
-DECLARE @ProcessId UNIQUEIDENTIFIER = NEWID();
+DECLARE @ProcessId INT = 1;
 INSERT INTO ProcessDefinitions (ProcessId, ProcessName, ProcessVersion, Description, CreatedBy)
 VALUES (@ProcessId, 'Application Workflow', '1.0', 'NCRC Application preprocessing and validation workflow for admins', 'admin');
 
 -- Insert Task Definitions
-DECLARE @TaskIds TABLE (TaskName NVARCHAR(100), TaskId UNIQUEIDENTIFIER);
+DECLARE @TaskIds TABLE (TaskName NVARCHAR(100), TaskId INT);
 
 -- Start Event
-DECLARE @StartTaskId UNIQUEIDENTIFIER = NEWID();
+DECLARE @StartTaskId INT = 1;
 INSERT INTO @TaskIds VALUES ('Start_Application_Submitted', @StartTaskId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
 VALUES (@StartTaskId, @ProcessId, 'Start_Application_Submitted', 'Event', 'Start', 1, 'System', 'Application submitted and ready for admin review', 1);
 
--- Validation Tasks
-DECLARE @ValidateCompanyId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Company_Data', @ValidateCompanyId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidateCompanyId, @ProcessId, 'Validate_Company_Data', 'ServiceTask', 'Validation', 2, 'Admin', 5, 'Validate company information and Kashrus DB status');
-
-DECLARE @ValidatePlantId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Plant_Data', @ValidatePlantId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidatePlantId, @ProcessId, 'Validate_Plant_Data', 'ServiceTask', 'Validation', 3, 'Admin', 5, 'Validate plant location and manufacturing details');
-
-DECLARE @ValidateContactsId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Contacts', @ValidateContactsId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidateContactsId, @ProcessId, 'Validate_Contacts', 'ServiceTask', 'Validation', 4, 'Admin', 3, 'Validate contact information and designate primary contact');
-
-DECLARE @ValidateProductsId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Products', @ValidateProductsId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidateProductsId, @ProcessId, 'Validate_Products', 'ServiceTask', 'Validation', 5, 'Admin', 10, 'Validate product specifications and categorization');
-
-DECLARE @ValidateIngredientsId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Ingredients', @ValidateIngredientsId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidateIngredientsId, @ProcessId, 'Validate_Ingredients', 'ServiceTask', 'Validation', 6, 'Admin', 15, 'Validate ingredient certifications and NCRC database entries');
-
-DECLARE @ValidateQuoteId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Quote', @ValidateQuoteId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidateQuoteId, @ProcessId, 'Validate_Quote', 'UserTask', 'Validation', 7, 'Admin', 5, 'Verify quote information and acceptance status');
-
-DECLARE @ValidateDocumentationId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('Validate_Documentation', @ValidateDocumentationId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@ValidateDocumentationId, @ProcessId, 'Validate_Documentation', 'ServiceTask', 'Validation', 8, 'Admin', 5, 'Validate all required documents are uploaded and processed');
-
--- Decision Gateway
-DECLARE @AllValidationsPassedId UNIQUEIDENTIFIER = NEWID();
-INSERT INTO @TaskIds VALUES ('All_Validations_Passed', @AllValidationsPassedId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
-VALUES (@AllValidationsPassedId, @ProcessId, 'All_Validations_Passed', 'Gateway', 'Decision', 9, 'System', 'Check if all validation tasks have passed', 1);
-
 -- Admin Action Tasks
-DECLARE @MarkCompleteId UNIQUEIDENTIFIER = NEWID();
+DECLARE @MarkCompleteId INT 2;
 INSERT INTO @TaskIds VALUES ('Mark_Application_Complete', @MarkCompleteId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
 VALUES (@MarkCompleteId, @ProcessId, 'Mark_Application_Complete', 'UserTask', 'Action', 10, 'Admin', 2, 'Admin marks application as complete and ready for dispatch');
 
-DECLARE @AdminActionGatewayId UNIQUEIDENTIFIER = NEWID();
+DECLARE @AdminActionGatewayId INT = 3;
 INSERT INTO @TaskIds VALUES ('Admin_Action_Gateway', @AdminActionGatewayId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
 VALUES (@AdminActionGatewayId, @ProcessId, 'Admin_Action_Gateway', 'Gateway', 'Decision', 11, 'Admin', 'Admin chooses next action: Dispatch, Undo, Comment, or Message', 0);
 
-DECLARE @DispatchToQueueId UNIQUEIDENTIFIER = NEWID();
+DECLARE @DispatchToQueueId INT = 4;
 INSERT INTO @TaskIds VALUES ('Dispatch_To_Queue', @DispatchToQueueId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
 VALUES (@DispatchToQueueId, @ProcessId, 'Dispatch_To_Queue', 'ServiceTask', 'Action', 12, 'Admin', 1, 'Send application to dispatcher review queue');
 
-DECLARE @UndoCompletionId UNIQUEIDENTIFIER = NEWID();
+DECLARE @UndoCompletionId INT = 5;
 INSERT INTO @TaskIds VALUES ('Undo_Completion', @UndoCompletionId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
 VALUES (@UndoCompletionId, @ProcessId, 'Undo_Completion', 'UserTask', 'Action', 13, 'Admin', 1, 'Return application to incomplete status for further review');
 
-DECLARE @AddCommentId UNIQUEIDENTIFIER = NEWID();
+DECLARE @AddCommentId INT = 6;
 INSERT INTO @TaskIds VALUES ('Add_Internal_Comment', @AddCommentId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
 VALUES (@AddCommentId, @ProcessId, 'Add_Internal_Comment', 'UserTask', 'Notification', 14, 'Admin', 3, 'Add internal comment for audit trail');
 
-DECLARE @SendMessageId UNIQUEIDENTIFIER = NEWID();
+DECLARE @SendMessageId INT = 7;
 INSERT INTO @TaskIds VALUES ('Send_Message_To_Dispatcher', @SendMessageId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
 VALUES (@SendMessageId, @ProcessId, 'Send_Message_To_Dispatcher', 'UserTask', 'Notification', 15, 'Admin', 5, 'Send message to dispatcher about application status');
 
 -- End States
-DECLARE @ApplicationDispatchedId UNIQUEIDENTIFIER = NEWID();
+DECLARE @ApplicationDispatchedId INT = 8;
 INSERT INTO @TaskIds VALUES ('Application_Dispatched', @ApplicationDispatchedId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
 VALUES (@ApplicationDispatchedId, @ProcessId, 'Application_Dispatched', 'Event', 'End', 16, 'System', 'Application successfully dispatched to review queue', 1);
 
-DECLARE @UnderReviewId UNIQUEIDENTIFIER = NEWID();
+DECLARE @UnderReviewId INT = 9;
 INSERT INTO @TaskIds VALUES ('Under_Review', @UnderReviewId);
 INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
 VALUES (@UnderReviewId, @ProcessId, 'Under_Review', 'Event', 'End', 17, 'Dispatcher', 'Application is under review by dispatcher', 1);
@@ -446,33 +432,6 @@ GO
 -- Insert Validation Rules
 -- =============================================
 
-INSERT INTO ValidationRules (ValidationName, Category, RuleType, ValidationQuery, ErrorMessage)
-VALUES 
-('Company_Name_Required', 'Company', 'Required', 'SELECT CASE WHEN ISNULL(CompanyName, '''') = '''' THEN 0 ELSE 1 END', 'Company name is required'),
-('Company_Address_Required', 'Company', 'Required', 'SELECT CASE WHEN ISNULL(Address, '''') = '''' THEN 0 ELSE 1 END', 'Company address is required'),
-('Kashrus_ID_Generated', 'Company', 'Business', 'SELECT CASE WHEN ISNULL(KashrusCompanyId, '''') = '''' THEN 0 ELSE 1 END', 'Kashrus company ID must be generated'),
-
-('Plant_Location_Required', 'Plant', 'Required', 'SELECT CASE WHEN ISNULL(PlantAddress, '''') = '''' THEN 0 ELSE 1 END', 'Plant location is required'),
-('Plant_Contact_Required', 'Plant', 'Required', 'SELECT CASE WHEN ISNULL(PlantContactName, '''') = '''' THEN 0 ELSE 1 END', 'Plant contact is required'),
-('Plant_ID_Generated', 'Plant', 'Business', 'SELECT CASE WHEN ISNULL(PlantId, '''') = '''' THEN 0 ELSE 1 END', 'Plant ID must be generated'),
-
-('Primary_Contact_Designated', 'Contacts', 'Business', 'SELECT CASE WHEN EXISTS(SELECT 1 FROM Contacts WHERE IsPrimary = 1) THEN 1 ELSE 0 END', 'Primary contact must be designated'),
-('Contact_Email_Valid', 'Contacts', 'Format', 'SELECT CASE WHEN Email LIKE ''%@%.%'' THEN 1 ELSE 0 END', 'Valid email address required'),
-
-('Products_Exist', 'Products', 'Required', 'SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM Products', 'At least one product must be specified'),
-('Product_Names_Required', 'Products', 'Required', 'SELECT CASE WHEN ISNULL(ProductName, '''') = '''' THEN 0 ELSE 1 END', 'Product names are required'),
-
-('Ingredients_Exist', 'Ingredients', 'Required', 'SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM Ingredients', 'At least one ingredient must be specified'),
-('Ingredient_Certifications_Valid', 'Ingredients', 'Business', 'SELECT CASE WHEN ISNULL(CertificationAgency, '''') = '''' THEN 0 ELSE 1 END', 'Ingredient certifications must be specified'),
-('NCRC_IDs_Generated', 'Ingredients', 'Business', 'SELECT CASE WHEN ISNULL(NCRCId, '''') = '''' THEN 0 ELSE 1 END', 'NCRC ingredient IDs must be generated'),
-
-('Quote_Exists', 'Quote', 'Required', 'SELECT CASE WHEN ISNULL(QuoteNumber, '''') = '''' THEN 0 ELSE 1 END', 'Quote must be provided'),
-('Quote_Accepted', 'Quote', 'Business', 'SELECT CASE WHEN QuoteStatus = ''Accepted'' THEN 1 ELSE 0 END', 'Quote must be accepted before completion'),
-
-('Required_Documents_Uploaded', 'Documentation', 'Required', 'SELECT CASE WHEN COUNT(*) >= 2 THEN 1 ELSE 0 END FROM Documents WHERE IsRequired = 1', 'All required documents must be uploaded'),
-('Documents_Processed', 'Documentation', 'Business', 'SELECT CASE WHEN AllDocumentsProcessed = 1 THEN 1 ELSE 0 END', 'All documents must be processed successfully');
-
-GO
 
 -- =============================================
 -- Sample Views for Workflow Monitoring
@@ -546,9 +505,9 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @ProcessId UNIQUEIDENTIFIER;
-    DECLARE @InstanceId UNIQUEIDENTIFIER = NEWID();
-    DECLARE @StartTaskId UNIQUEIDENTIFIER;
+    DECLARE @ProcessId INT;
+    DECLARE @InstanceId INT = NEWID();
+    DECLARE @StartTaskId INT;
     
     -- Get Process ID
     SELECT @ProcessId = ProcessId 
@@ -580,7 +539,7 @@ END;
 GO
 -- Procedure: Complete Task
 CREATE PROCEDURE sp_CompleteTask
-    @InstanceId UNIQUEIDENTIFIER,
+    @InstanceId INT,
     @TaskName NVARCHAR(100),
     @CompletedBy NVARCHAR(100),
     @Result NVARCHAR(50) = 'Success',
@@ -589,9 +548,9 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @TaskInstanceId UNIQUEIDENTIFIER;
-    DECLARE @TaskId UNIQUEIDENTIFIER;
-    DECLARE @NextTaskId UNIQUEIDENTIFIER;
+    DECLARE @TaskInstanceId INT;
+    DECLARE @TaskId INT;
+    DECLARE @NextTaskId INT;
     
     -- Get current task instance
     SELECT @TaskInstanceId = ti.TaskInstanceId, @TaskId = ti.TaskId
@@ -644,14 +603,14 @@ END;
 GO
 -- Procedure: Run Validation Check
 CREATE PROCEDURE sp_RunValidationCheck
-    @InstanceId UNIQUEIDENTIFIER,
+    @InstanceId INT,
     @ValidationCategory NVARCHAR(50) = NULL,
     @ValidatedBy NVARCHAR(100)
 AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @ValidationId UNIQUEIDENTIFIER;
+    DECLARE @ValidationId INT;
     DECLARE @ValidationName NVARCHAR(100);
     DECLARE @ValidationQuery NVARCHAR(MAX);
     DECLARE @ErrorMessage NVARCHAR(500);
@@ -717,7 +676,7 @@ END;
 GO
 -- Procedure: Add Message
 CREATE PROCEDURE sp_AddMessage
-    @InstanceId UNIQUEIDENTIFIER,
+    @InstanceId INT,
     @FromUser NVARCHAR(100),
     @ToUser NVARCHAR(100) = NULL,
     @ToRole NVARCHAR(50) = NULL,
@@ -728,7 +687,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @MessageId UNIQUEIDENTIFIER = NEWID();
+    DECLARE @MessageId INT = NEWID();
     
     INSERT INTO ProcessMessages (MessageId, InstanceId, FromUser, ToUser, ToRole, MessageType, Subject, MessageBody)
     VALUES (@MessageId, @InstanceId, @FromUser, @ToUser, @ToRole, @MessageType, @Subject, @MessageBody);
@@ -743,8 +702,8 @@ END;
 GO
 -- Procedure: Add Comment
 CREATE PROCEDURE sp_AddComment
-    @InstanceId UNIQUEIDENTIFIER,
-    @TaskInstanceId UNIQUEIDENTIFIER = NULL,
+    @InstanceId INT,
+    @TaskInstanceId INT = NULL,
     @CommentType NVARCHAR(50) = 'Internal',
     @CommentText NVARCHAR(MAX),
     @Author NVARCHAR(100)
@@ -752,7 +711,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @CommentId UNIQUEIDENTIFIER = NEWID();
+    DECLARE @CommentId INT = NEWID();
     
     INSERT INTO TaskComments (CommentId, InstanceId, TaskInstanceId, CommentType, CommentText, Author)
     VALUES (@CommentId, @InstanceId, @TaskInstanceId, @CommentType, @CommentText, @Author);
@@ -767,7 +726,7 @@ END;
 GO
 -- Procedure: Get Workflow Status
 CREATE PROCEDURE sp_GetWorkflowStatus
-    @InstanceId UNIQUEIDENTIFIER
+    @InstanceId INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -852,7 +811,7 @@ GO
 -- =============================================
 
 -- Create a sample workflow instance
-DECLARE @SampleInstanceId UNIQUEIDENTIFIER;
+DECLARE @SampleInstanceId INT;
 EXEC sp_StartWorkflowInstance 
     @ProcessName = 'Admin Completion Workflow',
     @ApplicationId = 'APP-2025-0717-001',
@@ -860,7 +819,7 @@ EXEC sp_StartWorkflowInstance
     @Priority = 'Normal';
 GO
 -- Insert some sample validation results
-DECLARE @SampleProcessInstanceId UNIQUEIDENTIFIER;
+DECLARE @SampleProcessInstanceId INT;
 SELECT TOP 1 @SampleProcessInstanceId = InstanceId 
 FROM ProcessInstances 
 WHERE ApplicationId = 'APP-2025-0717-001';
@@ -890,7 +849,7 @@ GO
 -- Function: Check All Validations Passed
 -- =============================================
 
-CREATE FUNCTION fn_AllValidationsPassed(@InstanceId UNIQUEIDENTIFIER)
+CREATE FUNCTION fn_AllValidationsPassed(@InstanceId INT)
 RETURNS BIT
 AS
 BEGIN
@@ -925,10 +884,10 @@ BEGIN
     -- Only process when status changes to Completed
     IF UPDATE(Status)
     BEGIN
-        DECLARE @InstanceId UNIQUEIDENTIFIER;
-        DECLARE @TaskId UNIQUEIDENTIFIER;
+        DECLARE @InstanceId INT;
+        DECLARE @TaskId INT;
         DECLARE @TaskName NVARCHAR(100);
-        DECLARE @NextTaskId UNIQUEIDENTIFIER;
+        DECLARE @NextTaskId INT;
         
         -- Get completed tasks
         SELECT 

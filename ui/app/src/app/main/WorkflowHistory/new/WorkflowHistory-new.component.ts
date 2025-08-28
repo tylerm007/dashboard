@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class WorkflowHistoryNewComponent {
   @ViewChild("WorkflowHistoryForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'HistoryId': '(newid())', 'ActionDate': '(getutcdate())'}
+    const default_values = {'HistoryId': '0', 'ActionDate': '(getutcdate())'}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

@@ -13,33 +13,35 @@ export const routes: Routes = [
         { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
       
     
-        { path: 'Comment', loadChildren: () => import('./Comment/Comment.module').then(m => m.CommentModule) },
-    
-        { path: 'Company', loadChildren: () => import('./Company/Company.module').then(m => m.CompanyModule) },
-    
-        { path: 'Contact', loadChildren: () => import('./Contact/Contact.module').then(m => m.ContactModule) },
-    
-        { path: 'Ingredient', loadChildren: () => import('./Ingredient/Ingredient.module').then(m => m.IngredientModule) },
-    
-        { path: 'Message', loadChildren: () => import('./Message/Message.module').then(m => m.MessageModule) },
-    
-        { path: 'Plant', loadChildren: () => import('./Plant/Plant.module').then(m => m.PlantModule) },
+        { path: 'LaneDefinition', loadChildren: () => import('./LaneDefinition/LaneDefinition.module').then(m => m.LaneDefinitionModule) },
     
         { path: 'ProcessDefinition', loadChildren: () => import('./ProcessDefinition/ProcessDefinition.module').then(m => m.ProcessDefinitionModule) },
     
         { path: 'ProcessInstance', loadChildren: () => import('./ProcessInstance/ProcessInstance.module').then(m => m.ProcessInstanceModule) },
     
-        { path: 'Product', loadChildren: () => import('./Product/Product.module').then(m => m.ProductModule) },
+        { path: 'ProcessMessage', loadChildren: () => import('./ProcessMessage/ProcessMessage.module').then(m => m.ProcessMessageModule) },
+    
+        { path: 'ProcessMessageType', loadChildren: () => import('./ProcessMessageType/ProcessMessageType.module').then(m => m.ProcessMessageTypeModule) },
+    
+        { path: 'ProcessPriority', loadChildren: () => import('./ProcessPriority/ProcessPriority.module').then(m => m.ProcessPriorityModule) },
+    
+        { path: 'ProcessStatus', loadChildren: () => import('./ProcessStatus/ProcessStatus.module').then(m => m.ProcessStatusModule) },
+    
+        { path: 'StageInstance', loadChildren: () => import('./StageInstance/StageInstance.module').then(m => m.StageInstanceModule) },
+    
+        { path: 'StageStatus', loadChildren: () => import('./StageStatus/StageStatus.module').then(m => m.StageStatusModule) },
     
         { path: 'Sysdiagram', loadChildren: () => import('./Sysdiagram/Sysdiagram.module').then(m => m.SysdiagramModule) },
+    
+        { path: 'TaskComment', loadChildren: () => import('./TaskComment/TaskComment.module').then(m => m.TaskCommentModule) },
+    
+        { path: 'TaskCommentType', loadChildren: () => import('./TaskCommentType/TaskCommentType.module').then(m => m.TaskCommentTypeModule) },
     
         { path: 'TaskDefinition', loadChildren: () => import('./TaskDefinition/TaskDefinition.module').then(m => m.TaskDefinitionModule) },
     
         { path: 'TaskFlow', loadChildren: () => import('./TaskFlow/TaskFlow.module').then(m => m.TaskFlowModule) },
     
         { path: 'TaskInstance', loadChildren: () => import('./TaskInstance/TaskInstance.module').then(m => m.TaskInstanceModule) },
-    
-        { path: 'ValidationCheck', loadChildren: () => import('./ValidationCheck/ValidationCheck.module').then(m => m.ValidationCheckModule) },
     
         { path: 'ValidationResult', loadChildren: () => import('./ValidationResult/ValidationResult.module').then(m => m.ValidationResultModule) },
     
@@ -51,9 +53,15 @@ export const routes: Routes = [
     
         { path: 'WFApplication', loadChildren: () => import('./WFApplication/WFApplication.module').then(m => m.WFApplicationModule) },
     
+        { path: 'WFApplicationComment', loadChildren: () => import('./WFApplicationComment/WFApplicationComment.module').then(m => m.WFApplicationCommentModule) },
+    
+        { path: 'WFApplicationMessage', loadChildren: () => import('./WFApplicationMessage/WFApplicationMessage.module').then(m => m.WFApplicationMessageModule) },
+    
         { path: 'WFApplicationStatus', loadChildren: () => import('./WFApplicationStatus/WFApplicationStatus.module').then(m => m.WFApplicationStatusModule) },
     
-        { path: 'WFComment', loadChildren: () => import('./WFComment/WFComment.module').then(m => m.WFCommentModule) },
+        { path: 'WFCompany', loadChildren: () => import('./WFCompany/WFCompany.module').then(m => m.WFCompanyModule) },
+    
+        { path: 'WFContact', loadChildren: () => import('./WFContact/WFContact.module').then(m => m.WFContactModule) },
     
         { path: 'WFDashboard', loadChildren: () => import('./WFDashboard/WFDashboard.module').then(m => m.WFDashboardModule) },
     
@@ -61,13 +69,13 @@ export const routes: Routes = [
     
         { path: 'WFFileType', loadChildren: () => import('./WFFileType/WFFileType.module').then(m => m.WFFileTypeModule) },
     
-        { path: 'WFMessage', loadChildren: () => import('./WFMessage/WFMessage.module').then(m => m.WFMessageModule) },
+        { path: 'WFIngredient', loadChildren: () => import('./WFIngredient/WFIngredient.module').then(m => m.WFIngredientModule) },
+    
+        { path: 'WFPlant', loadChildren: () => import('./WFPlant/WFPlant.module').then(m => m.WFPlantModule) },
     
         { path: 'WFPriority', loadChildren: () => import('./WFPriority/WFPriority.module').then(m => m.WFPriorityModule) },
     
-        { path: 'WFProcessPriority', loadChildren: () => import('./WFProcessPriority/WFProcessPriority.module').then(m => m.WFProcessPriorityModule) },
-    
-        { path: 'WFProcessStatus', loadChildren: () => import('./WFProcessStatus/WFProcessStatus.module').then(m => m.WFProcessStatusModule) },
+        { path: 'WFProduct', loadChildren: () => import('./WFProduct/WFProduct.module').then(m => m.WFProductModule) },
     
         { path: 'WFQuote', loadChildren: () => import('./WFQuote/WFQuote.module').then(m => m.WFQuoteModule) },
     

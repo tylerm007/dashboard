@@ -14,6 +14,13 @@ const routes: Routes = [
       }
     }
   },{
+    path: ':ProcessId/LaneDefinition', loadChildren: () => import('../LaneDefinition/LaneDefinition.module').then(m => m.LaneDefinitionModule),
+    data: {
+        oPermission: {
+            permissionId: 'LaneDefinition-detail-permissions'
+        }
+    }
+},{
     path: ':ProcessId/ProcessInstance', loadChildren: () => import('../ProcessInstance/ProcessInstance.module').then(m => m.ProcessInstanceModule),
     data: {
         oPermission: {

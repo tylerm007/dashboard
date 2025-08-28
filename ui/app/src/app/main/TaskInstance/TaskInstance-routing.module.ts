@@ -14,10 +14,10 @@ const routes: Routes = [
       }
     }
   },{
-    path: ':TaskInstanceId/Comment', loadChildren: () => import('../Comment/Comment.module').then(m => m.CommentModule),
+    path: ':TaskInstanceId/TaskComment', loadChildren: () => import('../TaskComment/TaskComment.module').then(m => m.TaskCommentModule),
     data: {
         oPermission: {
-            permissionId: 'Comment-detail-permissions'
+            permissionId: 'TaskComment-detail-permissions'
         }
     }
 },{

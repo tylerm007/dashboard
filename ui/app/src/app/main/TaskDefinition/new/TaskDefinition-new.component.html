@@ -19,7 +19,7 @@ after-insert-mode="new" class="standalone-form-container" >
         enabled="yes" 
         filter="yes"
         value-column="ProcessId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="ProcessId" 
         columns="ProcessId;ProcessId;ProcessName" 
         title="Process"
@@ -45,7 +45,7 @@ after-insert-mode="new" class="standalone-form-container" >
       
         <o-text-input #ConfigurationJson attr="ConfigurationJson" label="ConfigurationJson" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
-        <o-text-input #TaskId attr="TaskId" label="TaskId" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+        <o-integer-input #TaskId attr="TaskId" label="TaskId" type="integer" editable="no" required="no" ></o-integer-input>
       
         <o-checkbox #IsRequired attr="IsRequired" label="IsRequired" read-only="no" enabled="yes"></o-checkbox>
       

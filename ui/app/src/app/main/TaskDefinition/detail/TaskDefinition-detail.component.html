@@ -27,7 +27,7 @@
         enabled="yes" 
         filter="yes"
         value-column="ProcessId" 
-        value-column-type="CHAR"  
+        value-column-type="INTEGER"  
         keys="ProcessId" 
         columns="ProcessId;ProcessId;ProcessName" 
         title="Process"
@@ -53,7 +53,7 @@
       
       <o-text-input #ConfigurationJson attr="ConfigurationJson" label="ConfigurationJson" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
-      <o-text-input #TaskId attr="TaskId" label="TaskId" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      <o-integer-input #TaskId attr="TaskId" label="TaskId" type="integer" editable="no" required="no" ></o-integer-input>
       
       <o-checkbox #IsRequired attr="IsRequired" label="IsRequired" read-only="no" enabled="yes"></o-checkbox>
       
@@ -90,13 +90,27 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #InstanceId attr="InstanceId" title=" Instance Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #InstanceId attr="InstanceId" title=" Instance Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #CurrentTaskId attr="CurrentTaskId" title="CurrentTaskId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column attr="CurrentTaskId" title="CurrentTask">
+    <o-table-cell-renderer-service attr="CurrentTaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="TaskId:CurrentTaskId"
+        value-column="TaskName" keys="CurrentTaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Priority attr="Priority" title="Priority" editable="no" required="no" content-align="left"></o-table-column>
         
-          <o-table-column #ProcessId attr="ProcessId" title="ProcessId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="ProcessId" title="Process">
+    <o-table-cell-renderer-service attr="ProcessId" 
+        service="ProcessDefinition" entity="ProcessDefinitionType" columns="ProcessId;ProcessName"
+        parent-keys="TaskId:ProcessId"
+        value-column="ProcessName" keys="ProcessId"
+        visible-columns="ProcessName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
         
@@ -145,11 +159,25 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #FlowId attr="FlowId" title=" Flow Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #FlowId attr="FlowId" title=" Flow Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #FromTaskId attr="FromTaskId" title="FromTaskId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column attr="FromTaskId" title="FromTask">
+    <o-table-cell-renderer-service attr="FromTaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="TaskId:FromTaskId"
+        value-column="TaskName" keys="FromTaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
-          <o-table-column #ToTaskId attr="ToTaskId" title="ToTaskId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="ToTaskId" title="ToTask">
+    <o-table-cell-renderer-service attr="ToTaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="TaskId:ToTaskId"
+        value-column="TaskName" keys="ToTaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Condition attr="Condition" title="Condition" editable="no" required="no" content-align="left"></o-table-column>
         
@@ -191,11 +219,25 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #FlowId attr="FlowId" title=" Flow Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #FlowId attr="FlowId" title=" Flow Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #FromTaskId attr="FromTaskId" title="FromTaskId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column attr="FromTaskId" title="FromTask">
+    <o-table-cell-renderer-service attr="FromTaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="TaskId:FromTaskId"
+        value-column="TaskName" keys="FromTaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
-          <o-table-column #ToTaskId attr="ToTaskId" title="ToTaskId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="ToTaskId" title="ToTask">
+    <o-table-cell-renderer-service attr="ToTaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="TaskId:ToTaskId"
+        value-column="TaskName" keys="ToTaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Condition attr="Condition" title="Condition" editable="no" required="no" content-align="left"></o-table-column>
         
@@ -237,11 +279,25 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #TaskInstanceId attr="TaskInstanceId" title=" Task Instance Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #TaskInstanceId attr="TaskInstanceId" title=" Task Instance Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="InstanceId" title="Instance">
+    <o-table-cell-renderer-service attr="InstanceId" 
+        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
+        parent-keys="TaskId:InstanceId"
+        value-column="InstanceId" keys="InstanceId"
+        visible-columns="InstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
-          <o-table-column #TaskId attr="TaskId" title="TaskId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="TaskId" title="Task">
+    <o-table-cell-renderer-service attr="TaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="TaskId:TaskId"
+        value-column="TaskName" keys="TaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
         

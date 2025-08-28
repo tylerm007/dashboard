@@ -24,7 +24,14 @@
             
             <o-table-column #TaskName attr="TaskName" title=" Task Name" editable="no" required="yes" content-align="left"></o-table-column>
             
-            <o-table-column #ProcessId attr="ProcessId" title="ProcessId" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column attr="ProcessId" title="Process">
+    <o-table-cell-renderer-service attr="ProcessId" 
+        service="ProcessDefinition" entity="ProcessDefinitionType" columns="ProcessId;ProcessName"
+        parent-keys="TaskId:ProcessId"
+        value-column="ProcessName" keys="ProcessId"
+        visible-columns="ProcessName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
             
             <o-table-column #TaskType attr="TaskType" title="TaskType" editable="no" required="yes" content-align="left"></o-table-column>
             
@@ -50,7 +57,7 @@
             
             <o-table-column #ConfigurationJson attr="ConfigurationJson" title="ConfigurationJson" editable="no" required="no" content-align="left"></o-table-column>
             
-            <o-table-column #TaskId attr="TaskId" title="TaskId" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column #TaskId attr="TaskId" title="TaskId" type="integer" editable="no" required="no" content-align="center"></o-table-column>
             
             <o-table-column attr="IsRequired" title="IsRequired">
     <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"

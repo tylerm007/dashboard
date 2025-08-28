@@ -14,48 +14,6 @@ const routes: Routes = [
       }
     }
   },{
-    path: ':ApplicationID/Company', loadChildren: () => import('../Company/Company.module').then(m => m.CompanyModule),
-    data: {
-        oPermission: {
-            permissionId: 'Company-detail-permissions'
-        }
-    }
-},{
-    path: ':ApplicationID/Contact', loadChildren: () => import('../Contact/Contact.module').then(m => m.ContactModule),
-    data: {
-        oPermission: {
-            permissionId: 'Contact-detail-permissions'
-        }
-    }
-},{
-    path: ':ApplicationID/Ingredient', loadChildren: () => import('../Ingredient/Ingredient.module').then(m => m.IngredientModule),
-    data: {
-        oPermission: {
-            permissionId: 'Ingredient-detail-permissions'
-        }
-    }
-},{
-    path: ':ApplicationID/Plant', loadChildren: () => import('../Plant/Plant.module').then(m => m.PlantModule),
-    data: {
-        oPermission: {
-            permissionId: 'Plant-detail-permissions'
-        }
-    }
-},{
-    path: ':ApplicationID/Product', loadChildren: () => import('../Product/Product.module').then(m => m.ProductModule),
-    data: {
-        oPermission: {
-            permissionId: 'Product-detail-permissions'
-        }
-    }
-},{
-    path: ':ApplicationID/ValidationCheck', loadChildren: () => import('../ValidationCheck/ValidationCheck.module').then(m => m.ValidationCheckModule),
-    data: {
-        oPermission: {
-            permissionId: 'ValidationCheck-detail-permissions'
-        }
-    }
-},{
     path: ':ApplicationID/WFActivityLog', loadChildren: () => import('../WFActivityLog/WFActivityLog.module').then(m => m.WFActivityLogModule),
     data: {
         oPermission: {
@@ -63,10 +21,31 @@ const routes: Routes = [
         }
     }
 },{
-    path: ':ApplicationID/WFComment', loadChildren: () => import('../WFComment/WFComment.module').then(m => m.WFCommentModule),
+    path: ':ApplicationID/WFApplicationComment', loadChildren: () => import('../WFApplicationComment/WFApplicationComment.module').then(m => m.WFApplicationCommentModule),
     data: {
         oPermission: {
-            permissionId: 'WFComment-detail-permissions'
+            permissionId: 'WFApplicationComment-detail-permissions'
+        }
+    }
+},{
+    path: ':ApplicationID/WFApplicationMessage', loadChildren: () => import('../WFApplicationMessage/WFApplicationMessage.module').then(m => m.WFApplicationMessageModule),
+    data: {
+        oPermission: {
+            permissionId: 'WFApplicationMessage-detail-permissions'
+        }
+    }
+},{
+    path: ':ApplicationID/WFCompany', loadChildren: () => import('../WFCompany/WFCompany.module').then(m => m.WFCompanyModule),
+    data: {
+        oPermission: {
+            permissionId: 'WFCompany-detail-permissions'
+        }
+    }
+},{
+    path: ':ApplicationID/WFContact', loadChildren: () => import('../WFContact/WFContact.module').then(m => m.WFContactModule),
+    data: {
+        oPermission: {
+            permissionId: 'WFContact-detail-permissions'
         }
     }
 },{
@@ -77,10 +56,24 @@ const routes: Routes = [
         }
     }
 },{
-    path: ':ApplicationID/WFMessage', loadChildren: () => import('../WFMessage/WFMessage.module').then(m => m.WFMessageModule),
+    path: ':ApplicationID/WFIngredient', loadChildren: () => import('../WFIngredient/WFIngredient.module').then(m => m.WFIngredientModule),
     data: {
         oPermission: {
-            permissionId: 'WFMessage-detail-permissions'
+            permissionId: 'WFIngredient-detail-permissions'
+        }
+    }
+},{
+    path: ':ApplicationID/WFPlant', loadChildren: () => import('../WFPlant/WFPlant.module').then(m => m.WFPlantModule),
+    data: {
+        oPermission: {
+            permissionId: 'WFPlant-detail-permissions'
+        }
+    }
+},{
+    path: ':ApplicationID/WFProduct', loadChildren: () => import('../WFProduct/WFProduct.module').then(m => m.WFProductModule),
+    data: {
+        oPermission: {
+            permissionId: 'WFProduct-detail-permissions'
         }
     }
 },{

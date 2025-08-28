@@ -30,12 +30,70 @@
       
       <o-text-input #ModifiedBy attr="ModifiedBy" label="ModifiedBy" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
-      <o-text-input #ProcessId attr="ProcessId" label="ProcessId" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      <o-integer-input #ProcessId attr="ProcessId" label="ProcessId" type="integer" editable="no" required="no" ></o-integer-input>
       
     </div>
   </o-row>
       
       <mat-tab-group fxFill>
+        
+        <mat-tab label="LANEDEFINITION-ProcessId">
+    <div layout-padding>
+      <o-table 
+        attr="LaneDefinitionTable" 
+        service="LaneDefinition" 
+        entity="LaneDefinition" 
+        keys="LaneId"
+        parent-keys="ProcessId:ProcessId"
+        columns="LaneName;ProcessId;LaneDescription;EstimatedDurationDays;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;LaneId"  
+        horizontal-scroll="yes"
+        detail-form-route="LaneDefinition" 
+        edit-form-route="LaneDefinition"
+        visible-columns="LaneName;ProcessId;LaneDescription;EstimatedDurationDays;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;LaneId"  
+        sort-columns="LaneName" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #LaneName attr="LaneName" title=" Lane Name" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column attr="ProcessId" title="Process">
+    <o-table-cell-renderer-service attr="ProcessId" 
+        service="ProcessDefinition" entity="ProcessDefinitionType" columns="ProcessId;ProcessName"
+        parent-keys="ProcessId:ProcessId"
+        value-column="ProcessName" keys="ProcessId"
+        visible-columns="ProcessName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #LaneDescription attr="LaneDescription" title="LaneDescription" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #EstimatedDurationDays attr="EstimatedDurationDays" title="EstimatedDurationDays" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+        
+          <o-table-column #CreatedBy attr="CreatedBy" title="CreatedBy" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #ModifiedDate attr="ModifiedDate" title="ModifiedDate" type="DATETIME2" editable="no" required="no" ></o-table-column>
+        
+          <o-table-column #ModifiedBy attr="ModifiedBy" title="ModifiedBy" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #LaneId attr="LaneId" title="LaneId" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
         
         <mat-tab label="PROCESSINSTANCE-ProcessId">
     <div layout-padding>
@@ -65,13 +123,27 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #InstanceId attr="InstanceId" title=" Instance Id" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #InstanceId attr="InstanceId" title=" Instance Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column #CurrentTaskId attr="CurrentTaskId" title="CurrentTaskId" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column attr="CurrentTaskId" title="CurrentTask">
+    <o-table-cell-renderer-service attr="CurrentTaskId" 
+        service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
+        parent-keys="ProcessId:CurrentTaskId"
+        value-column="TaskName" keys="CurrentTaskId"
+        visible-columns="TaskName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Priority attr="Priority" title="Priority" editable="no" required="no" content-align="left"></o-table-column>
         
-          <o-table-column #ProcessId attr="ProcessId" title="ProcessId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="ProcessId" title="Process">
+    <o-table-cell-renderer-service attr="ProcessId" 
+        service="ProcessDefinition" entity="ProcessDefinitionType" columns="ProcessId;ProcessName"
+        parent-keys="ProcessId:ProcessId"
+        value-column="ProcessName" keys="ProcessId"
+        visible-columns="ProcessName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
         
@@ -122,7 +194,14 @@
         
           <o-table-column #TaskName attr="TaskName" title=" Task Name" editable="no" required="yes" content-align="left"></o-table-column>
         
-          <o-table-column #ProcessId attr="ProcessId" title="ProcessId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column attr="ProcessId" title="Process">
+    <o-table-cell-renderer-service attr="ProcessId" 
+        service="ProcessDefinition" entity="ProcessDefinitionType" columns="ProcessId;ProcessName"
+        parent-keys="ProcessId:ProcessId"
+        value-column="ProcessName" keys="ProcessId"
+        visible-columns="ProcessName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
         
           <o-table-column #TaskType attr="TaskType" title="TaskType" editable="no" required="yes" content-align="left"></o-table-column>
         
@@ -148,7 +227,7 @@
         
           <o-table-column #ConfigurationJson attr="ConfigurationJson" title="ConfigurationJson" editable="no" required="no" content-align="left"></o-table-column>
         
-          <o-table-column #TaskId attr="TaskId" title="TaskId" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #TaskId attr="TaskId" title="TaskId" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
           <o-table-column attr="IsRequired" title="IsRequired">
     <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"

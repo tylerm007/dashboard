@@ -22,13 +22,34 @@
             show-title="yes"
             export-button="yes">
             
-            <o-table-column #ValidationResultId attr="ValidationResultId" title=" Validation Result Id" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column #ValidationResultId attr="ValidationResultId" title=" Validation Result Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
             
-            <o-table-column #InstanceId attr="InstanceId" title="InstanceId" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column attr="InstanceId" title="Instance">
+    <o-table-cell-renderer-service attr="InstanceId" 
+        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
+        parent-keys="ValidationResultId:InstanceId"
+        value-column="InstanceId" keys="InstanceId"
+        visible-columns="InstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
             
-            <o-table-column #TaskInstanceId attr="TaskInstanceId" title="TaskInstanceId" editable="no" required="no" content-align="left"></o-table-column>
+            <o-table-column attr="TaskInstanceId" title="TaskInstance">
+    <o-table-cell-renderer-service attr="TaskInstanceId" 
+        service="TaskInstance" entity="TaskInstanceType" columns="TaskInstanceId;TaskInstanceId"
+        parent-keys="ValidationResultId:TaskInstanceId"
+        value-column="TaskInstanceId" keys="TaskInstanceId"
+        visible-columns="TaskInstanceId" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
             
-            <o-table-column #ValidationId attr="ValidationId" title="ValidationId" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column attr="ValidationId" title="Validation">
+    <o-table-cell-renderer-service attr="ValidationId" 
+        service="ValidationRule" entity="ValidationRuleType" columns="ValidationId;ValidationName"
+        parent-keys="ValidationResultId:ValidationId"
+        value-column="ValidationName" keys="ValidationId"
+        visible-columns="ValidationName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
             
             <o-table-column #ValidationMessage attr="ValidationMessage" title="ValidationMessage" editable="no" required="no" content-align="left"></o-table-column>
             
