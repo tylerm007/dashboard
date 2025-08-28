@@ -107,6 +107,8 @@ INSERT INTO TaskCategories (TaskCategoryCode, TaskCategoryDescription) VALUES
 ('Validation', 'Data validation task'),
 ('Action', 'Action task'),
 ('Decision', 'Decision gateway'),
+('Start', 'Start event'),
+('End', 'End event'),
 ('Notification', 'Notification task');
 
 -- Task Definitions within Processes
@@ -373,60 +375,25 @@ CREATE INDEX IX_WorkflowHistory_ActionDate ON WorkflowHistory(ActionDate);
 -- =============================================
 GO
 -- Insert the Admin Completion Workflow Process
-DECLARE @ProcessId INT = 1;
-INSERT INTO ProcessDefinitions (ProcessId, ProcessName, ProcessVersion, Description, CreatedBy)
-VALUES (@ProcessId, 'Application Workflow', '1.0', 'NCRC Application preprocessing and validation workflow for admins', 'admin');
+-- DECLARE 1 INT = 1;
+INSERT INTO ProcessDefinitions ( ProcessName, ProcessVersion, Description, CreatedBy)
+VALUES ( 'Application Workflow', '1.0', 'NCRC Application preprocessing and validation workflow for admins', 'admin');
 
--- Insert Task Definitions
-DECLARE @TaskIds TABLE (TaskName NVARCHAR(100), TaskId INT);
+INSERT INTO LaneDefinitions (ProcessId, LaneName, LaneDescription, EstimatedDurationDays, CreatedBy)
+VALUES (1, 'Application Initialization', 'Lane for reviewing applications', 2, 'admin');
 
--- Start Event
-DECLARE @StartTaskId INT = 1;
-INSERT INTO @TaskIds VALUES ('Start_Application_Submitted', @StartTaskId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
-VALUES (@StartTaskId, @ProcessId, 'Start_Application_Submitted', 'Event', 'Start', 1, 'System', 'Application submitted and ready for admin review', 1);
-
--- Admin Action Tasks
-DECLARE @MarkCompleteId INT 2;
-INSERT INTO @TaskIds VALUES ('Mark_Application_Complete', @MarkCompleteId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@MarkCompleteId, @ProcessId, 'Mark_Application_Complete', 'UserTask', 'Action', 10, 'Admin', 2, 'Admin marks application as complete and ready for dispatch');
-
-DECLARE @AdminActionGatewayId INT = 3;
-INSERT INTO @TaskIds VALUES ('Admin_Action_Gateway', @AdminActionGatewayId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
-VALUES (@AdminActionGatewayId, @ProcessId, 'Admin_Action_Gateway', 'Gateway', 'Decision', 11, 'Admin', 'Admin chooses next action: Dispatch, Undo, Comment, or Message', 0);
-
-DECLARE @DispatchToQueueId INT = 4;
-INSERT INTO @TaskIds VALUES ('Dispatch_To_Queue', @DispatchToQueueId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@DispatchToQueueId, @ProcessId, 'Dispatch_To_Queue', 'ServiceTask', 'Action', 12, 'Admin', 1, 'Send application to dispatcher review queue');
-
-DECLARE @UndoCompletionId INT = 5;
-INSERT INTO @TaskIds VALUES ('Undo_Completion', @UndoCompletionId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@UndoCompletionId, @ProcessId, 'Undo_Completion', 'UserTask', 'Action', 13, 'Admin', 1, 'Return application to incomplete status for further review');
-
-DECLARE @AddCommentId INT = 6;
-INSERT INTO @TaskIds VALUES ('Add_Internal_Comment', @AddCommentId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@AddCommentId, @ProcessId, 'Add_Internal_Comment', 'UserTask', 'Notification', 14, 'Admin', 3, 'Add internal comment for audit trail');
-
-DECLARE @SendMessageId INT = 7;
-INSERT INTO @TaskIds VALUES ('Send_Message_To_Dispatcher', @SendMessageId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, EstimatedDurationMinutes, Description)
-VALUES (@SendMessageId, @ProcessId, 'Send_Message_To_Dispatcher', 'UserTask', 'Notification', 15, 'Admin', 5, 'Send message to dispatcher about application status');
-
--- End States
-DECLARE @ApplicationDispatchedId INT = 8;
-INSERT INTO @TaskIds VALUES ('Application_Dispatched', @ApplicationDispatchedId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
-VALUES (@ApplicationDispatchedId, @ProcessId, 'Application_Dispatched', 'Event', 'End', 16, 'System', 'Application successfully dispatched to review queue', 1);
-
-DECLARE @UnderReviewId INT = 9;
-INSERT INTO @TaskIds VALUES ('Under_Review', @UnderReviewId);
-INSERT INTO TaskDefinitions (TaskId, ProcessId, TaskName, TaskType, TaskCategory, Sequence, AssigneeRole, Description, AutoComplete)
-VALUES (@UnderReviewId, @ProcessId, 'Under_Review', 'Event', 'End', 17, 'Dispatcher', 'Application is under review by dispatcher', 1);
+-- Insert Task Definitions for Admin Completion Workflow
+INSERT INTO TaskDefinitions (ProcessId, TaskName, TaskType, TaskCategory, Sequence, LaneId, AssigneeRole, EstimatedDurationMinutes, Description, AutoComplete)
+VALUES 
+    (1, 'Start_Application_Submitted', 'Event', 'Start', 1, 1, 'System', NULL, 'Application submitted and ready for admin review', 1),
+    (1, 'Mark_Application_Complete', 'UserTask', 'Action', 10, 1, 'Admin', 2, 'Admin marks application as complete and ready for dispatch', 0),
+    (1, 'Admin_Action_Gateway', 'Gateway', 'Decision', 11, 1, 'Admin', NULL, 'Admin chooses next action: Dispatch, Undo, Comment, or Message', 0),
+    (1, 'Dispatch_To_Queue', 'ServiceTask', 'Action', 12, 1, 'Admin', 1, 'Send application to dispatcher review queue', 0),
+    (1, 'Undo_Completion', 'UserTask', 'Action', 13, 1, 'Admin', 1, 'Return application to incomplete status for further review', 0),
+    (1, 'Add_Internal_Comment', 'UserTask', 'Notification', 14, 1, 'Admin', 3, 'Add internal comment for audit trail', 0),
+    (1, 'Send_Message_To_Dispatcher', 'UserTask', 'Notification', 15, 1, 'Admin', 5, 'Send message to dispatcher about application status', 0),
+    (1, 'Application_Dispatched', 'Event', 'End', 16, 1, 'System', NULL, 'Application successfully dispatched to review queue', 1),
+    (1, 'Under_Review', 'Event', 'End', 17, 1, 'Dispatcher', NULL, 'Application is under review by dispatcher', 1);
 GO
 -- =============================================
 -- Insert Validation Rules
@@ -505,16 +472,16 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @ProcessId INT;
+    DECLARE 1 INT;
     DECLARE @InstanceId INT = NEWID();
     DECLARE @StartTaskId INT;
     
     -- Get Process ID
-    SELECT @ProcessId = ProcessId 
+    SELECT 1 = ProcessId 
     FROM ProcessDefinitions 
     WHERE ProcessName = @ProcessName AND IsActive = 1;
     
-    IF @ProcessId IS NULL
+    IF 1 IS NULL
     BEGIN
         RAISERROR('Process definition not found: %s', 16, 1, @ProcessName);
         RETURN;
@@ -523,12 +490,12 @@ BEGIN
     -- Get Start Task
     SELECT TOP 1 @StartTaskId = TaskId 
     FROM TaskDefinitions 
-    WHERE ProcessId = @ProcessId AND TaskType = 'Event' AND TaskCategory = 'Start'
+    WHERE ProcessId = 1 AND TaskType = 'Event' AND TaskCategory = 'Start'
     ORDER BY Sequence;
     
     -- Create Process Instance
     INSERT INTO ProcessInstances (InstanceId, ProcessId, ApplicationId, CurrentTaskId, StartedBy, Priority)
-    VALUES (@InstanceId, @ProcessId, @ApplicationId, @StartTaskId, @StartedBy, @Priority);
+    VALUES (@InstanceId, 1, @ApplicationId, @StartTaskId, @StartedBy, @Priority);
     
     -- Log History
     INSERT INTO WorkflowHistory (InstanceId, Action, NewStatus, ActionBy, ActionReason)
