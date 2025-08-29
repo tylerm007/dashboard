@@ -11,6 +11,7 @@ from security.system.authorization import Grant, Security
 from logic.load_verify_rules import load_verify_rules
 import integration.kafka.kafka_producer as kafka_producer
 import logging
+from config import Config
 
 app_logger = logging.getLogger(__name__)
 
@@ -52,22 +53,22 @@ def declare_logic():
             opt_locking.opt_lock_patch(logic_row=logic_row)
 
         Grant.process_updates(logic_row=logic_row)
-
         did_stamping = False
-        if enable_stamping := False:  # #als:  DATE / USER STAMPING
+        enable_stamping = True
+        if enable_stamping:  # #als:  DATE / USER STAMPING
             row = logic_row.row
-            if logic_row.ins_upd_dlt == "ins" and hasattr(row, "CreatedOn"):
-                row.CreatedOn = datetime.datetime.now()
+            if logic_row.ins_upd_dlt == "ins" and hasattr(row, "CreatedDate"):
+                row.CreatedDate = datetime.datetime.now()
                 did_stamping = True
             if logic_row.ins_upd_dlt == "ins" and hasattr(row, "CreatedBy"):
                 row.CreatedBy = Security.current_user().id
                 #    if Config.SECURITY_ENABLED == True else 'public'
                 did_stamping = True
-            if logic_row.ins_upd_dlt == "upd" and hasattr(row, "UpdatedOn"):
-                row.UpdatedOn = datetime.datetime.now()
+            if logic_row.ins_upd_dlt == "upd" and hasattr(row, "ModifiedDate"):
+                row.ModifiedDate = datetime.datetime.now()
                 did_stamping = True
-            if logic_row.ins_upd_dlt == "upd" and hasattr(row, "UpdatedBy"):
-                row.UpdatedBy = Security.current_user().id  \
+            if logic_row.ins_upd_dlt == "upd" and hasattr(row, "ModifiedBy"):
+                row.ModifiedBy = Security.current_user().id  \
                     if Config.SECURITY_ENABLED == True else 'public'
                 did_stamping = True
             if did_stamping:

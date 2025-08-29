@@ -117,10 +117,13 @@ CREATE TABLE WF_Applications (
     SubmissionDate DATE NOT NULL,
     Status NVARCHAR(50) NOT NULL DEFAULT 'NEW',
     Priority NVARCHAR(20) DEFAULT 'NORMAL', -- 'Low', 'Normal', 'High', 'Critical'
-    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
-    LastUpdatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
-    LastStatusChangeDate DATETIME2 NOT NULL DEFAULT GETDATE(),
-    LastStatusChangedBy NVARCHAR(200) NULL, 
+    AssignedTo nvarchar(100) NULL, -- User email
+    AssignedBy nvarchar(100) NULL, -- User email
+    AssignedDate datetime2(7) NULL, -- Rule.formula when AssignedTo is not null return current_date
+    CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
+    CreatedBy nvarchar(100) NOT NULL DEFAULT 'System',
+    ModifiedDate datetime2(7) NULL,
+    ModifiedBy nvarchar(100) NULL,
     WFDashboardID INT NULL DEFAULT 1,
     FOREIGN KEY (WFDashboardID) REFERENCES WF_Dashboard(ID),
     FOREIGN KEY (Priority) REFERENCES WF_Priorities(PriorityCode),
@@ -200,7 +203,10 @@ CREATE TABLE WF_Quotes (
     ValidUntil DATE NOT NULL,
     Status NVARCHAR(10) NOT NULL DEFAULT 'PEND',
     LastUpdatedDate DATE NOT NULL,
-    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
+    CreatedBy nvarchar(100) NOT NULL DEFAULT 'System',
+    ModifiedDate datetime2(7) NULL,
+    ModifiedBy nvarchar(100) NULL,
     FOREIGN KEY (Status) REFERENCES WF_QuoteStatus (StatusCode),
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
 );
@@ -238,7 +244,10 @@ CREATE TABLE WF_Files (
     IsProcessed BIT NOT NULL DEFAULT 0,
     RecordCount INT NULL,
     FilePath NVARCHAR(1000) NULL,
-    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    CCreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
+    CreatedBy nvarchar(100) NOT NULL DEFAULT 'System',
+    ModifiedDate datetime2(7) NULL,
+    ModifiedBy nvarchar(100) NULL,
     FOREIGN KEY (FileType) REFERENCES WF_FileTypes(FileType),
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
 );
@@ -264,7 +273,10 @@ CREATE TABLE WF_ApplicationComments (
     CommentText NVARCHAR(MAX) NOT NULL,
     CommentType NVARCHAR(50) NOT NULL DEFAULT 'internal',
     Category NVARCHAR(100) NULL,
-    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
+    CreatedBy nvarchar(100) NOT NULL DEFAULT 'System',
+    ModifiedDate datetime2(7) NULL,
+    ModifiedBy nvarchar(100) NULL,
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
 );
 

@@ -53,6 +53,7 @@ IF OBJECT_ID('TaskTypes', 'U') IS NOT NULL DROP TABLE TaskTypes;
 IF OBJECT_ID('LaneDefinitions', 'U') IS NOT NULL DROP TABLE LaneDefinitions;
 
 -- Drop parent tables (tables with primary keys referenced by others)
+IF OBJECT_ID('LaneRoles', 'U') IS NOT NULL DROP TABLE LaneRoles;
 IF OBJECT_ID('StageStatus', 'U') IS NOT NULL DROP TABLE StageStatus;
 IF OBJECT_ID('TaskCommentTypes', 'U') IS NOT NULL DROP TABLE TaskCommentTypes;
 IF OBJECT_ID('ProcessMessageTypes', 'U') IS NOT NULL DROP TABLE ProcessMessageTypes;
@@ -75,17 +76,31 @@ CREATE TABLE ProcessDefinitions (
     ModifiedBy NVARCHAR(100)
 );
 
+-- Lookup table for Lane Roles
+CREATE TABLE LaneRoles (
+    RoleCode NVARCHAR(20) NOT NULL PRIMARY KEY,
+    RoleDescription NVARCHAR(255) NOT NULL
+);
+
+INSERT INTO LaneRoles (RoleCode, RoleDescription) VALUES
+    ('NCRC', 'NCRC - National Council of Rabbinical Certification'),
+    ('Sales', 'Sales Team'),
+    ('Legal', 'Legal Department'),
+    ('Finance', 'Finance Department'),
+    ('Ingredients', 'Ingredients Review Team'),
+    ('Products', 'Products Review Team');
 CREATE TABLE LaneDefinitions(
 	LaneId INT IDENTITY(1,1) PRIMARY KEY,
 	ProcessId INT NOT NULL,
 	LaneName nvarchar(100) NOT NULL,
 	LaneDescription nvarchar(500) NULL,
 	EstimatedDurationDays int NULL,
-    LaneRole NVARCHAR(100) NOT NULL DEFAULT 'NCRC', -- NCRC, Sales, Legal, Finance, Ingredients, Products
+    LaneRole NVARCHAR(20) NOT NULL DEFAULT 'NCRC', -- NCRC, Sales, Legal, Finance, Ingredients, Products
 	CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
 	CreatedBy nvarchar(100) NOT NULL,
     ModifiedDate datetime2(7) NULL,
     ModifiedBy nvarchar(100) NULL,
+    FOREIGN KEY (LaneRole) REFERENCES LaneRoles(RoleCode),
     FOREIGN KEY (ProcessId) REFERENCES ProcessDefinitions(ProcessId)
 );
 
@@ -123,7 +138,7 @@ CREATE TABLE TaskDefinitions (
     Sequence INT NOT NULL,
     LaneId INT NOT NULL,
     IsParallel BIT NOT NULL DEFAULT 0,
-    AssigneeRole NVARCHAR(50), -- Inherited role for process definition 
+    AssigneeRole NVARCHAR(20), -- Inherited role for process definition 
     EstimatedDurationMinutes INT,
     IsRequired BIT NOT NULL DEFAULT 1,
     AutoComplete BIT NOT NULL DEFAULT 0,
@@ -179,7 +194,7 @@ CREATE TABLE ProcessInstances (
     ProcessId INT NOT NULL,
     ApplicationId INT NOT NULL, -- wf_application reference
     Status NVARCHAR(10) NOT NULL DEFAULT 'NEW', -- 'Active', 'Completed', 'Suspended', 'Terminated'
-    CurrentTaskId INT,
+    CurrentTaskId INT, -- ? NOT SURE HOW TO MAKE THIS WORK
     StartedDate DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     StartedBy NVARCHAR(100) NOT NULL,
     CompletedDate DATETIME2,
@@ -211,9 +226,12 @@ CREATE TABLE StageInstance(
     LaneId INT NOT NULL, -- link back to LaneDefinitions
     Status nvarchar(20) NOT NULL DEFAULT 'NEW',
     StartedDate datetime2(7) NULL,
-    CompletedDate datetime2(7) NULL,
+    CompletedDate datetime2(7) NULL, -- RULE.formula when Status == Completed return current_date
     DurationDays  AS (datediff(day,StartedDate,CompletedDate)),
     RetryCount int NULL,
+    AssignedTo nvarchar(100) NULL, -- User email
+    AssignedBy nvarchar(100) NULL, -- User email
+    AssignedDate datetime2(7) NULL, -- Rule.formula when AssignedTo is not null return current_date
     CompletedCount int NULL, -- Rule to Count Completed Tasks
     TotalCount int NULL, -- Rule to Count Total Tasks
     CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
