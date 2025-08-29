@@ -32,7 +32,7 @@ IF OBJECT_ID('fn_AllValidationsPassed', 'FN') IS NOT NULL DROP FUNCTION fn_AllVa
 IF OBJECT_ID('sp_StartWorkflowInstance', 'P') IS NOT NULL DROP PROCEDURE sp_StartWorkflowInstance;
 IF OBJECT_ID('sp_CompleteTask', 'P') IS NOT NULL DROP PROCEDURE sp_CompleteTask;
 IF OBJECT_ID('sp_RunValidationCheck', 'P') IS NOT NULL DROP PROCEDURE sp_RunValidationCheck;
-IF OBJECT_ID('sp_AddMessage', 'P') IS NOT NULL DROP PROCEDURE sp_AddMessage;
+IF OBJECT_ID('sp_AddMessage', 'P') IS NOT NULL DROP PROCEDURE IF EXISTS sp_AddMessage;
 IF OBJECT_ID('sp_AddComment', 'P') IS NOT NULL DROP PROCEDURE sp_AddComment;
 IF OBJECT_ID('sp_GetWorkflowStatus', 'P') IS NOT NULL DROP PROCEDURE sp_GetWorkflowStatus;
 
@@ -44,6 +44,7 @@ IF OBJECT_ID('ProcessMessages', 'U') IS NOT NULL DROP TABLE ProcessMessages;
 IF OBJECT_ID('ValidationResults', 'U') IS NOT NULL DROP TABLE ValidationResults;
 IF OBJECT_ID('StageInstance', 'U') IS NOT NULL DROP TABLE StageInstance;
 IF OBJECT_ID('TaskInstances', 'U') IS NOT NULL DROP TABLE TaskInstances;
+IF OBJECT_ID('TaskStatus','U') IS NOT NULL DROP TABLE TaskStatus;
 IF OBJECT_ID('ProcessInstances', 'U') IS NOT NULL DROP TABLE ProcessInstances;
 IF OBJECT_ID('TaskFlow', 'U') IS NOT NULL DROP TABLE TaskFlow;
 IF OBJECT_ID('TaskDefinitions', 'U') IS NOT NULL DROP TABLE TaskDefinitions;
@@ -241,7 +242,7 @@ CREATE TABLE TaskInstances (
     TaskInstanceId INT IDENTITY(1,1) PRIMARY KEY,
     InstanceId INT NOT NULL, -- ProcessInstance
     TaskId INT NOT NULL, -- TaskDefinition
-    Status NVARCHAR(30) NOT NULL DEFAULT 'Pending', -- 'Pending', 'InProgress', 'Completed', 'Failed', 'Skipped'
+    Status NVARCHAR(20) NOT NULL DEFAULT 'Pending', -- 'Pending', 'InProgress', 'Completed', 'Failed', 'Skipped'
     AssignedTo NVARCHAR(100),
     StartedDate DATETIME2,
     CompletedDate DATETIME2,

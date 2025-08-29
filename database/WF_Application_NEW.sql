@@ -13,8 +13,8 @@ use dashboard;
 -- =============================================
 -- Drop child tables first (tables with foreign keys)
 DROP TABLE IF EXISTS WF_ActivityLog;
-DROP TABLE IF EXISTS WF_Comments;
-DROP TABLE IF EXISTS WF_Messages;
+DROP TABLE IF EXISTS WF_ApplicationComments;
+DROP TABLE IF EXISTS WF_ApplicationMessages;
 DROP TABLE IF EXISTS WF_Files;
 DROP TABLE IF EXISTS WF_QuoteItems;
 DROP TABLE IF EXISTS WF_Quotes;
@@ -22,20 +22,17 @@ DROP TABLE IF EXISTS WF_Ingredients;
 DROP TABLE IF EXISTS WF_Products;
 DROP TABLE IF EXISTS WF_Plants;
 DROP TABLE IF EXISTS WF_Contacts;
-DROP TABLE IF EXISTS WF_ValidationChecks;
 DROP TABLE IF EXISTS WF_Companies;
-DROP TABLE IF EXISTS WF_Priorities;
-DROP TABLE IF EXISTS WF_QuoteStatus;
--- Drop parent tables
 DROP TABLE IF EXISTS WF_Applications;
 DROP TABLE IF EXISTS WF_Users;
-DROP TABLE IF EXISTS WF_Dashboard;
 
--- Drop lookup/reference tables
+-- Drop parent/reference tables
+DROP TABLE IF EXISTS WF_Dashboard;
 DROP TABLE IF EXISTS WF_FileTypes;
 DROP TABLE IF EXISTS WF_ActivityStatus;
-DROP TABLE IF EXISTS WF_QouteStatus;
-DROP TABLE IF EXISTS WF_Applicationstatus;
+DROP TABLE IF EXISTS WF_QuoteStatus;
+DROP TABLE IF EXISTS WF_ApplicationStatus;
+DROP TABLE IF EXISTS WF_Priorities;
 DROP TABLE IF EXISTS WF_Roles;
 
 -- =============================================
@@ -331,9 +328,9 @@ INSERT INTO WF_Users (Username, FullName, Email, Role) VALUES
 
 -- Insert Application
 INSERT INTO WF_Applications (
-    ApplicationNumber, CompanyID, SubmissionDate, Status, PrimaryContactName, Version
+    ApplicationNumber, CompanyID, SubmissionDate, Status
 ) VALUES (
-    'APP-2025-0717-001', 1, '2025-07-17', 'NEW', 'John Mitchell', '1.2.0'
+    9999, 1, '2025-07-17', 'NEW'
 );
     -- -- Insert Company
     -- INSERT INTO Companies (
@@ -439,9 +436,7 @@ INSERT INTO WF_ActivityLog (ApplicationID, ActionType, ActionDetails, UserName, 
 -- Application Overview
 SELECT 
     a.ApplicationNumber,
-    c.CompanyName,
     a.Status,
-    a.PrimaryContactName,
     COUNT(DISTINCT p.ProductID) as ProductCount,
     COUNT(DISTINCT i.IngredientID) as IngredientCount,
     COUNT(DISTINCT f.FileID) as FileCount
@@ -450,18 +445,9 @@ INNER JOIN WF_Companies c ON a.CompanyID = c.CompanyID
 LEFT JOIN WF_Products p ON a.ApplicationID = p.ApplicationID
 LEFT JOIN WF_Ingredients i ON a.ApplicationID = i.ApplicationID
 LEFT JOIN WF_Files f ON a.ApplicationID = f.ApplicationID
-WHERE a.ApplicationNumber = 'APP-2025-0717-001'
-GROUP BY a.ApplicationNumber, c.CompanyName, a.Status, a.PrimaryContactName;
+WHERE a.ApplicationNumber = 1
+GROUP BY a.ApplicationNumber, a.Status;
 
--- Validation Status
-SELECT 
-    CheckType,
-    IsValid,
-    ValidationMessage,
-    LastCheckedDate
-FROM ValidationChecks 
-WHERE ApplicationID = 1
-ORDER BY CheckType;
 
 -- Recent Activity (last 7 days)
 SELECT 
@@ -475,14 +461,6 @@ WHERE ApplicationID = 1
 AND ActivityDate >= DATEADD(day, -7, GETDATE())
 ORDER BY ActivityDate DESC;
 
--- Ingredients by Status
-SELECT 
-    Status,
-    COUNT(*) as Count,
-    STRING_AGG(IngredientName, ', ') as Ingredients
-FROM WF_Ingredients 
-WHERE ApplicationID = 1
-GROUP BY Status;
 
 -- Files Processing Status
 SELECT 
