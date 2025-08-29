@@ -244,7 +244,7 @@ CREATE TABLE WF_Files (
     IsProcessed BIT NOT NULL DEFAULT 0,
     RecordCount INT NULL,
     FilePath NVARCHAR(1000) NULL,
-    CCreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
+    CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
     CreatedBy nvarchar(100) NOT NULL DEFAULT 'System',
     ModifiedDate datetime2(7) NULL,
     ModifiedBy nvarchar(100) NULL,

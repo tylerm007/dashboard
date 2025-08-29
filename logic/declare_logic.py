@@ -11,7 +11,7 @@ from security.system.authorization import Grant, Security
 from logic.load_verify_rules import load_verify_rules
 import integration.kafka.kafka_producer as kafka_producer
 import logging
-from config import Config
+from config.config import Config
 
 app_logger = logging.getLogger(__name__)
 

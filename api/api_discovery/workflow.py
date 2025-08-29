@@ -116,6 +116,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
                                 #LaneId=row.LaneId,
                                 StageId=StageInstance.StageInstanceId,
                                 Status='PEND',
+                                #isActive = False,
                                 CreatedDate=datetime.utcnow(),
                                 CreatedBy=started_by
                         )
