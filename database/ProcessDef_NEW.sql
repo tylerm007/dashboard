@@ -80,6 +80,7 @@ CREATE TABLE LaneDefinitions(
 	LaneName nvarchar(100) NOT NULL,
 	LaneDescription nvarchar(500) NULL,
 	EstimatedDurationDays int NULL,
+    LaneRole NVARCHAR(100) NOT NULL DEFAULT 'NCRC', -- NCRC, Sales, Legal, Finance, Ingredients, Products
 	CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
 	CreatedBy nvarchar(100) NOT NULL,
     ModifiedDate datetime2(7) NULL,
@@ -92,11 +93,11 @@ CREATE TABLE TaskTypes (
     TaskTypeDescription NVARCHAR(255) NOT NULL
 );
 INSERT INTO TaskTypes (TaskTypeCode, TaskTypeDescription) VALUES
-('UserTask', 'Task performed by a user'),
-('ServiceTask', 'Automated service task'),
-('ScriptTask', 'Script execution task'),
-('Gateway', 'Decision point in the workflow'),
-('Event', 'Start or end event');
+    ('UserTask', 'Task performed by a user'),
+    ('ServiceTask', 'Automated service task'),
+    ('ScriptTask', 'Script execution task'),
+    ('Gateway', 'Decision point in the workflow'),
+    ('Event', 'Start or end event');
 
 CREATE TABLE TaskCategories (
     TaskCategoryCode NVARCHAR(20) NOT NULL PRIMARY KEY,
@@ -104,12 +105,12 @@ CREATE TABLE TaskCategories (
 );  
 
 INSERT INTO TaskCategories (TaskCategoryCode, TaskCategoryDescription) VALUES
-('Validation', 'Data validation task'),
-('Action', 'Action task'),
-('Decision', 'Decision gateway'),
-('Start', 'Start event'),
-('End', 'End event'),
-('Notification', 'Notification task');
+    ('Validation', 'Data validation task'),
+    ('Action', 'Action task'),
+    ('Decision', 'Decision gateway'),
+    ('Start', 'Start event'),
+    ('End', 'End event'),
+    ('Notification', 'Notification task');
 
 -- Task Definitions within Processes
 CREATE TABLE TaskDefinitions (
@@ -121,7 +122,7 @@ CREATE TABLE TaskDefinitions (
     Sequence INT NOT NULL,
     LaneId INT NOT NULL,
     IsParallel BIT NOT NULL DEFAULT 0,
-    AssigneeRole NVARCHAR(50),
+    AssigneeRole NVARCHAR(50), -- Inherited role for process definition 
     EstimatedDurationMinutes INT,
     IsRequired BIT NOT NULL DEFAULT 1,
     AutoComplete BIT NOT NULL DEFAULT 0,
@@ -166,16 +167,16 @@ CREATE TABLE ProcessPriorities (
 );  
 
 INSERT INTO ProcessPriorities (PriorityCode, PriorityDescription) VALUES
-('LOW', 'Low Priority'),
-('NORMAL', 'Normal Priority'),
-('HIGH', 'High Priority'),
-('CRITICAL', 'Critical Priority');
+    ('LOW', 'Low Priority'),
+    ('NORMAL', 'Normal Priority'),
+    ('HIGH', 'High Priority'),
+    ('CRITICAL', 'Critical Priority');
 
 -- Application Workflow Instances
 CREATE TABLE ProcessInstances (
     InstanceId INT IDENTITY(1,1) PRIMARY KEY,
     ProcessId INT NOT NULL,
-    ApplicationId NVARCHAR(50) NOT NULL, -- External application reference
+    ApplicationId INT NOT NULL, -- wf_application reference
     Status NVARCHAR(10) NOT NULL DEFAULT 'NEW', -- 'Active', 'Completed', 'Suspended', 'Terminated'
     CurrentTaskId INT,
     StartedDate DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
@@ -197,24 +198,25 @@ CREATE TABLE StageStatus (
 );
 
 INSERT INTO StageStatus (StatusCode, StatusDescription) VALUES
-('NEW', 'Stage is new'),
-('IN_PROGRESS', 'Stage is in progress'),
-('OVERDUE', 'Stage is overdue'),
-('COMPLETED', 'Stage has been completed');
+    ('NEW', 'Stage is new'),
+    ('IN_PROGRESS', 'Stage is in progress'),
+    ('OVERDUE', 'Stage is overdue'),
+    ('COMPLETED', 'Stage has been completed');
 
+-- Stage Instance is a specific instance of a stage within a process
 CREATE TABLE StageInstance(
     StageInstanceId INT IDENTITY(1,1) PRIMARY KEY,
     ProcessInstanceId INT NOT NULL,
-    LaneId INT NOT NULL,
+    LaneId INT NOT NULL, -- link back to LaneDefinitions
     Status nvarchar(20) NOT NULL DEFAULT 'NEW',
     StartedDate datetime2(7) NULL,
     CompletedDate datetime2(7) NULL,
     DurationDays  AS (datediff(day,StartedDate,CompletedDate)),
     RetryCount int NULL,
-    CompletedCount int NULL,
-    TotalCount int NULL,
+    CompletedCount int NULL, -- Rule to Count Completed Tasks
+    TotalCount int NULL, -- Rule to Count Total Tasks
     CreatedDate datetime2(7) NOT NULL DEFAULT GETUTCDATE(),
-    CreatedBy nvarchar(100) NOT NULL,
+    CreatedBy nvarchar(100) NOT NULL DEFAULT 'System',
     ModifiedDate datetime2(7) NULL,
     ModifiedBy nvarchar(100) NULL,
     FOREIGN KEY (ProcessInstanceId) REFERENCES ProcessInstances(InstanceId),
@@ -222,13 +224,24 @@ CREATE TABLE StageInstance(
     FOREIGN KEY (Status) REFERENCES StageStatus(StatusCode)
 );
 
+-- Task Status Lookup Table
+CREATE TABLE TaskStatus (
+    StatusCode NVARCHAR(20) NOT NULL PRIMARY KEY,
+    StatusDescription NVARCHAR(255) NOT NULL
+);
 
+INSERT INTO TaskStatus (StatusCode, StatusDescription) VALUES
+    ('Pending', 'Task is pending execution'),
+    ('InProgress', 'Task is currently being executed'),
+    ('Completed', 'Task has been completed successfully'),
+    ('Failed', 'Task execution has failed'),
+    ('Skipped', 'Task has been skipped');
 -- Task Instance Execution
 CREATE TABLE TaskInstances (
     TaskInstanceId INT IDENTITY(1,1) PRIMARY KEY,
     InstanceId INT NOT NULL, -- ProcessInstance
     TaskId INT NOT NULL, -- TaskDefinition
-    Status NVARCHAR(50) NOT NULL DEFAULT 'Pending', -- 'Pending', 'InProgress', 'Completed', 'Failed', 'Skipped'
+    Status NVARCHAR(30) NOT NULL DEFAULT 'Pending', -- 'Pending', 'InProgress', 'Completed', 'Failed', 'Skipped'
     AssignedTo NVARCHAR(100),
     StartedDate DATETIME2,
     CompletedDate DATETIME2,
@@ -237,6 +250,7 @@ CREATE TABLE TaskInstances (
     ResultData NVARCHAR(MAX), -- JSON result data
     ErrorMessage NVARCHAR(1000),
     RetryCount INT DEFAULT 0,
+    FOREIGN KEY (Status) REFERENCES TaskStatus(StatusCode),
     FOREIGN KEY (InstanceId) REFERENCES ProcessInstances(InstanceId),
     FOREIGN KEY (TaskId) REFERENCES TaskDefinitions(TaskId)
 );
@@ -282,10 +296,10 @@ CREATE TABLE ProcessMessageTypes (
 );
 
 INSERT INTO ProcessMessageTypes (MessageTypeCode, MessageTypeDescription) VALUES
-('Standard', 'Standard message'),
-('Urgent', 'Urgent message requiring immediate attention'),
-('System', 'System-generated message'),
-('Notification', 'Notification message');
+    ('Standard', 'Standard message'),
+    ('Urgent', 'Urgent message requiring immediate attention'),
+    ('System', 'System-generated message'),
+    ('Notification', 'Notification message');
 -- ProcessMessages
 CREATE TABLE ProcessMessages (
     MessageId INT IDENTITY(1,1) PRIMARY KEY,
@@ -310,14 +324,14 @@ CREATE TABLE TaskCommentTypes (
 );
 
 INSERT INTO TaskCommentTypes (CommentTypeCode, CommentTypeDescription) VALUES
-('Internal', 'Internal comment for staff use only'),
-('External', 'External comment visible to clients'),
-('System', 'System-generated comment');
+    ('Internal', 'Internal comment for staff use only'),
+    ('External', 'External comment visible to clients'),
+    ('System', 'System-generated comment');
 
 -- TaskComments
 CREATE TABLE TaskComments (
     CommentId INT IDENTITY(1,1) PRIMARY KEY,
-    InstanceId INT NOT NULL,
+    ProcessInstanceId INT NOT NULL,
     TaskInstanceId INT,
     CommentType NVARCHAR(10) DEFAULT 'Internal', -- 'Internal', 'External', 'System'
     CommentText NVARCHAR(MAX) NOT NULL,
@@ -325,7 +339,7 @@ CREATE TABLE TaskComments (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     IsVisible BIT NOT NULL DEFAULT 1,
     FOREIGN KEY (CommentType) REFERENCES TaskCommentTypes(CommentTypeCode),
-    FOREIGN KEY (InstanceId) REFERENCES ProcessInstances(InstanceId),
+    FOREIGN KEY (ProcessInstanceId) REFERENCES ProcessInstances(InstanceId),
     FOREIGN KEY (TaskInstanceId) REFERENCES TaskInstances(TaskInstanceId)
 );
 
@@ -380,7 +394,17 @@ INSERT INTO ProcessDefinitions ( ProcessName, ProcessVersion, Description, Creat
 VALUES ( 'Application Workflow', '1.0', 'NCRC Application preprocessing and validation workflow for admins', 'admin');
 
 INSERT INTO LaneDefinitions (ProcessId, LaneName, LaneDescription, EstimatedDurationDays, CreatedBy)
-VALUES (1, 'Application Initialization', 'Lane for reviewing applications', 2, 'admin');
+VALUES 
+    (1, 'Application Initialization', 'Lane for reviewing applications', 2, 'admin'),
+    (1, 'Sales Review', 'Lane for reviewing sales', 2, 'admin'),
+    (1, 'NDA Review', 'Lane for reviewing NDA ', 2, 'admin'),
+    (1, 'Products Review', 'Lane for reviewing products ', 2, 'admin'),
+    (1, 'Ingredients Review', 'Lane for reviewing ingredients ', 2, 'admin'),
+    (1, 'Legal Review', 'Lane for reviewing legal aspects ', 2, 'admin'),
+    (1, 'Invoice Review', 'Lane for reviewing invoice payments', 2, 'admin'),
+    (1, 'Certification Review', 'Lane for  certification ', 2, 'admin');
+
+
 
 -- Insert Task Definitions for Admin Completion Workflow
 INSERT INTO TaskDefinitions (ProcessId, TaskName, TaskType, TaskCategory, Sequence, LaneId, AssigneeRole, EstimatedDurationMinutes, Description, AutoComplete)

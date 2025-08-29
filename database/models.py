@@ -1073,4 +1073,243 @@ class OWNSTB(Base):  # type: ignore
     COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("OWNSTBList"))
     PLANT_TB : Mapped["PLANTTB"] = relationship(back_populates=("OWNSTBList"))
     #PERSON_JOB_TB : Mapped["PERSONJOBTB"] = relationship(back_populates=("OWNSTBList"))
+    
+
+class PLANTADDRESSTB(Base):  # type: ignore
+    __tablename__ = 'PLANT_ADDRESS_TB'
+    _s_collection_name = 'PLANTADDRESSTB'  # type: ignore
+    __bind_key__ = 'ou'
+
+    ID = Column(Integer, server_default=text("0"), primary_key=True)
+    PLANT_ID = Column(ForeignKey('PLANT_TB.PLANT_ID'), nullable=False, index=True)
+    ADDRESS_SEQ_NUM = Column(Integer, nullable=False)
+    TYPE = Column(String(40), nullable=False)
+    ATTN = Column(String(40))
+    STREET1 = Column(String(60), server_default=text("('')"))
+    STREET2 = Column(String(60))
+    STREET3 = Column(String(60))
+    CITY = Column(String(40), server_default=text("('')"))
+    STATE = Column(String(25), server_default=text("('')"))
+    ZIP = Column(String(25))
+    COUNTRY = Column(String(25), server_default=text("('')"))
+    TIMESTAMP = Column(BINARY(8))
+    ACTIVE = Column(Integer)
+    COMPANY_ID = Column(ForeignKey('COMPANY_TB.COMPANY_ID'))
+    ValidFromTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'1900-01-01 00:00:00'))"), nullable=False)
+    ValidToTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'9999-12-31 23:59:59.9999999'))"), nullable=False)
+    CHANGESET_ID = Column(Integer, index=True)
+
+    # parent relationships (access parent)
+    COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("PLANTADDRESSTBList"))
+    PLANT_TB : Mapped["PLANTTB"] = relationship(back_populates=("PLANTADDRESSTBList"))
+
+
+class USEDIN1TB(Base):  # type: ignore
+    __tablename__ = 'USED_IN1_TB'
+    _s_collection_name = 'USEDIN1TB'  # type: ignore
+    __table_args__ = (
+        Index('IdxUsedInLabelIdOwnsIdUidActive', 'LabelID', 'OWNS_ID', 'ID', 'ACTIVE'),
+        Index('idxLabelID', 'LabelID', 'OWNS_ID'),
+        Index('ix_USED_IN1_TB_ACTIVE_LineItem_includes', 'ACTIVE', 'LineItem'),
+        Index('idxSubmissionDetail', 'JobID', 'LineItem', 'ACTIVE')
+    )
+    __bind_key__ = 'ou'
+
+    ID = Column(Integer, server_default=text("0"), primary_key=True)
+    BRAND_NAME = Column(String(100))
+    PROC_LINE_ID = Column(Integer)
+    START_DATE = Column(SMALLDATETIME, server_default=text("(getdate())"))
+    END_DATE = Column(DateTime)
+    TIMESTAMP = Column(BINARY(8))
+    STATUS = Column(String(20))
+    COMMENT = Column(String(255), server_default=text("('')"))
+    ACTIVE = Column(Integer, index=True)
+    OWNS_ID = Column(ForeignKey('OWNS_TB.ID'), index=True)
+    RAW_MATERIAL_CODE = Column(String(500), server_default=text("('')"))
+    ENTERED_BY = Column(String(75), server_default=text("(suser_sname())"))
+    Ing_Name_ps = Column(String(75))
+    JobID = Column(Integer)
+    Comment_NTA = Column(String(255))
+    LineItem = Column(SmallInteger, index=True)
+    DoNotDelete = Column(String(1), server_default=text("('N')"))
+    BrokerID = Column(ForeignKey('COMPANY_TB.COMPANY_ID'), server_default=text("((0))"))
+    PreferredBrokerContactID = Column(Integer, server_default=text("((0))"))
+    PreferredSourceContactID = Column(Integer, server_default=text("((0))"))
+    PassoverProductionUse = Column(String(15), server_default=text("('Non Passover')"))
+    LocReceivedStatus = Column(Integer)
+    InternalCode = Column(String(50))
+    LabelID = Column(ForeignKey('label_tb.ID'), index=True)
+    ValidFromTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'1900-01-01 00:00:00'))"), nullable=False)
+    ValidToTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'9999-12-31 23:59:59.9999999'))"), nullable=False)
+    CHANGESET_ID = Column(Integer, index=True)
+
+    # parent relationships (access parent)
+    COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("USEDIN1TBList"))
+    label_tb : Mapped["LabelTb"] = relationship(back_populates=("USEDIN1TBList"))
+    OWNS_TB : Mapped["OWNSTB"] = relationship(back_populates=("USEDIN1TBList"))
+
+    # child relationships (access children)
+
+
+class MERCHTB(Base):  # type: ignore
+    __tablename__ = 'MERCH_TB'
+    _s_collection_name = 'MERCHTB'  # type: ignore
+    __table_args__ = (
+        Index('ix_MERCH_TB_ACTIVE_Reviewed_includes', 'ACTIVE', 'Reviewed'),
+        Index('idx_MerchandiseID_Active', 'MERCHANDISE_ID', 'ACTIVE', unique=True),
+        Index('idxSymbol', 'Symbol', 'MERCHANDISE_ID', 'ACTIVE')
+    )
+    __bind_key__ = 'ou'
+
+    MERCHANDISE_ID = Column(Integer, server_default=text("0"), primary_key=True)
+    NAME = Column(String(225), nullable=False)
+    AS_STIPULATED = Column(String(1), server_default=text("('N')"))
+    STIPULATION = Column(String(1000), server_default=text("('')"))
+    CONFIDENTIAL = Column(String(1), server_default=text("('N')"))
+    RETAIL = Column(String(1))
+    FOODSERVICE = Column(String(1))
+    CONSUMER = Column(String(1))
+    INDUSTRIAL = Column(String(1))
+    INSTITUTIONAL = Column(String(1), server_default=text("('N')"))
+    OUP_REQUIRED = Column(String(2), server_default=text("('N')"))
+    GENERIC = Column(String(1))
+    SPECIFIED_SOURCE = Column(String(1))
+    SPECIFIED_SYMBOL = Column(String(1))
+    DESCRIPTION = Column(String(80))
+    DPM = Column(String(20))
+    PESACH = Column(String(1), server_default=text("('N')"))
+    COMMENT = Column(String(250))
+    ACTIVE = Column(Integer)
+    CONFIDENTIAL_TEXT = Column(String(500))
+    GROUP_COMMENT = Column(String(100))
+    STATUS = Column(String(25))
+    LOC_CATEGORY = Column(String(80), server_default=text("('')"))
+    LOC_SELECTED = Column(String(80))
+    COMMENTS_SCHED_B = Column(String(250))
+    PROD_NUM = Column(String(25), server_default=text("('')"))
+    INTERMEDIATE_MIX = Column(String(1), server_default=text("('N')"))
+    ALTERNATE_NAME = Column(String(80))
+    BrochoCode = Column(SmallInteger, server_default=text("((0))"))
+    Brocho2Code = Column(SmallInteger, server_default=text("((0))"))
+    CAS = Column(String(30), server_default=text("('')"))
+    Symbol = Column(String(50), server_default=text("('')"))
+    LOC = Column(Date)
+    UKDdisplay = Column(String(1), server_default=text("('Y')"))
+    Reviewed = Column(Boolean)
+    TransferredTo = Column(Boolean, server_default=text("((0))"), nullable=False)
+    TransferredMerch = Column(Integer)
+    Special_Status = Column(String(255))
+    ValidFromTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'1900-01-01 00:00:00'))"), nullable=False)
+    ValidToTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'9999-12-31 23:59:59.9999999'))"), nullable=False)
+    CHANGESET_ID = Column(Integer, index=True)
+
+    # parent relationships (access parent)
+
+    # child relationships (access children)
+    FormulaProductList : Mapped[List["FormulaProduct"]] = relationship(back_populates="MERCH_TB")
+    #MERCHOTHERNAMEList : Mapped[List["MERCHOTHERNAME"]] = relationship(back_populates="MERCH_TB")
+    #YoshonInfoList : Mapped[List["YoshonInfo"]] = relationship(back_populates="Merch")
+    LabelTbList : Mapped[List["LabelTb"]] = relationship(back_populates="MERCH_TB")
+    #FormulaComponentList : Mapped[List["FormulaComponent"]] = relationship(back_populates="MERCH_TB")
+    #FormulaSubmissionComponentList : Mapped[List["FormulaSubmissionComponent"]] = relationship(back_populates="MERCH_TB")
+
+
+
+class FormulaProduct(Base):  # type: ignore
+    __tablename__ = 'FormulaProduct'
+    _s_collection_name = 'FormulaProduct'  # type: ignore
+    __bind_key__ = 'ou'
+
+    ID = Column(Integer, server_default=text("0"), primary_key=True)
+    FormulaID = Column(Integer, nullable=False)
+    Merchandise_ID = Column(ForeignKey('MERCH_TB.MERCHANDISE_ID'), nullable=False)
+
+    # parent relationships (access parent)
+    MERCH_TB : Mapped["MERCHTB"] = relationship(back_populates=("FormulaProductList"))
+
+
+class LabelTb(Base):  # type: ignore
+    __tablename__ = 'label_tb'
+    _s_collection_name = 'LabelTb'  # type: ignore
+    __table_args__ = (
+        Index('<idxLBL', 'ACTIVE', 'SRC_MAR_ID'),
+        Index('idx_test', 'LABEL_SEQ_NUM', 'ACTIVE'),
+        Index('ix_label_tb_ACTIVE_LABEL_SEQ_NUM_AgencyID_includes', 'ACTIVE', 'LABEL_SEQ_NUM', 'AgencyID'),
+        Index('labelidx4', 'SRC_MAR_ID', 'ID'),
+        Index('cidxLBL', 'ACTIVE', 'SRC_MAR_ID'),
+        Index('LabelMerchStat', 'MERCHANDISE_ID', 'ACTIVE'),
+        Index('idxlabelmidbrnd', 'MERCHANDISE_ID', 'LABEL_SEQ_NUM'),
+        Index('ix_label_tb_ACTIVE_LABEL_SEQ_NUM_includes', 'ACTIVE', 'LABEL_SEQ_NUM'),
+        Index('MerchLSN', 'MERCHANDISE_ID', 'LABEL_SEQ_NUM', 'LABEL_TYPE', 'SRC_MAR_ID', 'ACTIVE', 'BRAND_NAME', 'AgencyID', 'SEAL_SIGN', 'NUM_NAME', 'BLK'),
+        Index('CompListWithLOC', 'ACTIVE', 'LABEL_SEQ_NUM'),
+        Index('ix_label_tb_ACTIVE_LABEL_TYPE_includes', 'ACTIVE', 'LABEL_TYPE'),
+        Index('MerchSrc', 'MERCHANDISE_ID', 'SRC_MAR_ID', 'ACTIVE', 'LABEL_SEQ_NUM', 'GRP'),
+        Index('idxLSNAgencyIDBLKBrandConfConsGRPetc', 'ACTIVE', 'LABEL_SEQ_NUM'),
+        Index('ix_label_tb_LOChold_ACTIVE_AgencyID_LOCholdDate', 'LOChold', 'ACTIVE', 'AgencyID', 'LOCholdDate'),
+        Index('IDX_NUM', 'LABEL_NUM', 'MERCHANDISE_ID', 'LABEL_SEQ_NUM', 'SRC_MAR_ID', 'LABEL_TYPE', 'LOChold'),
+        Index('IX_Label_OrderAndFilter', 'LABEL_NAME', 'BRAND_NAME', 'LABEL_SEQ_NUM'),
+        Index('ix_label_tb_ACTIVE_BRAND_NAME_includes', 'ACTIVE', 'BRAND_NAME')
+    )
+
+    ID = Column(Integer, server_default=text("0"), primary_key=True, unique=True)
+    MERCHANDISE_ID = Column(ForeignKey('MERCH_TB.MERCHANDISE_ID'), nullable=False)
+    LABEL_SEQ_NUM = Column(SmallInteger, nullable=False)
+    SYMBOL = Column(String(20))
+    INSTITUTIONAL = Column(String(1))
+    BLK = Column(String(1), Computed("(case when [GRP]='5' OR [GRP]='4' then 'Y' else 'N' end)", persisted=False), nullable=False)
+    SEAL_SIGN = Column(String(30), server_default=text("('{NONE}')"))
+    GRP = Column(String(10), server_default=text("((3))"))
+    SEAL_SIGN_FLAG = Column(String(1))
+    BRAND_NAME = Column(String(100), index=True)
+    SRC_MAR_ID = Column(ForeignKey('COMPANY_TB.COMPANY_ID'), ForeignKey('COMPANY_TB.COMPANY_ID'), nullable=False)
+    LABEL_NAME = Column(String(225), index=True)
+    INDUSTRIAL = Column(String(1))
+    CONSUMER = Column(String(1))
+    LABEL_TYPE = Column(String(20))
+    ACTIVE = Column(Integer)
+    SPECIAL_PRODUCTION = Column(String(1))
+    CREATE_DATE = Column(DateTime, server_default=text("(getdate())"), index=True)
+    LAST_MODIFY_DATE = Column(DateTime, server_default=text("(getdate())"), index=True)
+    STATUS_DATE = Column(DateTime)
+    JEWISH_ACTION = Column(String(1))
+    CREATED_BY = Column(String(100), server_default=text("(suser_sname())"))
+    MODIFIED_BY = Column(String(100), server_default=text("(suser_sname())"))
+    LABEL_NUM = Column(String(25))
+    NUM_NAME = Column(String(251), Computed("(case when [LABEL_NUM] IS NULL OR [LABEL_NUM]='' then [LABEL_NAME] else ([LABEL_NUM]+' ')+[LABEL_NAME] end)", persisted=False), index=True)
+    Confidential = Column(String(1))
+    AgencyID = Column(String(50), unique=True)
+    LOChold = Column(String(1))
+    LOCholdDate = Column(DateTime)
+    PassoverSpecialProduction = Column(String(1), server_default=text("('N')"))
+    COMMENT = Column(String(1000), server_default=text("('')"))
+    DisplayNewlyCertifiedOnWeb = Column(String(1), server_default=text("('N')"))
+    Status = Column(String(25))
+    ValidFromTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'1900-01-01 00:00:00'))"), nullable=False)
+    ValidToTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'9999-12-31 23:59:59.9999999'))"), nullable=False)
+    CHANGESET_ID = Column(Integer, index=True)
+    LastChangeDate = Column(DateTime)
+    LastChangeReason = Column(String(100))
+    LastChangeType = Column(String(100))
+    ReplacedByAgencyId = Column(String(50))
+    TransferredFromAgencyId = Column(String(50))
+    Kitniyot = Column(Boolean)
+    IsDairyEquipment = Column(Boolean, server_default=text("((0))"), nullable=False)
+    NameNum = Column(String(251), Computed("(ltrim(isnull(concat(nullif([Label_Name],''),case when [Label_Name]<>'' AND [Label_Num]<>'' then ' '+[Label_Num] else [Label_Num] end),'')))", persisted=False))
+
+    # parent relationships (access parent)
+    MERCH_TB : Mapped["MERCHTB"] = relationship(back_populates=("LabelTbList"))
+    COMPANY_TB : Mapped["COMPANYTB"] = relationship(foreign_keys='[LabelTb.SRC_MAR_ID]', back_populates=("LabelTbList"))
+    #COMPANY_TB1 : Mapped["COMPANYTB"] = relationship(foreign_keys='[LabelTb.SRC_MAR_ID]', back_populates=("LabelTbList1"), overlaps="COMPANY_TB,LabelTbList")
+
+    # child relationships (access children)
+    FormulaComponentList : Mapped[List["FormulaComponent"]] = relationship(back_populates="label_tb")
+    #LabelCommentList : Mapped[List["LabelComment"]] = relationship(back_populates="Label")
+    #LabelOptionList : Mapped[List["LabelOption"]] = relationship(foreign_keys='[LabelOption.LabelID]', back_populates="label_tb")
+    #LabelOptionList1 : Mapped[List["LabelOption"]] = relationship(foreign_keys='[LabelOption.LabelID]', back_populates="label_tb1", overlaps="LabelOptionList")
+    #LabelBarcodeList : Mapped[List["LabelBarcode"]] = relationship(back_populates="label")
+    #FormulaSubmissionComponentList : Mapped[List["FormulaSubmissionComponent"]] = relationship(back_populates="label_tb")
+    USEDIN1TBList : Mapped[List["USEDIN1TB"]] = relationship(back_populates="label_tb")
+    ProducedIn1TbList : Mapped[List["ProducedIn1Tb"]] = relationship(back_populates="label_tb")
+
+
 '''

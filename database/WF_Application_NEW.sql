@@ -49,16 +49,16 @@ CREATE TABLE WF_Roles (
 );
 
 INSERT INTO WF_Roles (UserRole, Role) VALUES
-('ADMIN', 'Administrator'),
-('DISPATCH', 'Dispatcher'),
-('LEGAL','Legal'),
-('IAR', 'Ingredients'),
-('PROD','Product'),
-('RFR', 'RFR'),
-('SALES', 'Sales'),
-('SUPPORT', 'Support'),
-('CUST', 'Customer'),
-('NCRC', 'NCRC');
+    ('ADMIN', 'Administrator'),
+    ('DISPATCH', 'Dispatcher'),
+    ('LEGAL','Legal'),
+    ('IAR', 'Ingredients'),
+    ('PROD','Product'),
+    ('RFR', 'RFR'),
+    ('SALES', 'Sales'),
+    ('SUPPORT', 'Support'),
+    ('CUST', 'Customer'),
+    ('NCRC', 'NCRC');
 
 -- Users Table
 CREATE TABLE WF_Users (
@@ -92,13 +92,13 @@ CREATE TABLE WF_ApplicationStatus (
     StatusDescription NVARCHAR(255) NOT NULL
 );
 INSERT INTO WF_ApplicationStatus (StatusCode, StatusDescription) VALUES
-('NEW', 'Application is new'),
-('INC', 'Application is incomplete'),
-('DISP', 'Application has been dispatched for review'),
-('INP', 'Application is currently being processed'),
-('COMPL', 'Application processing is completed'),
-('REV', 'Application requires further review'),
-('WTH', 'Application has been withdrawn');
+    ('NEW', 'Application is new'),
+    ('INC', 'Application is incomplete'),
+    ('DISP', 'Application has been dispatched for review'),
+    ('INP', 'Application is currently being processed'),
+    ('COMPL', 'Application processing is completed'),
+    ('REV', 'Application requires further review'),
+    ('WTH', 'Application has been withdrawn');
 
 CREATE TABLE WF_Priorities (
     PriorityCode NVARCHAR(20) NOT NULL PRIMARY KEY,
@@ -106,22 +106,20 @@ CREATE TABLE WF_Priorities (
 );  
 
 INSERT INTO WF_Priorities (PriorityCode, PriorityDescription) VALUES
-('LOW', 'Low Priority'),
-('NORMAL', 'Normal Priority'),
-('HIGH', 'High Priority'),
-('CRITICAL', 'Critical Priority');
+    ('LOW', 'Low Priority'),
+    ('NORMAL', 'Normal Priority'),
+    ('HIGH', 'High Priority'),
+    ('CRITICAL', 'Critical Priority');
 
 -- WF_Applications Table
 CREATE TABLE WF_Applications (
     ApplicationID INT IDENTITY(1,1) PRIMARY KEY,
-    ApplicationNumber NVARCHAR(50) NOT NULL UNIQUE, -- ties back to legacy 
+    ApplicationNumber INT NOT NULL UNIQUE, -- ties back to legacy CompanyApplication.ID 
     CompanyID INT NOT NULL,
     PlantID INT, -- becomes OWNSID CompanyID-PlantID
     SubmissionDate DATE NOT NULL,
     Status NVARCHAR(50) NOT NULL DEFAULT 'NEW',
     Priority NVARCHAR(20) DEFAULT 'NORMAL', -- 'Low', 'Normal', 'High', 'Critical'
-    PrimaryContactName NVARCHAR(200) NULL,
-    Version NVARCHAR(20) NOT NULL DEFAULT '1.0.0',
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     LastUpdatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     LastStatusChangeDate DATETIME2 NOT NULL DEFAULT GETDATE(),
@@ -130,7 +128,8 @@ CREATE TABLE WF_Applications (
     FOREIGN KEY (WFDashboardID) REFERENCES WF_Dashboard(ID),
     FOREIGN KEY (Priority) REFERENCES WF_Priorities(PriorityCode),
     FOREIGN KEY (Status) REFERENCES WF_ApplicationStatus(StatusCode)
-    --,FOREIGN KEY (CompanyID) REFERENCES Companies(CompanyID)
+    --,FOREIGN KEY (CompanyID) REFERENCES COMPANYTB(CompanyID)
+    --,FOREIGN KEY (PlantID) REFERENCES PLANTTB(PlantID)
 );
 
 
@@ -139,9 +138,10 @@ CREATE TABLE WF_Applications (
 CREATE TABLE WF_Companies (
     CompanyID INT IDENTITY(1,1) PRIMARY KEY, 
     ApplicationID INT NOT NULL,
-    KashrusCompanyID NVARCHAR(50) NOT NULL,
+    KashrusCompanyID INT NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
+    --,FOREIGN KEY (KashrusCompanyID) REFERENCES COMPANYTB(CompanyID)
 );
 
 
@@ -157,9 +157,10 @@ CREATE TABLE WF_Contacts (
 CREATE TABLE WF_Plants (
     PlantID INT IDENTITY(1,1) PRIMARY KEY,
     ApplicationID INT NOT NULL,
-    PlantNumber NVARCHAR(50)  NULL, -- Foreign Key to ou_kash.PLANT_TB
+    PlantNumber INT  NULL, -- Foreign Key to ou_kash.PLANT_TB
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
+    --,FOREIGN KEY (PlantNumber) REFERENCES PLANTTB(PlantID)
 );
 
 -- Products Table

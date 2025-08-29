@@ -134,3 +134,5 @@ if __name__ == "__main__":
 
     for file in submission_files.get('content', []):
         print(f"  - {file.get('name', 'N/A')}") 
+        
+#curl -X POST -d "webhookURL=http://my.webhook.url/connect-to-DB.ext" -d "apiKey={myApiKey}" "https://api.jotform.com/v1/form/{myFormID}/webhooks"

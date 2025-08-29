@@ -32,6 +32,17 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         } | ConvertTo-Json
 
         Invoke-RestMethod -Uri "http://localhost:5656/start_workflow" -Method POST -Body $body -ContentType "application/json"
+        
+        # Alternative test with curl:
+        curl -X POST http://localhost:5656/start_workflow \
+             -H "Content-Type: application/json" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NjQxNTU0NywianRpIjoiNWVkZGUwNjItZmM2Ny00NjIzLWE5MTgtOWM2OWI3ZTMwZmZhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzU2NDE1NTQ3LCJleHAiOjE3NTY0Mjg4Njd9.kLexFww7GkTCLn8waOr-lc-p_K4ot_IuG0qctw0Oyg8" \
+             -d '{
+               "process_name": "Application Workflow",
+               "application_id": "1", 
+               "started_by": "1",
+               "priority": "HIGH"
+             }'
         """
 
         # Extract variables from request.args
@@ -76,24 +87,24 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         print(f'New ProcessInstance InstanceId: {process_instance_id}')
         # Log History
         #history_instance_id = str(uuid.uuid4())
-       
-     
+
+
         # TODO - use TaskFlow to only create starting tasks?
         lanes = LaneDefinition.query.filter_by(ProcessId=process_id).all()
         for lane in lanes:
                 print(f'LaneDefinition: {lane.LaneName}')
                 #stage_instance_id = str(uuid.uuid4())
                 lane_instance = StageInstance(
-                    #StageInstanceId=stage_instance_id,
-                    ProcessInstanceId=process_instance_id,
-                    LaneId=lane.LaneId,
-                    Status='NEW',
-                    CreatedDate=datetime.utcnow(),
-                    CreatedBy=started_by
+                        #StageInstanceId=stage_instance_id,
+                        ProcessInstanceId=process_instance_id,
+                        LaneId=lane.LaneId,
+                        Status='NEW',
+                        CreatedDate=datetime.utcnow(),
+                        CreatedBy=started_by
                 )
                 session.add(lane_instance)
                 session.commit()
-               
+
                 rows = TaskDefinition.query.filter_by(ProcessId=process_id).all() # LaneId=lane.LaneId
                 for row in rows:
                         print(f'TaskDefinition: {row.TaskName}')
