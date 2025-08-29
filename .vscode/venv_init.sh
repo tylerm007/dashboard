@@ -15,12 +15,12 @@ if [ "$DEBUG_VENV_INIT" = "1" ]; then
 fi
 
 # Source the virtual environment activation script
-if [ -f "C:\genai-logic\venv\Scripts\activate" ]; then
+if [ -f "/Users/tylerband/dev/ApiLogicServer/ApiLogicServer-dev/build_and_test/ApiLogicServer/venv/bin/activate" ]; then
     if [ "$DEBUG_VENV_INIT" = "1" ]; then
-        echo "Found activation script: C:\genai-logic\venv\Scripts\activate"
+        echo "Found activation script: /Users/tylerband/dev/ApiLogicServer/ApiLogicServer-dev/build_and_test/ApiLogicServer/venv/bin/activate"
     fi
-    source C:\genai-logic\venv\Scripts\activate
-    echo "Virtual environment activated: $(basename $(dirname $(dirname C:\genai-logic\venv\Scripts\activate)))"
+    source /Users/tylerband/dev/ApiLogicServer/ApiLogicServer-dev/build_and_test/ApiLogicServer/venv/bin/activate
+    echo "Virtual environment activated: $(basename $(dirname $(dirname /Users/tylerband/dev/ApiLogicServer/ApiLogicServer-dev/build_and_test/ApiLogicServer/venv/bin/activate)))"
     
     if [ "$DEBUG_VENV_INIT" = "1" ]; then
         echo "VIRTUAL_ENV after activation: $VIRTUAL_ENV"
@@ -56,7 +56,7 @@ if [ -f "C:\genai-logic\venv\Scripts\activate" ]; then
     fi
     
 else
-    echo "Warning: Virtual environment activation script not found at C:\genai-logic\venv\Scripts\activate"
+    echo "Warning: Virtual environment activation script not found at /Users/tylerband/dev/ApiLogicServer/ApiLogicServer-dev/build_and_test/ApiLogicServer/venv/bin/activate"
 fi
 
 if [ "$DEBUG_VENV_INIT" = "1" ]; then
