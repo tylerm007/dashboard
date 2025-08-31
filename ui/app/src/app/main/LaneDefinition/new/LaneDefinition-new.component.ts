@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class LaneDefinitionNewComponent {
   @ViewChild("LaneDefinitionForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'CreatedDate': '(getutcdate())', 'LaneId': '0'}
+    const default_values = {'LaneRole': "('NCRC')", 'CreatedDate': '(getutcdate())', 'LaneId': '0'}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

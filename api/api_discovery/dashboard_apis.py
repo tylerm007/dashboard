@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from datetime import datetime
-from database.models import PLANTADDRESSTB, ProcessDefinition, TaskDefinition, ProcessInstance, WorkflowHistory, StageInstance, TaskInstance, LaneDefinition
+from database.models import PLANTADDRESSTB, ProcessDefinition, TaskDefinition, ProcessInstance, WFIngredient, WFProduct, WorkflowHistory, StageInstance, TaskInstance, LaneDefinition
 from flask import request, jsonify, session
 import logging
 import uuid
@@ -29,20 +29,21 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         """
         application_id = request.args.get('applicationId',1, type=int)
         app_logger.info(f'{application_id}')
-        from database.models import CompanyApplication, WFApplication, COMPANYTB, OWNSTB, PLANTTB, PLANTADDRESSTB, LabelTb, MERCHTB, INGREDIENTTB, USEDIN1TB
-        application = WFApplication.query.filter_by(ApplicationID=application_id).first()
-        if not application:
-            return jsonify({"error": "Application not found"}), 404
-        
-        company_application = CompanyApplication.query.filter_by(ID=application.ApplicationNumber).first()
+        from database.models import CompanyApplication, WFApplication, COMPANYTB, OWNSTB, PLANTTB, PLANTADDRESSTB, LabelTb, MERCHTB, USEDIN1TB
+        wf_application = WFApplication.query.filter_by(ApplicationID=application_id).first()
+        if not wf_application:
+            return jsonify({"error": "WF_Application not found"}), 404
+        application = wf_application.to_dict()
+
+        company_application = CompanyApplication.query.filter_by(ID=application['ApplicationNumber']).first()
         if not company_application:
             return jsonify({"error": "Company application not found"}), 404
-        
-        company_id = application.CompanyID if hasattr(application, 'CompanyID') else None
+
+        company_id = application['CompanyID'] if 'CompanyID' in application else None
         if not company_id:
             return jsonify({"error": "Company ID not found for application"}), 404
         
-        company = COMPANYTB.query.filter_by(CompanyID=company_id).first()
+        company = COMPANYTB.query.filter_by(COMPANY_ID=company_id).first()
         if not company:
             return jsonify({"error": "Company not found"}), 404 
         
@@ -50,24 +51,38 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         if not owns:
             return jsonify({"error": "Ownership not found"}), 404
 
-        plants = PLANTTB.query.filter(PLANTTB.PLANT_ID.in_(own.PlantID for own in owns)).first()
-        if not plants or len(plants) == 0:
+        plants = PLANTTB.query.filter(PLANTTB.PLANT_ID.in_(own.PLANT_ID for own in owns)).all()
+        if not plants:
             app.logger.info(f'No plants found for company ID: {company_id}')    
         for plant in plants:
-            address = PLANTADDRESSTB.query.filter_by(PlantID=plant.PLANT_ID).first()
-            plant['address'] = {
-                "street": address.STREET1, 
-                'line2': address.STREET2,
-                "city": address.STREET1 ,
-                "state": address.STATE ,
-                "zip": address.ZIP ,
-                "country": address.COUNTRY ,
-                "type": address.TYPE
-            }
-            plant['contacts'] = []
+            address = PLANTADDRESSTB.query.filter_by(PLANT_ID=plant.PLANT_ID).first()
+            if address:
+                plant.address = {
+                    "street": address.STREET1, 
+                    'line2': address.STREET2,
+                    "city": address.CITY ,
+                    "state": address.STATE ,
+                    "zip": address.ZIP ,
+                    "country": address.COUNTRY ,
+                    "type": address.TYPE
+                }
+            else:
+                plant.address = {
+                    "street": "Unknown",
+                    "line2": "Unknown", 
+                    "city": "Unknown",
+                    "state": "Unknown",
+                    "zip": "Unknown",
+                    "country": "Unknown",
+                    "type": "Unknown"
+                }
+            plant.contacts = {}
+            continue
         application['Plants'] = plants
-        application['Products'] = []
-        application['Ingredients'] = []
+        products = WFProduct.query.filter_by(ApplicationID=application_id).all()
+        application['Products'] = products
+        ingredients = WFIngredient.query.filter_by(ApplicationID=application_id).all()
+        application['Ingredients'] = ingredients
         result = {
             "applicationId": company_application.ID,
             "submissionDate": company_application.dateSubmitted.strftime('%Y-%m-%d') if hasattr(company_application, 'dateSubmitted') and company_application.dateSubmitted else "UNKNOWN",
@@ -134,7 +149,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
                 "bulkShipped": product.BulkShipped if hasattr(product, 'BulkShipped') else True,
                 "certification": product.Certification if hasattr(product, 'Certification') else "OU"
             }
-            for product in application.Products
+            for product in application['Products']
         ]
         result['ingredients'] = [
             {
@@ -149,7 +164,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
                 "addedBy": ingredient.AddedBy if hasattr(ingredient, 'AddedBy') else "System Import",
                 "status": ingredient.Status if hasattr(ingredient, 'Status') else "Original"
             }
-            for ingredient in application.Ingredients
+            for ingredient in application['Ingredients']    
         ]
         application_info = {}
         application_info["applicationInfo"] = result

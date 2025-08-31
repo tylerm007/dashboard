@@ -6,9 +6,9 @@
             entity="TaskDefinition" 
             title="TASKDEFINITION"
             keys="TaskId"
-            columns="TaskName;ProcessId;TaskType;TaskCategory;Sequence;IsParallel;AssigneeRole;EstimatedDurationMinutes;AutoComplete;Description;ConfigurationJson;TaskId;IsRequired" 
+            columns="TaskName;LaneId;ProcessId;TaskCategory;TaskType;Sequence;IsParallel;AssigneeRole;EstimatedDurationMinutes;AutoComplete;Description;ConfigurationJson;TaskId;IsRequired" 
             header-actions="R;D"
-            visible-columns="TaskName;ProcessId;TaskType;TaskCategory;Sequence;IsParallel;AssigneeRole;EstimatedDurationMinutes;AutoComplete;Description;ConfigurationJson;TaskId;IsRequired"  
+            visible-columns="TaskName;LaneId;ProcessId;TaskCategory;TaskType;Sequence;IsParallel;AssigneeRole;EstimatedDurationMinutes;AutoComplete;Description;ConfigurationJson;TaskId;IsRequired"  
             sort-columns="TaskName" 
             query-rows="20" 
             quick-filter="yes"
@@ -24,6 +24,15 @@
             
             <o-table-column #TaskName attr="TaskName" title=" Task Name" editable="no" required="yes" content-align="left"></o-table-column>
             
+            <o-table-column attr="LaneId" title="Lane">
+    <o-table-cell-renderer-service attr="LaneId" 
+        service="LaneDefinition" entity="LaneDefinitionType" columns="LaneId;LaneName"
+        parent-keys="TaskId:LaneId"
+        value-column="LaneName" keys="LaneId"
+        visible-columns="LaneName" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
             <o-table-column attr="ProcessId" title="Process">
     <o-table-cell-renderer-service attr="ProcessId" 
         service="ProcessDefinition" entity="ProcessDefinitionType" columns="ProcessId;ProcessName"
@@ -33,9 +42,9 @@
     </o-table-cell-renderer-service>
 </o-table-column>
             
-            <o-table-column #TaskType attr="TaskType" title="TaskType" editable="no" required="yes" content-align="left"></o-table-column>
-            
             <o-table-column #TaskCategory attr="TaskCategory" title="TaskCategory" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #TaskType attr="TaskType" title="TaskType" editable="no" required="yes" content-align="left"></o-table-column>
             
             <o-table-column #Sequence attr="Sequence" title="Sequence" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
             

@@ -13,14 +13,7 @@ const routes: Routes = [
         permissionId: 'WFProduct-detail-permissions'
       }
     }
-  },{
-    path: ':ProductID/WFIngredient', loadChildren: () => import('../WFIngredient/WFIngredient.module').then(m => m.WFIngredientModule),
-    data: {
-        oPermission: {
-            permissionId: 'WFIngredient-detail-permissions'
-        }
-    }
-}
+  }
 ];
 
 export const WFPRODUCT_MODULE_DECLARATIONS = [

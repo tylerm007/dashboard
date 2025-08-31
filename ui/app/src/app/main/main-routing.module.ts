@@ -15,6 +15,8 @@ export const routes: Routes = [
     
         { path: 'LaneDefinition', loadChildren: () => import('./LaneDefinition/LaneDefinition.module').then(m => m.LaneDefinitionModule) },
     
+        { path: 'LaneRole', loadChildren: () => import('./LaneRole/LaneRole.module').then(m => m.LaneRoleModule) },
+    
         { path: 'ProcessDefinition', loadChildren: () => import('./ProcessDefinition/ProcessDefinition.module').then(m => m.ProcessDefinitionModule) },
     
         { path: 'ProcessInstance', loadChildren: () => import('./ProcessInstance/ProcessInstance.module').then(m => m.ProcessInstanceModule) },
@@ -33,6 +35,8 @@ export const routes: Routes = [
     
         { path: 'Sysdiagram', loadChildren: () => import('./Sysdiagram/Sysdiagram.module').then(m => m.SysdiagramModule) },
     
+        { path: 'TaskCategory', loadChildren: () => import('./TaskCategory/TaskCategory.module').then(m => m.TaskCategoryModule) },
+    
         { path: 'TaskComment', loadChildren: () => import('./TaskComment/TaskComment.module').then(m => m.TaskCommentModule) },
     
         { path: 'TaskCommentType', loadChildren: () => import('./TaskCommentType/TaskCommentType.module').then(m => m.TaskCommentTypeModule) },
@@ -42,6 +46,10 @@ export const routes: Routes = [
         { path: 'TaskFlow', loadChildren: () => import('./TaskFlow/TaskFlow.module').then(m => m.TaskFlowModule) },
     
         { path: 'TaskInstance', loadChildren: () => import('./TaskInstance/TaskInstance.module').then(m => m.TaskInstanceModule) },
+    
+        { path: 'TaskStatus', loadChildren: () => import('./TaskStatus/TaskStatus.module').then(m => m.TaskStatusModule) },
+    
+        { path: 'TaskType', loadChildren: () => import('./TaskType/TaskType.module').then(m => m.TaskTypeModule) },
     
         { path: 'ValidationResult', loadChildren: () => import('./ValidationResult/ValidationResult.module').then(m => m.ValidationResultModule) },
     

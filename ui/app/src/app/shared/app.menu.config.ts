@@ -2,6 +2,8 @@ import { MenuRootItem } from 'ontimize-web-ngx';
 
 import { LaneDefinitionCardComponent } from './LaneDefinition-card/LaneDefinition-card.component';
 
+import { LaneRoleCardComponent } from './LaneRole-card/LaneRole-card.component';
+
 import { ProcessDefinitionCardComponent } from './ProcessDefinition-card/ProcessDefinition-card.component';
 
 import { ProcessInstanceCardComponent } from './ProcessInstance-card/ProcessInstance-card.component';
@@ -20,6 +22,8 @@ import { StageStatusCardComponent } from './StageStatus-card/StageStatus-card.co
 
 import { SysdiagramCardComponent } from './Sysdiagram-card/Sysdiagram-card.component';
 
+import { TaskCategoryCardComponent } from './TaskCategory-card/TaskCategory-card.component';
+
 import { TaskCommentCardComponent } from './TaskComment-card/TaskComment-card.component';
 
 import { TaskCommentTypeCardComponent } from './TaskCommentType-card/TaskCommentType-card.component';
@@ -29,6 +33,10 @@ import { TaskDefinitionCardComponent } from './TaskDefinition-card/TaskDefinitio
 import { TaskFlowCardComponent } from './TaskFlow-card/TaskFlow-card.component';
 
 import { TaskInstanceCardComponent } from './TaskInstance-card/TaskInstance-card.component';
+
+import { TaskStatusCardComponent } from './TaskStatus-card/TaskStatus-card.component';
+
+import { TaskTypeCardComponent } from './TaskType-card/TaskType-card.component';
 
 import { ValidationResultCardComponent } from './ValidationResult-card/ValidationResult-card.component';
 
@@ -86,6 +94,8 @@ export const MENU_CONFIG: MenuRootItem[] = [
     
         { id: 'LaneDefinition', name: 'LANEDEFINITION', icon: 'view_list', route: '/main/LaneDefinition' }
     
+        ,{ id: 'LaneRole', name: 'LANEROLE', icon: 'view_list', route: '/main/LaneRole' }
+    
         ,{ id: 'ProcessDefinition', name: 'PROCESSDEFINITION', icon: 'view_list', route: '/main/ProcessDefinition' }
     
         ,{ id: 'ProcessInstance', name: 'PROCESSINSTANCE', icon: 'view_list', route: '/main/ProcessInstance' }
@@ -104,6 +114,8 @@ export const MENU_CONFIG: MenuRootItem[] = [
     
         ,{ id: 'Sysdiagram', name: 'SYSDIAGRAM', icon: 'view_list', route: '/main/Sysdiagram' }
     
+        ,{ id: 'TaskCategory', name: 'TASKCATEGORY', icon: 'view_list', route: '/main/TaskCategory' }
+    
         ,{ id: 'TaskComment', name: 'TASKCOMMENT', icon: 'view_list', route: '/main/TaskComment' }
     
         ,{ id: 'TaskCommentType', name: 'TASKCOMMENTTYPE', icon: 'view_list', route: '/main/TaskCommentType' }
@@ -113,6 +125,10 @@ export const MENU_CONFIG: MenuRootItem[] = [
         ,{ id: 'TaskFlow', name: 'TASKFLOW', icon: 'view_list', route: '/main/TaskFlow' }
     
         ,{ id: 'TaskInstance', name: 'TASKINSTANCE', icon: 'view_list', route: '/main/TaskInstance' }
+    
+        ,{ id: 'TaskStatus', name: 'TASKSTATUS', icon: 'view_list', route: '/main/TaskStatus' }
+    
+        ,{ id: 'TaskType', name: 'TASKTYPE', icon: 'view_list', route: '/main/TaskType' }
     
         ,{ id: 'ValidationResult', name: 'VALIDATIONRESULT', icon: 'view_list', route: '/main/ValidationResult' }
     
@@ -172,6 +188,8 @@ export const MENU_COMPONENTS = [
 
     LaneDefinitionCardComponent
 
+    ,LaneRoleCardComponent
+
     ,ProcessDefinitionCardComponent
 
     ,ProcessInstanceCardComponent
@@ -190,6 +208,8 @@ export const MENU_COMPONENTS = [
 
     ,SysdiagramCardComponent
 
+    ,TaskCategoryCardComponent
+
     ,TaskCommentCardComponent
 
     ,TaskCommentTypeCardComponent
@@ -199,6 +219,10 @@ export const MENU_COMPONENTS = [
     ,TaskFlowCardComponent
 
     ,TaskInstanceCardComponent
+
+    ,TaskStatusCardComponent
+
+    ,TaskTypeCardComponent
 
     ,ValidationResultCardComponent
 

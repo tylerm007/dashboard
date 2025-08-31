@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class WFApplicationNewComponent {
   @ViewChild("WFApplicationForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'Priority': "('NORMAL')", 'Status': "('NEW')", 'WFDashboardID': '((1))', 'Version': "('1.0.0')", 'CreatedDate': '(getdate())', 'LastUpdatedDate': '(getdate())', 'LastStatusChangeDate': '(getdate())', 'ApplicationID': '0'}
+    const default_values = {'ApplicationID': '0', 'Priority': "('NORMAL')", 'Status': "('NEW')", 'WFDashboardID': '((1))', 'CreatedDate': '(getutcdate())', 'CreatedBy': "('System')"}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

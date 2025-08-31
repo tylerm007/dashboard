@@ -26,16 +26,16 @@
             
             <o-table-column attr="ApplicationID" title="ApplicationID">
     <o-table-cell-renderer-service attr="ApplicationID" 
-        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;ApplicationID"
         parent-keys="CompanyID:ApplicationID"
-        value-column="PrimaryContactName" keys="ApplicationID"
-        visible-columns="PrimaryContactName" separator=" - " width="680px">
+        value-column="ApplicationID" keys="ApplicationID"
+        visible-columns="ApplicationID" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
             
             <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
             
-            <o-table-column #KashrusCompanyID attr="KashrusCompanyID" title="KashrusCompanyID" editable="no" required="yes" content-align="left"></o-table-column>
+            <o-table-column #KashrusCompanyID attr="KashrusCompanyID" title="KashrusCompanyID" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
             
             <o-table-context-menu></o-table-context-menu>
             <o-table-paginator page-size-options="24;48;96"></o-table-paginator>

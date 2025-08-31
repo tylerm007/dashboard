@@ -16,6 +16,8 @@ resources:
       required: true
       search: true
       sort: true
+    - name: LaneRole
+      required: true
     - name: ProcessId
       required: true
     - name: LaneDescription
@@ -35,7 +37,12 @@ resources:
       resource: TaskDefinition
     - direction: toone
       fks:
-        - ProcessId
+      - LaneRole
+      name: LaneRole1
+      resource: LaneRole
+    - direction: toone
+      fks:
+      - ProcessId
       name: Process
       resource: ProcessDefinition
     type: LaneDefinition
@@ -321,7 +328,7 @@ resources:
       resource: StageInstance
     - direction: tomany
       fks:
-      - InstanceId
+      - ProcessInstanceId
       name: TaskCommentList
       resource: TaskComment
     - direction: tomany
@@ -463,6 +470,9 @@ resources:
     - name: CompletedDate
     - name: DurationDays
     - name: RetryCount
+    - name: AssignedTo
+    - name: AssignedBy
+    - name: AssignedDate
     - name: CompletedCount
     - name: TotalCount
     - name: CreatedDate
@@ -515,7 +525,6 @@ resources:
       sort: true
     - name: version
     - name: definition
-      type: image
     - name: principal_id
       required: true
     - name: diagram_id
@@ -545,7 +554,7 @@ resources:
       search: true
       sort: true
     - name: CommentType
-    - name: InstanceId
+    - name: ProcessInstanceId
       required: true
     - name: TaskInstanceId
     - name: CommentText
@@ -565,8 +574,8 @@ resources:
       resource: TaskCommentType
     - direction: toone
       fks:
-      - InstanceId
-      name: Instance
+      - ProcessInstanceId
+      name: ProcessInstance
       resource: ProcessInstance
     - direction: toone
       fks:
@@ -701,9 +710,9 @@ resources:
       sort: true
     - name: InstanceId
       required: true
-    - name: TaskId
-      required: true
     - name: Status
+      required: true
+    - name: TaskId
       required: true
     - name: AssignedTo
     - name: StartedDate
@@ -736,11 +745,33 @@ resources:
       resource: ProcessInstance
     - direction: toone
       fks:
+      - Status
+      name: TaskStatu
+      resource: TaskStatus
+    - direction: toone
+      fks:
       - TaskId
       name: Task
       resource: TaskDefinition
     type: TaskInstance
     user_key: TaskInstanceId
+  TaskStatus:
+    attributes:
+    - label: ' Status Description*'
+      name: StatusDescription
+      required: true
+      search: true
+      sort: true
+    - name: StatusCode
+      required: true
+    tab_groups:
+    - direction: tomany
+      fks:
+      - Status
+      name: TaskInstanceList
+      resource: TaskInstance
+    type: TaskStatus
+    user_key: StatusDescription
   TaskType:
     attributes:
     - label: ' Task Type Description*'
@@ -872,8 +903,8 @@ resources:
     user_key: StatusCode
   WFApplication:
     attributes:
-    - label: ' Primary Contact Name*'
-      name: PrimaryContactName
+    - label: ' Application I D*'
+      name: ApplicationID
       search: true
       sort: true
     - name: Priority
@@ -885,16 +916,15 @@ resources:
     - name: SubmissionDate
       required: true
       type: DATE
-    - name: Version
-      required: true
+    - name: AssignedTo
+    - name: AssignedBy
+    - name: AssignedDate
     - name: CreatedDate
       required: true
-    - name: LastUpdatedDate
+    - name: CreatedBy
       required: true
-    - name: LastStatusChangeDate
-      required: true
-    - name: LastStatusChangedBy
-    - name: ApplicationID
+    - name: ModifiedDate
+    - name: ModifiedBy
     - name: CompanyID
       required: true
     - name: PlantID
@@ -957,7 +987,7 @@ resources:
     - direction: toone
       fks:
       - Status
-      name: WF_ApplicationStatu
+      name: WF_ApplicationStatus
       resource: WFApplicationStatus
     - direction: toone
       fks:
@@ -965,7 +995,7 @@ resources:
       name: WFDashboard
       resource: WFDashboard
     type: WFApplication
-    user_key: PrimaryContactName
+    user_key: ApplicationID
   WFApplicationComment:
     attributes:
     - label: ' Comment I D*'
@@ -983,6 +1013,10 @@ resources:
     - name: Category
     - name: CreatedDate
       required: true
+    - name: CreatedBy
+      required: true
+    - name: ModifiedDate
+    - name: ModifiedBy
     tab_groups:
     - direction: toone
       fks:
@@ -1112,8 +1146,12 @@ resources:
     - name: Tag
     - name: RecordCount
     - name: FilePath
-    - name: CreatedDate
+    - name: CCreatedDate
       required: true
+    - name: CreatedBy
+      required: true
+    - name: ModifiedDate
+    - name: ModifiedBy
     - name: FileID
     - name: IsProcessed
       required: true
@@ -1150,27 +1188,45 @@ resources:
     user_key: FileTypeName
   WFIngredient:
     attributes:
-    - label: ' Ingredient I D*'
-      name: IngredientID
+    - label: ' Ingredient Name*'
+      name: IngredientName
+      required: true
       search: true
       sort: true
     - name: ApplicationID
       required: true
-    - name: ProductID
-    - name: NCRCIngredientID
+    - name: Source
+      required: true
+    - name: RMC
+    - name: Manufacturer
+      required: true
+    - name: Packaging
+      required: true
+    - name: Agency
+      required: true
+    - name: AddedDate
+      required: true
+      type: DATE
+    - name: AddedBy
+      required: true
+    - name: Status
+      required: true
+    - name: CreatedDate
+    - name: ModifiedDate
+    - name: IngredientID
+    - name: UKDId
+    - name: Brand
+      required: true
+    - name: NCRCId
+      required: true
     tab_groups:
     - direction: toone
       fks:
       - ApplicationID
       name: Application
       resource: WFApplication
-    - direction: toone
-      fks:
-      - ProductID
-      name: Product
-      resource: WFProduct
     type: WFIngredient
-    user_key: IngredientID
+    user_key: IngredientName
   WFPlant:
     attributes:
     - label: ' Plant I D*'
@@ -1183,11 +1239,6 @@ resources:
     - name: CreatedDate
       required: true
     tab_groups:
-    - direction: tomany
-      fks:
-      - PlantID
-      name: WFProductList
-      resource: WFProduct
     - direction: toone
       fks:
       - ApplicationID
@@ -1214,34 +1265,68 @@ resources:
     user_key: PriorityDescription
   WFProduct:
     attributes:
-    - label: ' Product I D*'
-      name: ProductID
+    - label: ' label Name*'
+      name: labelName
+      required: true
       search: true
       sort: true
     - name: ApplicationID
       required: true
-    - name: PlantID
-    - name: ProductNumber
-    - name: CreatedDate
+    - name: action
       required: true
+    - name: doNotImport
+      required: true
+      type: Boolean
+    - name: message
+    - name: labelType
+      required: true
+    - name: brandName
+      required: true
+    - name: distributorName
+      required: true
+    - name: group
+      required: true
+    - name: symbol
+      required: true
+    - name: dpm
+      required: true
+    - name: category
+      required: true
+    - name: usePlantStatus
+      required: true
+      type: Boolean
+    - name: status
+      required: true
+    - name: legacyStatus
+    - name: consumer
+      required: true
+      type: Boolean
+    - name: industrial
+      required: true
+      type: Boolean
+    - name: processedBy
+      required: true
+    - name: processedDate
+      required: true
+      type: DATE
+    - name: notes
+      required: true
+    - name: ProductID
+    - name: legacyId
+      required: true
+    - name: labelCompanyId
+      required: true
+    - name: finalized
+      required: true
+      type: Boolean
     tab_groups:
-    - direction: tomany
-      fks:
-      - ProductID
-      name: WFIngredientList
-      resource: WFIngredient
     - direction: toone
       fks:
       - ApplicationID
       name: Application
       resource: WFApplication
-    - direction: toone
-      fks:
-      - PlantID
-      name: Plant
-      resource: WFPlant
     type: WFProduct
-    user_key: ProductID
+    user_key: labelName
   WFQuote:
     attributes:
     - label: ' Quote I D*'
@@ -1264,6 +1349,10 @@ resources:
       type: DATE
     - name: CreatedDate
       required: true
+    - name: CreatedBy
+      required: true
+    - name: ModifiedDate
+    - name: ModifiedBy
     tab_groups:
     - direction: tomany
       fks:

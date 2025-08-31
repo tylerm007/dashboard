@@ -31,11 +31,11 @@
         entity="TaskComment" 
         keys="CommentId"
         parent-keys="CommentType:CommentTypeCode"
-        columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
+        columns="CommentId;CommentType;ProcessInstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         horizontal-scroll="yes"
         detail-form-route="TaskComment" 
         edit-form-route="TaskComment"
-        visible-columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
+        visible-columns="CommentId;CommentType;ProcessInstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         sort-columns="CommentId" 
         query-rows="25" 
         quick-filter="yes"
@@ -55,11 +55,11 @@
         
           <o-table-column #CommentType attr="CommentType" title="CommentType" editable="no" required="no" content-align="left"></o-table-column>
         
-          <o-table-column attr="InstanceId" title="Instance">
-    <o-table-cell-renderer-service attr="InstanceId" 
+          <o-table-column attr="ProcessInstanceId" title="ProcessInstance">
+    <o-table-cell-renderer-service attr="ProcessInstanceId" 
         service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
-        parent-keys="CommentTypeCode:InstanceId"
-        value-column="InstanceId" keys="InstanceId"
+        parent-keys="CommentTypeCode:ProcessInstanceId"
+        value-column="InstanceId" keys="ProcessInstanceId"
         visible-columns="InstanceId" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>

@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class WFApplicationCommentNewComponent {
   @ViewChild("WFApplicationCommentForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'CommentID': '0', 'CommentType': "('internal')", 'CreatedDate': '(getdate())'}
+    const default_values = {'CommentID': '0', 'CommentType': "('internal')", 'CreatedDate': '(getutcdate())', 'CreatedBy': "('System')"}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

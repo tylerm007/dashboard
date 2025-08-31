@@ -6,9 +6,9 @@
             entity="LaneDefinition" 
             title="LANEDEFINITION"
             keys="LaneId"
-            columns="LaneName;ProcessId;LaneDescription;EstimatedDurationDays;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;LaneId" 
+            columns="LaneName;LaneRole;ProcessId;LaneDescription;EstimatedDurationDays;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;LaneId" 
             header-actions="R;D"
-            visible-columns="LaneName;ProcessId;LaneDescription;EstimatedDurationDays;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;LaneId"  
+            visible-columns="LaneName;LaneRole;ProcessId;LaneDescription;EstimatedDurationDays;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;LaneId"  
             sort-columns="LaneName" 
             query-rows="20" 
             quick-filter="yes"
@@ -23,6 +23,8 @@
             export-button="yes">
             
             <o-table-column #LaneName attr="LaneName" title=" Lane Name" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #LaneRole attr="LaneRole" title="LaneRole" editable="no" required="yes" content-align="left"></o-table-column>
             
             <o-table-column attr="ProcessId" title="Process">
     <o-table-cell-renderer-service attr="ProcessId" 

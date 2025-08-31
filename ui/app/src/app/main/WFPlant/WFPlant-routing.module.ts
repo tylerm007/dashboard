@@ -13,14 +13,7 @@ const routes: Routes = [
         permissionId: 'WFPlant-detail-permissions'
       }
     }
-  },{
-    path: ':PlantID/WFProduct', loadChildren: () => import('../WFProduct/WFProduct.module').then(m => m.WFProductModule),
-    data: {
-        oPermission: {
-            permissionId: 'WFProduct-detail-permissions'
-        }
-    }
-}
+  }
 ];
 
 export const WFPLANT_MODULE_DECLARATIONS = [

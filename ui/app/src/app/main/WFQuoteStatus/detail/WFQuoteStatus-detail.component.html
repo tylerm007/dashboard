@@ -31,11 +31,11 @@
         entity="WFQuote" 
         keys="QuoteID"
         parent-keys="Status:StatusCode"
-        columns="QuoteID;ApplicationID;Status;QuoteNumber;TotalAmount;ValidUntil;LastUpdatedDate;CreatedDate"  
+        columns="QuoteID;ApplicationID;Status;QuoteNumber;TotalAmount;ValidUntil;LastUpdatedDate;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy"  
         horizontal-scroll="yes"
         detail-form-route="WFQuote" 
         edit-form-route="WFQuote"
-        visible-columns="QuoteID;ApplicationID;Status;QuoteNumber;TotalAmount;ValidUntil;LastUpdatedDate;CreatedDate"  
+        visible-columns="QuoteID;ApplicationID;Status;QuoteNumber;TotalAmount;ValidUntil;LastUpdatedDate;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy"  
         sort-columns="QuoteID" 
         query-rows="25" 
         quick-filter="yes"
@@ -55,10 +55,10 @@
         
           <o-table-column attr="ApplicationID" title="ApplicationID">
     <o-table-cell-renderer-service attr="ApplicationID" 
-        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;ApplicationID"
         parent-keys="StatusCode:ApplicationID"
-        value-column="PrimaryContactName" keys="ApplicationID"
-        visible-columns="PrimaryContactName" separator=" - " width="680px">
+        value-column="ApplicationID" keys="ApplicationID"
+        visible-columns="ApplicationID" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
         
@@ -73,6 +73,12 @@
           <o-table-column #LastUpdatedDate attr="LastUpdatedDate" title="LastUpdatedDate" type="DATE" editable="no" required="yes" ></o-table-column>
         
           <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+        
+          <o-table-column #CreatedBy attr="CreatedBy" title="CreatedBy" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #ModifiedDate attr="ModifiedDate" title="ModifiedDate" type="DATETIME2" editable="no" required="no" ></o-table-column>
+        
+          <o-table-column #ModifiedBy attr="ModifiedBy" title="ModifiedBy" editable="no" required="no" content-align="left"></o-table-column>
         
         <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
       </o-table>

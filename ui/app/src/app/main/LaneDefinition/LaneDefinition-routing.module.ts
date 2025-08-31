@@ -20,6 +20,13 @@ const routes: Routes = [
             permissionId: 'StageInstance-detail-permissions'
         }
     }
+},{
+    path: ':LaneId/TaskDefinition', loadChildren: () => import('../TaskDefinition/TaskDefinition.module').then(m => m.TaskDefinitionModule),
+    data: {
+        oPermission: {
+            permissionId: 'TaskDefinition-detail-permissions'
+        }
+    }
 }
 ];
 

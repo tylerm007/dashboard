@@ -55,10 +55,10 @@
         
           <o-table-column attr="ApplicationID" title="ApplicationID">
     <o-table-cell-renderer-service attr="ApplicationID" 
-        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
+        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;ApplicationID"
         parent-keys="StatusCode:ApplicationID"
-        value-column="PrimaryContactName" keys="ApplicationID"
-        visible-columns="PrimaryContactName" separator=" - " width="680px">
+        value-column="ApplicationID" keys="ApplicationID"
+        visible-columns="ApplicationID" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
         

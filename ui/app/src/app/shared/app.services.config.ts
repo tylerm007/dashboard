@@ -1,4 +1,5 @@
 export const SERVICE_CONFIG ={ 'LaneDefinition': { 'path': '/LaneDefinition' }
+,'LaneRole': { 'path': '/LaneRole' }
 ,'ProcessDefinition': { 'path': '/ProcessDefinition' }
 ,'ProcessInstance': { 'path': '/ProcessInstance' }
 ,'ProcessMessage': { 'path': '/ProcessMessage' }
@@ -8,11 +9,14 @@ export const SERVICE_CONFIG ={ 'LaneDefinition': { 'path': '/LaneDefinition' }
 ,'StageInstance': { 'path': '/StageInstance' }
 ,'StageStatus': { 'path': '/StageStatus' }
 ,'Sysdiagram': { 'path': '/Sysdiagram' }
+,'TaskCategory': { 'path': '/TaskCategory' }
 ,'TaskComment': { 'path': '/TaskComment' }
 ,'TaskCommentType': { 'path': '/TaskCommentType' }
 ,'TaskDefinition': { 'path': '/TaskDefinition' }
 ,'TaskFlow': { 'path': '/TaskFlow' }
 ,'TaskInstance': { 'path': '/TaskInstance' }
+,'TaskStatus': { 'path': '/TaskStatus' }
+,'TaskType': { 'path': '/TaskType' }
 ,'ValidationResult': { 'path': '/ValidationResult' }
 ,'ValidationRule': { 'path': '/ValidationRule' }
 ,'WFActivityLog': { 'path': '/WFActivityLog' }

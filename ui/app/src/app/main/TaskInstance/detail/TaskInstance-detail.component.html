@@ -36,6 +36,25 @@
 </o-list-picker>
       
       <o-list-picker 
+        attr="Status"
+        service="TaskStatus" 
+        entity="TaskStatusType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="StatusCode" 
+        value-column-type="VARCHAR"  
+        keys="StatusCode" 
+        columns="StatusCode;Status;StatusDescription" 
+        title="Status"
+        visible-columns="StatusCode;StatusDescription" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+      <o-list-picker 
         attr="TaskId"
         service="TaskDefinition" 
         entity="TaskDefinitionType"
@@ -53,8 +72,6 @@
         visible-columns="TaskId;TaskName" 
         separator=" - " width="680px" class="form-field">
 </o-list-picker>
-      
-      <o-text-input #Status attr="Status" label="Status" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
       
       <o-text-input #AssignedTo attr="AssignedTo" label="AssignedTo" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
@@ -85,11 +102,11 @@
         entity="TaskComment" 
         keys="CommentId"
         parent-keys="TaskInstanceId:TaskInstanceId"
-        columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
+        columns="CommentId;CommentType;ProcessInstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         horizontal-scroll="yes"
         detail-form-route="TaskComment" 
         edit-form-route="TaskComment"
-        visible-columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
+        visible-columns="CommentId;CommentType;ProcessInstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         sort-columns="CommentId" 
         query-rows="25" 
         quick-filter="yes"
@@ -109,11 +126,11 @@
         
           <o-table-column #CommentType attr="CommentType" title="CommentType" editable="no" required="no" content-align="left"></o-table-column>
         
-          <o-table-column attr="InstanceId" title="Instance">
-    <o-table-cell-renderer-service attr="InstanceId" 
+          <o-table-column attr="ProcessInstanceId" title="ProcessInstance">
+    <o-table-cell-renderer-service attr="ProcessInstanceId" 
         service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
-        parent-keys="TaskInstanceId:InstanceId"
-        value-column="InstanceId" keys="InstanceId"
+        parent-keys="TaskInstanceId:ProcessInstanceId"
+        value-column="InstanceId" keys="ProcessInstanceId"
         visible-columns="InstanceId" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>

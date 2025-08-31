@@ -167,6 +167,21 @@ class TaskCommentType(Base):  # type: ignore
 
 
 
+class TaskStatus(Base):  # type: ignore
+    __tablename__ = 'TaskStatus'
+    _s_collection_name = 'TaskStatus'  # type: ignore
+
+    StatusCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
+    StatusDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    allow_client_generated_ids = True
+
+    # parent relationships (access parent)
+
+    # child relationships (access children)
+    TaskInstanceList : Mapped[List["TaskInstance"]] = relationship(back_populates="TaskStatus")
+
+
+
 class TaskType(Base):  # type: ignore
     __tablename__ = 'TaskTypes'
     _s_collection_name = 'TaskType'  # type: ignore
@@ -210,7 +225,7 @@ class WFActivityStatus(Base):  # type: ignore
     # parent relationships (access parent)
 
     # child relationships (access children)
-    WFActivityLogList : Mapped[List["WFActivityLog"]] = relationship(back_populates="WF_ActivityStatu")
+    WFActivityLogList : Mapped[List["WFActivityLog"]] = relationship(back_populates="WF_ActivityStatus")
 
 
 
@@ -225,7 +240,7 @@ class WFApplicationStatus(Base):  # type: ignore
     # parent relationships (access parent)
 
     # child relationships (access children)
-    WFApplicationList : Mapped[List["WFApplication"]] = relationship(back_populates="WF_ApplicationStatu")
+    WFApplicationList : Mapped[List["WFApplication"]] = relationship(back_populates="WF_ApplicationStatus")
 
 
 
@@ -391,7 +406,7 @@ class TaskDefinition(Base):  # type: ignore
     Sequence = Column(Integer, nullable=False)
     LaneId = Column(ForeignKey('LaneDefinitions.LaneId'), nullable=False)
     IsParallel = Column(Boolean, server_default=text("0"), nullable=False)
-    AssigneeRole = Column(Unicode(50))
+    AssigneeRole = Column(Unicode(20))
     EstimatedDurationMinutes = Column(Integer)
     IsRequired = Column(Boolean, server_default=text("1"), nullable=False)
     AutoComplete = Column(Boolean, server_default=text("0"), nullable=False)
@@ -408,7 +423,7 @@ class TaskDefinition(Base):  # type: ignore
     ProcessInstanceList : Mapped[List["ProcessInstance"]] = relationship(back_populates="CurrentTask")
     TaskFlowList : Mapped[List["TaskFlow"]] = relationship(foreign_keys='[TaskFlow.FromTaskId]', back_populates="FromTask")
     ToTaskTaskFlowList : Mapped[List["TaskFlow"]] = relationship(foreign_keys='[TaskFlow.ToTaskId]', back_populates="ToTask")
-    TaskInstanceList : Mapped[List["TaskInstance"]] = relationship(back_populates="Task")
+    TaskInstanceList : Mapped[List["TaskInstance"]] = relationship(back_populates="TaskDef")
 
 
 
@@ -417,23 +432,24 @@ class WFApplication(Base):  # type: ignore
     _s_collection_name = 'WFApplication'  # type: ignore
 
     ApplicationID = Column(Integer, autoincrement=True, primary_key=True, index=True)
-    ApplicationNumber = Column(Unicode(50), nullable=False, unique=True)
+    ApplicationNumber = Column(Integer, nullable=False, unique=True)
     CompanyID = Column(Integer, nullable=False, index=True)
     PlantID = Column(Integer)
     SubmissionDate = Column(Date, nullable=False)
     Status = Column(ForeignKey('WF_ApplicationStatus.StatusCode'), server_default=text("NEW"), nullable=False, index=True)
-    Priority = Column(ForeignKey('WF_Priorities.PriorityCode'), server_default=text('NORMAL'))
-    PrimaryContactName = Column(Unicode(200))
-    Version = Column(Unicode(20), server_default=text('1.0.0'), nullable=False)
-    CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
-    LastUpdatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
-    LastStatusChangeDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
-    LastStatusChangedBy = Column(Unicode(200))
+    Priority = Column(ForeignKey('WF_Priorities.PriorityCode'), server_default=text("NORMAL"))
+    AssignedTo = Column(Unicode(100))
+    AssignedBy = Column(Unicode(100))
+    AssignedDate = Column(DATETIME2)
+    CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
+    CreatedBy = Column(Unicode(100), server_default=text("System"), nullable=False)
+    ModifiedDate = Column(DATETIME2)
+    ModifiedBy = Column(Unicode(100))
     WFDashboardID = Column(ForeignKey('WF_Dashboard.ID'), server_default=text("1"))
 
     # parent relationships (access parent)
     WF_Priority : Mapped["WFPriority"] = relationship(back_populates=("WFApplicationList"))
-    WF_ApplicationStatu : Mapped["WFApplicationStatus"] = relationship(back_populates=("WFApplicationList"))
+    WF_ApplicationStatus : Mapped["WFApplicationStatus"] = relationship(back_populates=("WFApplicationList"))
     WFDashboard : Mapped["WFDashboard"] = relationship(back_populates=("WFApplicationList"))
 
     # child relationships (access children)
@@ -496,7 +512,7 @@ class ProcessInstance(Base):  # type: ignore
     ProcessMessageList : Mapped[List["ProcessMessage"]] = relationship(back_populates="Instance")
     StageInstanceList : Mapped[List["StageInstance"]] = relationship(back_populates="ProcessInstance")
     TaskInstanceList : Mapped[List["TaskInstance"]] = relationship(back_populates="Instance")
-    TaskCommentList : Mapped[List["TaskComment"]] = relationship(back_populates="Instance")
+    TaskCommentList : Mapped[List["TaskComment"]] = relationship(back_populates="ProcessInstance")
     ValidationResultList : Mapped[List["ValidationResult"]] = relationship(back_populates="Instance")
     WorkflowHistoryList : Mapped[List["WorkflowHistory"]] = relationship(back_populates="Instance")
 
@@ -536,7 +552,7 @@ class WFActivityLog(Base):  # type: ignore
 
     # parent relationships (access parent)
     Application : Mapped["WFApplication"] = relationship(back_populates=("WFActivityLogList"))
-    WF_ActivityStatu : Mapped["WFActivityStatus"] = relationship(back_populates=("WFActivityLogList"))
+    WF_ActivityStatus: Mapped["WFActivityStatus"] = relationship(back_populates=("WFActivityLogList"))
 
     # child relationships (access children)
 
@@ -626,7 +642,10 @@ class WFFile(Base):  # type: ignore
     IsProcessed = Column(Boolean, server_default=text("0"), nullable=False)
     RecordCount = Column(Integer)
     FilePath = Column(Unicode(1000))
-    CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
+    CCreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False) #TODO
+    CreatedBy = Column(Unicode(100), server_default=text("System"), nullable=False)
+    ModifiedDate = Column(DATETIME2)
+    ModifiedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
     Application : Mapped["WFApplication"] = relationship(back_populates=("WFFileList"))
@@ -649,7 +668,7 @@ class WFPlant(Base):  # type: ignore
     Application : Mapped["WFApplication"] = relationship(back_populates=("WFPlantList"))
 
     # child relationships (access children)
-    WFProductList : Mapped[List["WFProduct"]] = relationship(back_populates="Plant")
+   # WFProductList : Mapped[List["WFProduct"]] = relationship(back_populates="Plant")
 
 
 
@@ -734,7 +753,7 @@ class TaskInstance(Base):  # type: ignore
     TaskInstanceId = Column(Integer, autoincrement=True, primary_key=True)
     InstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False)
     TaskId = Column(ForeignKey('TaskDefinitions.TaskId'), nullable=False)
-    Status = Column(Unicode(50), server_default=text('Pending'), nullable=False, index=True)
+    Status = Column(ForeignKey('TaskStatus.StatusCode'), server_default=text('Pending'), nullable=False, index=True)
     AssignedTo = Column(Unicode(100), index=True)
     StartedDate = Column(DATETIME2, index=True)
     CompletedDate = Column(DATETIME2)
@@ -746,7 +765,8 @@ class TaskInstance(Base):  # type: ignore
 
     # parent relationships (access parent)
     Instance : Mapped["ProcessInstance"] = relationship(back_populates=("TaskInstanceList"))
-    Task : Mapped["TaskDefinition"] = relationship(back_populates=("TaskInstanceList"))
+    TaskStatus : Mapped["TaskStatus"] = relationship(back_populates=("TaskInstanceList"))
+    TaskDef : Mapped["TaskDefinition"] = relationship(back_populates=("TaskInstanceList"))
 
     # child relationships (access children)
     TaskCommentList : Mapped[List["TaskComment"]] = relationship(back_populates="TaskInstance")
@@ -759,18 +779,36 @@ class WFProduct(Base):  # type: ignore
     __tablename__ = 'WF_Products'
     _s_collection_name = 'WFProduct'  # type: ignore
 
-    ProductID = Column(Integer, autoincrement=True, primary_key=True)
+    ProductID = Column(Integer, server_default=text("0"), primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    PlantID = Column(ForeignKey('WF_Plants.PlantID'))
-    ProductNumber = Column(Unicode(50))
-    CreatedDate = Column(DATETIME2, server_default=text("getdate()"), nullable=False)
+    action = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), server_default=text("('Add')"), nullable=False)
+    legacyId = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    doNotImport = Column(Boolean, server_default=text("((0))"), nullable=False)
+    message = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
+    labelType = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    labelName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    brandName = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    labelCompanyId = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    distributorName = Column(Unicode(150, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    group = Column(Unicode(10, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    symbol = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    dpm = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    category = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    usePlantStatus = Column(Boolean, nullable=False)
+    status = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    legacyStatus = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
+    consumer = Column(Boolean, nullable=False)
+    industrial = Column(Boolean, nullable=False)
+    finalized = Column(Boolean, nullable=False)
+    processedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    processedDate = Column(Date, nullable=False, index=True)
+    notes = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
 
     # parent relationships (access parent)
     Application : Mapped["WFApplication"] = relationship(back_populates=("WFProductList"))
-    Plant : Mapped["WFPlant"] = relationship(back_populates=("WFProductList"))
 
     # child relationships (access children)
-    WFIngredientList : Mapped[List["WFIngredient"]] = relationship(back_populates="Product")
+
 
 
 
@@ -796,17 +834,17 @@ class TaskComment(Base):  # type: ignore
     _s_collection_name = 'TaskComment'  # type: ignore
 
     CommentId = Column(Integer, autoincrement=True, primary_key=True)
-    InstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False)
+    ProcessInstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False)
     TaskInstanceId = Column(ForeignKey('TaskInstances.TaskInstanceId'))
     CommentType = Column(ForeignKey('TaskCommentTypes.CommentTypeCode'), server_default=text('Internal'))
-    CommentText = Column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    CommentText = Column(Unicode(250), nullable=False)
     Author = Column(Unicode(100), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
     IsVisible = Column(Boolean, server_default=text("1"), nullable=False)
 
     # parent relationships (access parent)
     TaskCommentType : Mapped["TaskCommentType"] = relationship(back_populates=("TaskCommentList"))
-    Instance : Mapped["ProcessInstance"] = relationship(back_populates=("TaskCommentList"))
+    ProcessInstance : Mapped["ProcessInstance"] = relationship(back_populates=("TaskCommentList"))
     TaskInstance : Mapped["TaskInstance"] = relationship(back_populates=("TaskCommentList"))
 
     # child relationships (access children)
@@ -839,16 +877,29 @@ class WFIngredient(Base):  # type: ignore
     __tablename__ = 'WF_Ingredients'
     _s_collection_name = 'WFIngredient'  # type: ignore
 
-    IngredientID = Column(Integer, autoincrement=True, primary_key=True)
+    IngredientID = Column(Integer, server_default=text("0"), primary_key=True)
     ApplicationID = Column(ForeignKey('WF_Applications.ApplicationID'), nullable=False, index=True)
-    ProductID = Column(ForeignKey('WF_Products.ProductID'))
-    NCRCIngredientID = Column(Unicode(50), index=True)
+    Source = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    UKDId = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    RMC = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'))
+    IngredientName = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Manufacturer = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Brand = Column(Unicode(200, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Packaging = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Agency = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    AddedDate = Column(Date, nullable=False, index=True)
+    AddedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Status = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    NCRCId = Column(Unicode(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False, index=True)
+    CreatedDate = Column(DATETIME2, server_default=text("(getdate())"))
+    ModifiedDate = Column(DATETIME2, server_default=text("(getdate())"))
 
     # parent relationships (access parent)
     Application : Mapped["WFApplication"] = relationship(back_populates=("WFIngredientList"))
-    Product : Mapped["WFProduct"] = relationship(back_populates=("WFIngredientList"))
 
     # child relationships (access children)
+
+
 
 
 
@@ -873,7 +924,7 @@ class WorkflowHistory(Base):  # type: ignore
 
     # child relationships (access children)
 #======== ou_kash tables===========================================
-'''
+
 class CompanyApplication(Base):  # type: ignore
     __tablename__ = 'CompanyApplicationWebRequestFromAPI'
     _s_collection_name = 'CompanyApplication'   # type: ignore
@@ -982,6 +1033,9 @@ class COMPANYTB(Base):  # type: ignore
     #CompanyApplicationList : Mapped[List["CompanyApplication"]] = relationship(back_populates="ApplicationCompany")
     PLANTTBList : Mapped[List["PLANTTB"]] = relationship(back_populates="COMPANY_TB")
     OWNSTBList : Mapped[List["OWNSTB"]] = relationship(back_populates="COMPANY_TB")
+    PLANTADDRESSTBList : Mapped[List["PLANTADDRESSTB"]] = relationship(back_populates="COMPANY_TB")
+    #USEDIN1TBList : Mapped[List["USEDIN1TB"]] = relationship(back_populates="COMPANY_TB")
+    #LabelTbList : Mapped[List["LabelTb"]] = relationship(foreign_keys='[LabelTb.SRC_MAR_ID]', back_populates="COMPANY_TB")
 
 class PLANTTB(Base):  # type: ignore
     __tablename__ = 'PLANT_TB'
@@ -1019,6 +1073,8 @@ class PLANTTB(Base):  # type: ignore
 
     # child relationships (access children)
     OWNSTBList : Mapped[List["OWNSTB"]] = relationship(back_populates="PLANT_TB")
+    # Child Relationships
+    PLANTADDRESSTBList : Mapped[List["PLANTADDRESSTB"]] = relationship(back_populates="PLANT_TB")
 
 
 class OWNSTB(Base):  # type: ignore
@@ -1119,7 +1175,7 @@ class USEDIN1TB(Base):  # type: ignore
     BRAND_NAME = Column(String(100))
     PROC_LINE_ID = Column(Integer)
     START_DATE = Column(SMALLDATETIME, server_default=text("(getdate())"))
-    END_DATE = Column(DateTime)
+    END_DATE = Column(DATETIME)
     TIMESTAMP = Column(BINARY(8))
     STATUS = Column(String(20))
     COMMENT = Column(String(255), server_default=text("('')"))
@@ -1130,7 +1186,7 @@ class USEDIN1TB(Base):  # type: ignore
     Ing_Name_ps = Column(String(75))
     JobID = Column(Integer)
     Comment_NTA = Column(String(255))
-    LineItem = Column(SmallInteger, index=True)
+    LineItem = Column(SMALLINT, index=True)
     DoNotDelete = Column(String(1), server_default=text("('N')"))
     BrokerID = Column(ForeignKey('COMPANY_TB.COMPANY_ID'), server_default=text("((0))"))
     PreferredBrokerContactID = Column(Integer, server_default=text("((0))"))
@@ -1144,9 +1200,9 @@ class USEDIN1TB(Base):  # type: ignore
     CHANGESET_ID = Column(Integer, index=True)
 
     # parent relationships (access parent)
-    COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("USEDIN1TBList"))
-    label_tb : Mapped["LabelTb"] = relationship(back_populates=("USEDIN1TBList"))
-    OWNS_TB : Mapped["OWNSTB"] = relationship(back_populates=("USEDIN1TBList"))
+    #COMPANY_TB : Mapped["COMPANYTB"] = relationship(back_populates=("USEDIN1TBList"))
+    #label_tb : Mapped["LabelTb"] = relationship(back_populates=("USEDIN1TBList"))
+    #OWNS_TB : Mapped["OWNSTB"] = relationship(back_populates=("USEDIN1TBList"))
 
     # child relationships (access children)
 
@@ -1189,8 +1245,8 @@ class MERCHTB(Base):  # type: ignore
     PROD_NUM = Column(String(25), server_default=text("('')"))
     INTERMEDIATE_MIX = Column(String(1), server_default=text("('N')"))
     ALTERNATE_NAME = Column(String(80))
-    BrochoCode = Column(SmallInteger, server_default=text("((0))"))
-    Brocho2Code = Column(SmallInteger, server_default=text("((0))"))
+    BrochoCode = Column(SMALLINT, server_default=text("((0))"))
+    Brocho2Code = Column(SMALLINT, server_default=text("((0))"))
     CAS = Column(String(30), server_default=text("('')"))
     Symbol = Column(String(50), server_default=text("('')"))
     LOC = Column(Date)
@@ -1206,10 +1262,10 @@ class MERCHTB(Base):  # type: ignore
     # parent relationships (access parent)
 
     # child relationships (access children)
-    FormulaProductList : Mapped[List["FormulaProduct"]] = relationship(back_populates="MERCH_TB")
+    #FormulaProductList : Mapped[List["FormulaProduct"]] = relationship(back_populates="MERCH_TB")
     #MERCHOTHERNAMEList : Mapped[List["MERCHOTHERNAME"]] = relationship(back_populates="MERCH_TB")
     #YoshonInfoList : Mapped[List["YoshonInfo"]] = relationship(back_populates="Merch")
-    LabelTbList : Mapped[List["LabelTb"]] = relationship(back_populates="MERCH_TB")
+    #LabelTbList : Mapped[List["LabelTb"]] = relationship(back_populates="MERCH_TB")
     #FormulaComponentList : Mapped[List["FormulaComponent"]] = relationship(back_populates="MERCH_TB")
     #FormulaSubmissionComponentList : Mapped[List["FormulaSubmissionComponent"]] = relationship(back_populates="MERCH_TB")
 
@@ -1222,10 +1278,10 @@ class FormulaProduct(Base):  # type: ignore
 
     ID = Column(Integer, server_default=text("0"), primary_key=True)
     FormulaID = Column(Integer, nullable=False)
-    Merchandise_ID = Column(ForeignKey('MERCH_TB.MERCHANDISE_ID'), nullable=False)
+    Merchandise_ID = Column(Integer, nullable=False)
 
     # parent relationships (access parent)
-    MERCH_TB : Mapped["MERCHTB"] = relationship(back_populates=("FormulaProductList"))
+    #MERCH_TB : Mapped["MERCHTB"] = relationship(back_populates=("FormulaProductList"))
 
 
 class LabelTb(Base):  # type: ignore
@@ -1250,10 +1306,11 @@ class LabelTb(Base):  # type: ignore
         Index('IX_Label_OrderAndFilter', 'LABEL_NAME', 'BRAND_NAME', 'LABEL_SEQ_NUM'),
         Index('ix_label_tb_ACTIVE_BRAND_NAME_includes', 'ACTIVE', 'BRAND_NAME')
     )
+    __bind_key__ = 'ou'
 
     ID = Column(Integer, server_default=text("0"), primary_key=True, unique=True)
-    MERCHANDISE_ID = Column(ForeignKey('MERCH_TB.MERCHANDISE_ID'), nullable=False)
-    LABEL_SEQ_NUM = Column(SmallInteger, nullable=False)
+    MERCHANDISE_ID = Column(Integer, nullable=False)
+    LABEL_SEQ_NUM = Column(SMALLINT, nullable=False)
     SYMBOL = Column(String(20))
     INSTITUTIONAL = Column(String(1))
     BLK = Column(String(1), Computed("(case when [GRP]='5' OR [GRP]='4' then 'Y' else 'N' end)", persisted=False), nullable=False)
@@ -1261,16 +1318,16 @@ class LabelTb(Base):  # type: ignore
     GRP = Column(String(10), server_default=text("((3))"))
     SEAL_SIGN_FLAG = Column(String(1))
     BRAND_NAME = Column(String(100), index=True)
-    SRC_MAR_ID = Column(ForeignKey('COMPANY_TB.COMPANY_ID'), ForeignKey('COMPANY_TB.COMPANY_ID'), nullable=False)
+    SRC_MAR_ID = Column(Integer, nullable=False)
     LABEL_NAME = Column(String(225), index=True)
     INDUSTRIAL = Column(String(1))
     CONSUMER = Column(String(1))
     LABEL_TYPE = Column(String(20))
     ACTIVE = Column(Integer)
     SPECIAL_PRODUCTION = Column(String(1))
-    CREATE_DATE = Column(DateTime, server_default=text("(getdate())"), index=True)
-    LAST_MODIFY_DATE = Column(DateTime, server_default=text("(getdate())"), index=True)
-    STATUS_DATE = Column(DateTime)
+    CREATE_DATE = Column(DATETIME, server_default=text("(getdate())"), index=True)
+    LAST_MODIFY_DATE = Column(DATETIME, server_default=text("(getdate())"), index=True)
+    STATUS_DATE = Column(DATETIME)
     JEWISH_ACTION = Column(String(1))
     CREATED_BY = Column(String(100), server_default=text("(suser_sname())"))
     MODIFIED_BY = Column(String(100), server_default=text("(suser_sname())"))
@@ -1279,7 +1336,7 @@ class LabelTb(Base):  # type: ignore
     Confidential = Column(String(1))
     AgencyID = Column(String(50), unique=True)
     LOChold = Column(String(1))
-    LOCholdDate = Column(DateTime)
+    LOCholdDate = Column(DATETIME)
     PassoverSpecialProduction = Column(String(1), server_default=text("('N')"))
     COMMENT = Column(String(1000), server_default=text("('')"))
     DisplayNewlyCertifiedOnWeb = Column(String(1), server_default=text("('N')"))
@@ -1287,7 +1344,7 @@ class LabelTb(Base):  # type: ignore
     ValidFromTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'1900-01-01 00:00:00'))"), nullable=False)
     ValidToTime = Column(DATETIME2, server_default=text("(CONVERT([datetime2](7),'9999-12-31 23:59:59.9999999'))"), nullable=False)
     CHANGESET_ID = Column(Integer, index=True)
-    LastChangeDate = Column(DateTime)
+    LastChangeDate = Column(DATETIME)
     LastChangeReason = Column(String(100))
     LastChangeType = Column(String(100))
     ReplacedByAgencyId = Column(String(50))
@@ -1297,19 +1354,18 @@ class LabelTb(Base):  # type: ignore
     NameNum = Column(String(251), Computed("(ltrim(isnull(concat(nullif([Label_Name],''),case when [Label_Name]<>'' AND [Label_Num]<>'' then ' '+[Label_Num] else [Label_Num] end),'')))", persisted=False))
 
     # parent relationships (access parent)
-    MERCH_TB : Mapped["MERCHTB"] = relationship(back_populates=("LabelTbList"))
-    COMPANY_TB : Mapped["COMPANYTB"] = relationship(foreign_keys='[LabelTb.SRC_MAR_ID]', back_populates=("LabelTbList"))
+    #MERCH_TB : Mapped["MERCHTB"] = relationship(back_populates=("LabelTbList"))
+    #COMPANY_TB : Mapped["COMPANYTB"] = relationship(foreign_keys='[LabelTb.SRC_MAR_ID]', back_populates=("LabelTbList"))
     #COMPANY_TB1 : Mapped["COMPANYTB"] = relationship(foreign_keys='[LabelTb.SRC_MAR_ID]', back_populates=("LabelTbList1"), overlaps="COMPANY_TB,LabelTbList")
 
     # child relationships (access children)
-    FormulaComponentList : Mapped[List["FormulaComponent"]] = relationship(back_populates="label_tb")
+    #FormulaComponentList : Mapped[List["FormulaComponent"]] = relationship(back_populates="label_tb")
     #LabelCommentList : Mapped[List["LabelComment"]] = relationship(back_populates="Label")
     #LabelOptionList : Mapped[List["LabelOption"]] = relationship(foreign_keys='[LabelOption.LabelID]', back_populates="label_tb")
     #LabelOptionList1 : Mapped[List["LabelOption"]] = relationship(foreign_keys='[LabelOption.LabelID]', back_populates="label_tb1", overlaps="LabelOptionList")
     #LabelBarcodeList : Mapped[List["LabelBarcode"]] = relationship(back_populates="label")
     #FormulaSubmissionComponentList : Mapped[List["FormulaSubmissionComponent"]] = relationship(back_populates="label_tb")
-    USEDIN1TBList : Mapped[List["USEDIN1TB"]] = relationship(back_populates="label_tb")
-    ProducedIn1TbList : Mapped[List["ProducedIn1Tb"]] = relationship(back_populates="label_tb")
+    #USEDIN1TBList : Mapped[List["USEDIN1TB"]] = relationship(back_populates="label_tb")
+    #ProducedIn1TbList : Mapped[List["ProducedIn1Tb"]] = relationship(back_populates="label_tb")
 
 
-'''

@@ -6,9 +6,9 @@
             entity="TaskInstance" 
             title="TASKINSTANCE"
             keys="TaskInstanceId"
-            columns="TaskInstanceId;InstanceId;TaskId;Status;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount" 
+            columns="TaskInstanceId;InstanceId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount" 
             header-actions="R;D"
-            visible-columns="TaskInstanceId;InstanceId;TaskId;Status;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
+            visible-columns="TaskInstanceId;InstanceId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
             sort-columns="TaskInstanceId" 
             query-rows="20" 
             quick-filter="yes"
@@ -33,6 +33,8 @@
     </o-table-cell-renderer-service>
 </o-table-column>
             
+            <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
+            
             <o-table-column attr="TaskId" title="Task">
     <o-table-cell-renderer-service attr="TaskId" 
         service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
@@ -41,8 +43,6 @@
         visible-columns="TaskName" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
-            
-            <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
             
             <o-table-column #AssignedTo attr="AssignedTo" title="AssignedTo" editable="no" required="no" content-align="left"></o-table-column>
             

@@ -102,7 +102,7 @@
       
       <o-text-input #ContextData attr="ContextData" label="ContextData" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
-      <o-text-input #ApplicationId attr="ApplicationId" label="ApplicationId" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      <o-integer-input #ApplicationId attr="ApplicationId" label="ApplicationId" type="integer" editable="no" required="yes" ></o-integer-input>
       
     </div>
   </o-row>
@@ -182,11 +182,11 @@
         entity="StageInstance" 
         keys="StageInstanceId"
         parent-keys="ProcessInstanceId:InstanceId"
-        columns="StageInstanceId;LaneId;ProcessInstanceId;Status;StartedDate;CompletedDate;DurationDays;RetryCount;CompletedCount;TotalCount;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy"  
+        columns="StageInstanceId;LaneId;ProcessInstanceId;Status;StartedDate;CompletedDate;DurationDays;RetryCount;AssignedTo;AssignedBy;AssignedDate;CompletedCount;TotalCount;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy"  
         horizontal-scroll="yes"
         detail-form-route="StageInstance" 
         edit-form-route="StageInstance"
-        visible-columns="StageInstanceId;LaneId;ProcessInstanceId;Status;StartedDate;CompletedDate;DurationDays;RetryCount;CompletedCount;TotalCount;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy"  
+        visible-columns="StageInstanceId;LaneId;ProcessInstanceId;Status;StartedDate;CompletedDate;DurationDays;RetryCount;AssignedTo;AssignedBy;AssignedDate;CompletedCount;TotalCount;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy"  
         sort-columns="StageInstanceId" 
         query-rows="25" 
         quick-filter="yes"
@@ -232,6 +232,12 @@
         
           <o-table-column #RetryCount attr="RetryCount" title="RetryCount" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
+          <o-table-column #AssignedTo attr="AssignedTo" title="AssignedTo" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #AssignedBy attr="AssignedBy" title="AssignedBy" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #AssignedDate attr="AssignedDate" title="AssignedDate" type="DATETIME2" editable="no" required="no" ></o-table-column>
+        
           <o-table-column #CompletedCount attr="CompletedCount" title="CompletedCount" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
           <o-table-column #TotalCount attr="TotalCount" title="TotalCount" type="integer" editable="no" required="no" content-align="center"></o-table-column>
@@ -249,19 +255,19 @@
     </div>
 </mat-tab>
         
-        <mat-tab label="TASKCOMMENT-InstanceId">
+        <mat-tab label="TASKCOMMENT-ProcessInstanceId">
     <div layout-padding>
       <o-table 
         attr="TaskCommentTable" 
         service="TaskComment" 
         entity="TaskComment" 
         keys="CommentId"
-        parent-keys="InstanceId:InstanceId"
-        columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
+        parent-keys="ProcessInstanceId:InstanceId"
+        columns="CommentId;CommentType;ProcessInstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         horizontal-scroll="yes"
         detail-form-route="TaskComment" 
         edit-form-route="TaskComment"
-        visible-columns="CommentId;CommentType;InstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
+        visible-columns="CommentId;CommentType;ProcessInstanceId;TaskInstanceId;CommentText;Author;CreatedDate;IsVisible"  
         sort-columns="CommentId" 
         query-rows="25" 
         quick-filter="yes"
@@ -281,11 +287,11 @@
         
           <o-table-column #CommentType attr="CommentType" title="CommentType" editable="no" required="no" content-align="left"></o-table-column>
         
-          <o-table-column attr="InstanceId" title="Instance">
-    <o-table-cell-renderer-service attr="InstanceId" 
+          <o-table-column attr="ProcessInstanceId" title="ProcessInstance">
+    <o-table-cell-renderer-service attr="ProcessInstanceId" 
         service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
-        parent-keys="InstanceId:InstanceId"
-        value-column="InstanceId" keys="InstanceId"
+        parent-keys="InstanceId:ProcessInstanceId"
+        value-column="InstanceId" keys="ProcessInstanceId"
         visible-columns="InstanceId" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
@@ -323,11 +329,11 @@
         entity="TaskInstance" 
         keys="TaskInstanceId"
         parent-keys="InstanceId:InstanceId"
-        columns="TaskInstanceId;InstanceId;TaskId;Status;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
+        columns="TaskInstanceId;InstanceId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
         horizontal-scroll="yes"
         detail-form-route="TaskInstance" 
         edit-form-route="TaskInstance"
-        visible-columns="TaskInstanceId;InstanceId;TaskId;Status;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
+        visible-columns="TaskInstanceId;InstanceId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
         sort-columns="TaskInstanceId" 
         query-rows="25" 
         quick-filter="yes"
@@ -354,6 +360,8 @@
     </o-table-cell-renderer-service>
 </o-table-column>
         
+          <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
+        
           <o-table-column attr="TaskId" title="Task">
     <o-table-cell-renderer-service attr="TaskId" 
         service="TaskDefinition" entity="TaskDefinitionType" columns="TaskId;TaskName"
@@ -362,8 +370,6 @@
         visible-columns="TaskName" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
-        
-          <o-table-column #Status attr="Status" title="Status" editable="no" required="yes" content-align="left"></o-table-column>
         
           <o-table-column #AssignedTo attr="AssignedTo" title="AssignedTo" editable="no" required="no" content-align="left"></o-table-column>
         

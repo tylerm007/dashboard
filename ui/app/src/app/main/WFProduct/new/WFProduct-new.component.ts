@@ -9,7 +9,7 @@ import { NavigationService, OFormComponent } from 'ontimize-web-ngx';
 export class WFProductNewComponent {
   @ViewChild("WFProductForm") form: OFormComponent;
   onInsertMode() {
-    const default_values = {'ProductID': '0', 'CreatedDate': '(getdate())'}
+    const default_values = {'action': "('Add')", 'ProductID': '0'}
     this.form.setFieldValues(default_values);
   }
   constructor(protected injector: Injector) {

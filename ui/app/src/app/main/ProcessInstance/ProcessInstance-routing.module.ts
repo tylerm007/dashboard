@@ -28,7 +28,7 @@ const routes: Routes = [
         }
     }
 },{
-    path: ':InstanceId/TaskComment', loadChildren: () => import('../TaskComment/TaskComment.module').then(m => m.TaskCommentModule),
+    path: ':ProcessInstanceId/TaskComment', loadChildren: () => import('../TaskComment/TaskComment.module').then(m => m.TaskCommentModule),
     data: {
         oPermission: {
             permissionId: 'TaskComment-detail-permissions'

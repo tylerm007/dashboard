@@ -21,9 +21,9 @@ after-insert-mode="new" class="standalone-form-container" >
         value-column="ApplicationID" 
         value-column-type="INTEGER"  
         keys="ApplicationID" 
-        columns="ApplicationID;ApplicationID;PrimaryContactName" 
+        columns="ApplicationID;ApplicationID;ApplicationID" 
         title="ApplicationID"
-        visible-columns="ApplicationID;PrimaryContactName" 
+        visible-columns="ApplicationID;ApplicationID" 
         separator=" - " width="680px" class="form-field">
 </o-list-picker>
       
@@ -36,6 +36,12 @@ after-insert-mode="new" class="standalone-form-container" >
         <o-text-input #Category attr="Category" label="Category" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
         <o-date-input #CreatedDate attr="CreatedDate" value-type="string" label="CreatedDate" editable="no" required="yes" format="YYYY-MM-DD hh:mm:ss" fxFlex="20%" class="form-field"></o-date-input>
+      
+        <o-text-input #CreatedBy attr="CreatedBy" label="CreatedBy" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+        <o-date-input #ModifiedDate attr="ModifiedDate" value-type="string" label="ModifiedDate" editable="no" required="no" format="YYYY-MM-DD hh:mm:ss" fxFlex="20%" class="form-field"></o-date-input>
+      
+        <o-text-input #ModifiedBy attr="ModifiedBy" label="ModifiedBy" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
       
 </div>
 </o-row>

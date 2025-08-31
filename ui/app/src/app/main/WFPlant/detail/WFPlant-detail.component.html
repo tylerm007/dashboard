@@ -29,13 +29,13 @@
         value-column="ApplicationID" 
         value-column-type="INTEGER"  
         keys="ApplicationID" 
-        columns="ApplicationID;ApplicationID;PrimaryContactName" 
+        columns="ApplicationID;ApplicationID;ApplicationID" 
         title="ApplicationID"
-        visible-columns="ApplicationID;PrimaryContactName" 
+        visible-columns="ApplicationID;ApplicationID" 
         separator=" - " width="680px" class="form-field">
 </o-list-picker>
       
-      <o-text-input #PlantNumber attr="PlantNumber" label="PlantNumber" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      <o-integer-input #PlantNumber attr="PlantNumber" label="PlantNumber" type="integer" editable="no" required="no" ></o-integer-input>
       
       <o-date-input #CreatedDate attr="CreatedDate" value-type="string" label="CreatedDate" editable="no" required="yes" format="YYYY-MM-DD hh:mm:ss" fxFlex="20%" class="form-field"></o-date-input>
       
@@ -43,63 +43,6 @@
   </o-row>
       
       <mat-tab-group fxFill>
-        
-        <mat-tab label="WFPRODUCT-PlantID">
-    <div layout-padding>
-      <o-table 
-        attr="WFProductTable" 
-        service="WFProduct" 
-        entity="WFProduct" 
-        keys="ProductID"
-        parent-keys="PlantID:PlantID"
-        columns="ProductID;ApplicationID;PlantID;ProductNumber;CreatedDate"  
-        horizontal-scroll="yes"
-        detail-form-route="WFProduct" 
-        edit-form-route="WFProduct"
-        visible-columns="ProductID;ApplicationID;PlantID;ProductNumber;CreatedDate"  
-        sort-columns="ProductID" 
-        query-rows="25" 
-        quick-filter="yes"
-        row-height="medium" 
-        select-all-checkbox="true" 
-        pageable="yes"  
-        auto-adjust="true" 
-        virtual-scroll="yes" 
-        insert-button="yes" 
-        delete-button="yes" 
-        fixed-header="true" 
-        class="vertical-padding-8"
-        edition-mode="dblclick" 
-        horizontal-scroll="yes" class="fill-form">
-        
-          <o-table-column #ProductID attr="ProductID" title=" Product I D" type="integer" editable="no" required="no" content-align="center"></o-table-column>
-        
-          <o-table-column attr="ApplicationID" title="ApplicationID">
-    <o-table-cell-renderer-service attr="ApplicationID" 
-        service="WFApplication" entity="WFApplicationType" columns="ApplicationID;PrimaryContactName"
-        parent-keys="PlantID:ApplicationID"
-        value-column="PrimaryContactName" keys="ApplicationID"
-        visible-columns="PrimaryContactName" separator=" - " width="680px">
-    </o-table-cell-renderer-service>
-</o-table-column>
-        
-          <o-table-column attr="PlantID" title="PlantID">
-    <o-table-cell-renderer-service attr="PlantID" 
-        service="WFPlant" entity="WFPlantType" columns="PlantID;PlantID"
-        parent-keys="PlantID:PlantID"
-        value-column="PlantID" keys="PlantID"
-        visible-columns="PlantID" separator=" - " width="680px">
-    </o-table-cell-renderer-service>
-</o-table-column>
-        
-          <o-table-column #ProductNumber attr="ProductNumber" title="ProductNumber" editable="no" required="no" content-align="left"></o-table-column>
-        
-          <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
-        
-        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
-      </o-table>
-    </div>
-</mat-tab>
         
       </mat-tab-group>
       

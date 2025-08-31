@@ -31,12 +31,12 @@
         entity="WFApplication" 
         keys="ApplicationID"
         parent-keys="Priority:PriorityCode"
-        columns="PrimaryContactName;Priority;Status;WFDashboardID;ApplicationNumber;SubmissionDate;Version;CreatedDate;LastUpdatedDate;LastStatusChangeDate;LastStatusChangedBy;ApplicationID;CompanyID;PlantID"  
+        columns="ApplicationID;Priority;Status;WFDashboardID;ApplicationNumber;SubmissionDate;AssignedTo;AssignedBy;AssignedDate;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;CompanyID;PlantID"  
         horizontal-scroll="yes"
         detail-form-route="WFApplication" 
         edit-form-route="WFApplication"
-        visible-columns="PrimaryContactName;Priority;Status;WFDashboardID;ApplicationNumber;SubmissionDate;Version;CreatedDate;LastUpdatedDate;LastStatusChangeDate;LastStatusChangedBy;ApplicationID;CompanyID;PlantID"  
-        sort-columns="PrimaryContactName" 
+        visible-columns="ApplicationID;Priority;Status;WFDashboardID;ApplicationNumber;SubmissionDate;AssignedTo;AssignedBy;AssignedDate;CreatedDate;CreatedBy;ModifiedDate;ModifiedBy;CompanyID;PlantID"  
+        sort-columns="ApplicationID" 
         query-rows="25" 
         quick-filter="yes"
         row-height="medium" 
@@ -51,7 +51,7 @@
         edition-mode="dblclick" 
         horizontal-scroll="yes" class="fill-form">
         
-          <o-table-column #PrimaryContactName attr="PrimaryContactName" title=" Primary Contact Name" editable="no" required="no" content-align="left"></o-table-column>
+          <o-table-column #ApplicationID attr="ApplicationID" title=" Application I D" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
           <o-table-column #Priority attr="Priority" title="Priority" editable="no" required="no" content-align="left"></o-table-column>
         
@@ -66,21 +66,23 @@
     </o-table-cell-renderer-service>
 </o-table-column>
         
-          <o-table-column #ApplicationNumber attr="ApplicationNumber" title="ApplicationNumber" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #ApplicationNumber attr="ApplicationNumber" title="ApplicationNumber" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
         
           <o-table-column #SubmissionDate attr="SubmissionDate" title="SubmissionDate" type="DATE" editable="no" required="yes" ></o-table-column>
         
-          <o-table-column #Version attr="Version" title="Version" editable="no" required="yes" content-align="left"></o-table-column>
+          <o-table-column #AssignedTo attr="AssignedTo" title="AssignedTo" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #AssignedBy attr="AssignedBy" title="AssignedBy" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #AssignedDate attr="AssignedDate" title="AssignedDate" type="DATETIME2" editable="no" required="no" ></o-table-column>
         
           <o-table-column #CreatedDate attr="CreatedDate" title="CreatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
         
-          <o-table-column #LastUpdatedDate attr="LastUpdatedDate" title="LastUpdatedDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+          <o-table-column #CreatedBy attr="CreatedBy" title="CreatedBy" editable="no" required="yes" content-align="left"></o-table-column>
         
-          <o-table-column #LastStatusChangeDate attr="LastStatusChangeDate" title="LastStatusChangeDate" type="DATETIME2" editable="no" required="yes" ></o-table-column>
+          <o-table-column #ModifiedDate attr="ModifiedDate" title="ModifiedDate" type="DATETIME2" editable="no" required="no" ></o-table-column>
         
-          <o-table-column #LastStatusChangedBy attr="LastStatusChangedBy" title="LastStatusChangedBy" editable="no" required="no" content-align="left"></o-table-column>
-        
-          <o-table-column #ApplicationID attr="ApplicationID" title="ApplicationID" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+          <o-table-column #ModifiedBy attr="ModifiedBy" title="ModifiedBy" editable="no" required="no" content-align="left"></o-table-column>
         
           <o-table-column #CompanyID attr="CompanyID" title="CompanyID" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
         
