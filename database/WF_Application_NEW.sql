@@ -163,26 +163,70 @@ CREATE TABLE WF_Plants (
     --,FOREIGN KEY (PlantNumber) REFERENCES PLANTTB(PlantID)
 );
 
--- Products Table
-CREATE TABLE WF_Products (
-    ProductID INT IDENTITY(1,1) PRIMARY KEY,
-    ApplicationID INT NOT NULL,
-    PlantID INT  NULL,
-    ProductNumber NVARCHAR(50) NULL, -- Foreign Key to ou_kash.PRODUCT_TB
-    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
-    FOREIGN KEY (PlantID) REFERENCES WF_Plants(PlantID),
+
+-- Create table: WF_Products
+CREATE TABLE [dbo].[WF_Products] (
+    [ProductID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [ApplicationID] INT NOT NULL,
+    [action] NVARCHAR(100) NOT NULL DEFAULT 'Add',
+    [legacyId] NVARCHAR(50) NOT NULL, -- LINK to PRODUCTSTB ???
+    [doNotImport] BIT NOT NULL DEFAULT 0,
+    [message] NVARCHAR(MAX) NULL,
+    [labelType] NVARCHAR(100) NOT NULL, -- lookups ???
+    [labelName] NVARCHAR(100) NOT NULL,
+    [brandName] NVARCHAR(100) NOT NULL,
+    [labelCompanyId] NVARCHAR(50) NOT NULL, -- lookup??
+    [distributorName] NVARCHAR(150) NOT NULL,
+    [group] NVARCHAR(10) NOT NULL,
+    [symbol] NVARCHAR(20) NOT NULL,
+    [dpm] NVARCHAR(50) NOT NULL,
+    [category] NVARCHAR(100) NOT NULL, -- LOOKUP ???
+    [usePlantStatus] BIT NOT NULL,
+    [status] NVARCHAR(50) NOT NULL, -- LOOKUP ???
+    [legacyStatus] NVARCHAR(MAX) NULL,
+    [consumer] BIT NOT NULL,
+    [industrial] BIT NOT NULL,
+    [finalized] BIT NOT NULL,
+    [processedBy] NVARCHAR(100) NOT NULL,
+    [processedDate] DATE NOT NULL,
+    [notes] NVARCHAR(255) NOT NULL,
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
 );
 
--- Ingredients Table
+-- Add indexes for common queries
+CREATE INDEX [IX_WF_Products_Status] ON [dbo].[WF_Products] ([status]);
+CREATE INDEX [IX_WF_Products_DPM] ON [dbo].[WF_Products] ([dpm]);
+CREATE INDEX [IX_WF_Products_Group] ON [dbo].[WF_Products] ([group]);
+CREATE INDEX [IX_WF_Products_ProcessedDate] ON [dbo].[WF_Products] ([processedDate]);
+
+
+
+
 CREATE TABLE WF_Ingredients (
     IngredientID INT IDENTITY(1,1) PRIMARY KEY,
-    ApplicationID INT NOT NULL,
-    ProductID INT NULL,
-    NCRCIngredientID NVARCHAR(50) NULL, -- Foreign Key to ou_kash.INGREDIENT_TB for given product in plant
-    FOREIGN KEY (ProductID) REFERENCES WF_Products(ProductID),
+    ApplicationID INT NOT NULL, 
+    Source NVARCHAR(100) NOT NULL,
+    UKDId NVARCHAR(50) NULL,
+    RMC NVARCHAR(50) NULL,
+    IngredientName NVARCHAR(200) NOT NULL,
+    Manufacturer NVARCHAR(200) NOT NULL,
+    Brand NVARCHAR(200) NOT NULL,
+    Packaging NVARCHAR(50) NOT NULL,
+    Agency NVARCHAR(20) NOT NULL,
+    AddedDate DATE NOT NULL,
+    AddedBy NVARCHAR(100) NOT NULL,
+    Status NVARCHAR(50) NOT NULL,
+    NCRCId NVARCHAR(50) NOT NULL,
+    CreatedDate DATETIME2 DEFAULT GETDATE(),
+    ModifiedDate DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (ApplicationID) REFERENCES WF_Applications(ApplicationID)
 );
+
+-- Create indexes for better performance
+CREATE INDEX IX_WF_Ingredients_NCRCId ON WF_Ingredients(NCRCId);
+CREATE INDEX IX_WF_Ingredients_Status ON WF_Ingredients(Status);
+CREATE INDEX IX_WF_Ingredients_AddedDate ON WF_Ingredients(AddedDate);
+CREATE INDEX IX_WF_Ingredients_Agency ON WF_Ingredients(Agency);
 
 CREATE TABLE WF_QuoteStatus(
 	StatusCode NVARCHAR(10) NOT NULL PRIMARY KEY,
@@ -317,7 +361,7 @@ CREATE INDEX IX_ValidationChecks_ApplicationID ON WF_Applications(ApplicationID)
 CREATE INDEX IX_Plants_ApplicationID ON WF_Plants(ApplicationID);
 CREATE INDEX IX_Products_ApplicationID ON WF_Products(ApplicationID);
 CREATE INDEX IX_Ingredients_ApplicationID ON WF_Ingredients(ApplicationID);
-CREATE INDEX IX_Ingredients_NCRCIngredientID ON WF_Ingredients(NCRCIngredientID);
+--CREATE INDEX IX_Ingredients_NCRCIngredientID ON WF_Ingredients(NCRCIngredientID);
 CREATE INDEX IX_Quotes_ApplicationID ON WF_Quotes(ApplicationID);
 CREATE INDEX IX_Files_ApplicationID ON WF_Files(ApplicationID);
 CREATE INDEX IX_Messages_ApplicationID ON WF_ApplicationMessages(ApplicationID);
@@ -344,6 +388,78 @@ INSERT INTO WF_Applications (
 ) VALUES (
     9999, 1, '2025-07-17', 'NEW'
 );
+
+
+
+-- Insert mock data into WF_Products
+INSERT INTO [dbo].[WF_Products] (
+    [ApplicationID],
+    [action],
+    [legacyId],
+    [doNotImport],
+    [message],
+    [labelType],
+    [labelName],
+    [brandName],
+    [labelCompanyId],
+    [distributorName],
+    [group],
+    [symbol],
+    [dpm],
+    [category],
+    [usePlantStatus],
+    [status],
+    [legacyStatus],
+    [consumer],
+    [industrial],
+    [finalized],
+    [processedBy],
+    [processedDate],
+    [notes]
+) VALUES
+    (1, 'Add', '1142395', 0, NULL, 'In-House', 'Product ABC', 'Hungry Jack ®', '2584', 'Basic American Foods', '3', 'OU', 'Pareve', 'Potato Products', 0, 'pending', NULL, 0, 0, 0, 'Excel Import', '2025-08-20', 'Imported from Book 9.xlsx'),
+    (1, 'Add', '1142396', 0, NULL, 'In-House', 'Product XYZ', 'Fresh Farms', '2585', 'Fresh Produce Inc.', '3', 'OU', 'Dairy', 'Vegetable Blends', 0, 'pending', NULL, 0, 0, 0, 'Excel Import', '2025-08-20', 'Imported from Book 9.xlsx'),
+    (1, 'Add', '1142397', 0, NULL, 'Private', 'Snack Mix A', 'Crunchy Time', '2586', 'National Snack Co.', '3', 'OU', 'Pareve', 'Snack Foods', 0, 'pending', NULL, 0, 0, 0, 'Excel Import', '2025-08-20', 'Imported from Book 9.xlsx'),
+    (1, 'Add', '1142398', 0, NULL, 'In-House', 'Soup Base Z', 'Gourmet Chefs', '2587', 'Culinary Distributors LLC', '3', 'OU', 'Meat', 'Soup Bases', 0, 'pending', NULL, 0, 0, 0, 'Excel Import', '2025-08-20', 'Imported from Book 9.xlsx');
+
+
+
+-- Insert mock data
+INSERT INTO WF_Ingredients (ApplicationID,
+    Source, UKDId, RMC, IngredientName, Manufacturer, Brand, 
+    Packaging, Agency, AddedDate, AddedBy, Status, NCRCId
+)
+VALUES 
+    (1,'File 1', NULL, NULL, 'Ryman Rye Grain', 'Jones Farms Organics', 'Jones Farms Organics', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1001'),
+    
+    (1,'File 1', NULL, NULL, 'Yecora Rojo Grain', 'Jones Farms Organics', 'Jones Farms Organics', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1002'),
+    
+    (1,'File 2', NULL, NULL, 'Durham Grain', 'cow & Livestock', 'cow & Livestock', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1003'),
+    
+    (1,'File 2', NULL, NULL, 'Purple Barley Grain', 'cow & Livestock', 'cow & Livestock', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1004'),
+    
+    (1,'File 2', NULL, NULL, 'Emmer Grain', 'cow Farms', 'cow Farms', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1005'),
+    
+    (1,'File 2', NULL, NULL, 'Einkorn Grain', 'cow Farms', 'cow Farms', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1006'),
+    
+    (1,'File 2', NULL, NULL, 'Spelt Grain', 'cow Farms', 'cow Farms', 
+     'bulk', 'OU', '2025-07-17', 'System Import', 'Original', 'ING-2025-1007'),
+    
+    (1,'Manual Entry', 'OUE9-VAN2024', NULL, 'Natural Vanilla Extract', 'Premium Flavor Co', 'Premium Flavor Co', 
+     'Packaged', 'OU', '2025-07-18', 'J. Mitchell', 'Recent', 'ING-2025-1008'),
+    
+    (1,'Manual Entry', NULL, NULL, 'Organic Quinoa Flour', 'Andean Grains Ltd', 'Andean Grains', 
+     'bulk', 'OU-P', '2025-07-18', 'G. Magder', 'Recent', 'ING-2025-1009'),
+    
+    (1,'Supplier Update', NULL, NULL, 'Coconut Oil (Refined)', 'Tropical Oils Inc', 'TropicalPure', 
+     'Packaged', 'OU', '2025-07-18', 'Auto-Sync', 'Recent', 'ING-2025-1010');
+
     -- -- Insert Company
     -- INSERT INTO Companies (
     --     KashrusCompanyID, ApplicationID, CompanyName, Category, CurrentlyCertified, EverCertified,
