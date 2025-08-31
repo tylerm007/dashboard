@@ -1,3 +1,4 @@
+from email.mime import application
 from flask import request, jsonify
 from datetime import datetime
 from database.models import PLANTADDRESSTB, ProcessDefinition, TaskDefinition, ProcessInstance, WFIngredient, WFProduct, WorkflowHistory, StageInstance, TaskInstance, LaneDefinition
@@ -49,36 +50,59 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         
         owns = OWNSTB.query.filter_by(COMPANY_ID=company_id).all()
         if not owns:
-            return jsonify({"error": "Ownership not found"}), 404
+           return jsonify({"error": "Ownership not found"}), 404
 
-        plants = PLANTTB.query.filter(PLANTTB.PLANT_ID.in_(own.PLANT_ID for own in owns)).all()
-        if not plants:
-            app.logger.info(f'No plants found for company ID: {company_id}')    
-        for plant in plants:
-            address = PLANTADDRESSTB.query.filter_by(PLANT_ID=plant.PLANT_ID).first()
-            if address:
-                plant.address = {
-                    "street": address.STREET1, 
-                    'line2': address.STREET2,
-                    "city": address.CITY ,
-                    "state": address.STATE ,
-                    "zip": address.ZIP ,
-                    "country": address.COUNTRY ,
-                    "type": address.TYPE
-                }
-            else:
-                plant.address = {
-                    "street": "Unknown",
-                    "line2": "Unknown", 
-                    "city": "Unknown",
-                    "state": "Unknown",
-                    "zip": "Unknown",
-                    "country": "Unknown",
-                    "type": "Unknown"
-                }
-            plant.contacts = {}
-            continue
-        application['Plants'] = plants
+        planttb = PLANTTB.query.filter_by(PLANT_ID=application['PlantID']).first()
+        #plants = PLANTTB.query.filter(PLANTTB.PLANT_ID.in_(own.PLANT_ID for own in owns)).all()
+        if not planttb:
+            app.logger.info(f'No plant found for company ID: {company_id} in Application {application_id}')    
+        #for plant in plants:
+        plant = {}
+        plant['address'] = {}
+        plant["manufacturing"] = {} 
+        '''
+            "manufacturing": {
+            "process": "Grain cleaning, milling, and flour production. Raw grains are received in bulk, cleaned using mechanical separators, ground using stone mills, sifted through mesh screens, and packaged in food-grade containers. All processes follow HACCP guidelines.",
+            "closestMajorCity": "Rochester, NY (15 miles)"
+            },
+            "otherProducts": true,
+            "otherProductsList": "Animal feed supplements, grain storage services",
+            "otherPlantsProducing": true,
+            "otherPlantsLocation": "Secondary facility at 425a Commerce Drive, Rochester NY"
+            }
+        '''
+        address = PLANTADDRESSTB.query.filter_by(PLANT_ID=planttb.PLANT_ID).first()
+        if address:
+            plant["address"] = {
+                "street": address.STREET1, 
+                'line2': address.STREET2,
+                "city": address.CITY ,
+                "state": address.STATE ,
+                "zip": address.ZIP ,
+                "country": address.COUNTRY ,
+                "type": address.TYPE
+            }
+        else:
+            plant["address"] = {
+                "street": "Unknown",
+                "line2": "Unknown", 
+                "city": "Unknown",
+                "state": "Unknown",
+                "zip": "Unknown",
+                "country": "Unknown",
+                "type": "Unknown"
+            }
+
+        plant["contacts"] = {}
+        '''
+            {
+                "name": "John Mitchell",
+                "title": "Plant Manager",
+                "phone": "(585) 555-0123",
+                "email": "j.mitchell@happycowmills.com"
+            }
+        '''
+        application['Plants'] = plant
         products = WFProduct.query.filter_by(ApplicationID=application_id).all()
         application['Products'] = products
         ingredients = WFIngredient.query.filter_by(ApplicationID=application_id).all()
@@ -125,19 +149,11 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         ]
         result['plants'] = [
             {
-                "name": plant.Name if hasattr(plant, 'Name') else "Unknown",
-                "location": plant.Location if hasattr(plant, 'Location') else "Unknown",
-                "address": plant.address if hasattr(plant, 'address') else {
-                    "street": "Unknown",
-                    "line2": "Unknown",
-                    "city": "Unknown",
-                    "state": "Unknown",
-                    "zip": "Unknown",
-                    "country": "Unknown",
-                    "type": "Unknown"
-                }
+                "name": planttb.NAME if hasattr(planttb, 'NAME') else "Unknown",
+                "location": planttb.LOCATION if hasattr(planttb, 'LOCATION') else "Unknown",
+                "address": plant["address"],
             }
-            for plant in plants
+            #for plant in plants
         ]
         result['products'] = [
             {
