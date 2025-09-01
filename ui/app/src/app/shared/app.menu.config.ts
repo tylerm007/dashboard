@@ -87,187 +87,201 @@ import { WorkflowHistoryCardComponent } from './WorkflowHistory-card/WorkflowHis
 
 export const MENU_CONFIG: MenuRootItem[] = [
     { id: 'home', name: 'HOME', icon: 'home', route: '/main/home' },
-    
+
+
     {
-    id: 'data', name: ' data', icon: 'remove_red_eye', opened: true,
-    items: [
-    
-        { id: 'LaneDefinition', name: 'LANEDEFINITION', icon: 'view_list', route: '/main/LaneDefinition' }
-    
-        ,{ id: 'LaneRole', name: 'LANEROLE', icon: 'view_list', route: '/main/LaneRole' }
-    
-        ,{ id: 'ProcessDefinition', name: 'PROCESSDEFINITION', icon: 'view_list', route: '/main/ProcessDefinition' }
-    
-        ,{ id: 'ProcessInstance', name: 'PROCESSINSTANCE', icon: 'view_list', route: '/main/ProcessInstance' }
-    
-        ,{ id: 'ProcessMessage', name: 'PROCESSMESSAGE', icon: 'view_list', route: '/main/ProcessMessage' }
-    
-        ,{ id: 'ProcessMessageType', name: 'PROCESSMESSAGETYPE', icon: 'view_list', route: '/main/ProcessMessageType' }
-    
-        ,{ id: 'ProcessPriority', name: 'PROCESSPRIORITY', icon: 'view_list', route: '/main/ProcessPriority' }
-    
-        ,{ id: 'ProcessStatus', name: 'PROCESSSTATUS', icon: 'view_list', route: '/main/ProcessStatus' }
-    
-        ,{ id: 'StageInstance', name: 'STAGEINSTANCE', icon: 'view_list', route: '/main/StageInstance' }
-    
-        ,{ id: 'StageStatus', name: 'STAGESTATUS', icon: 'view_list', route: '/main/StageStatus' }
-    
-        ,{ id: 'Sysdiagram', name: 'SYSDIAGRAM', icon: 'view_list', route: '/main/Sysdiagram' }
-    
-        ,{ id: 'TaskCategory', name: 'TASKCATEGORY', icon: 'view_list', route: '/main/TaskCategory' }
-    
-        ,{ id: 'TaskComment', name: 'TASKCOMMENT', icon: 'view_list', route: '/main/TaskComment' }
-    
-        ,{ id: 'TaskCommentType', name: 'TASKCOMMENTTYPE', icon: 'view_list', route: '/main/TaskCommentType' }
-    
-        ,{ id: 'TaskDefinition', name: 'TASKDEFINITION', icon: 'view_list', route: '/main/TaskDefinition' }
-    
-        ,{ id: 'TaskFlow', name: 'TASKFLOW', icon: 'view_list', route: '/main/TaskFlow' }
-    
-        ,{ id: 'TaskInstance', name: 'TASKINSTANCE', icon: 'view_list', route: '/main/TaskInstance' }
-    
-        ,{ id: 'TaskStatus', name: 'TASKSTATUS', icon: 'view_list', route: '/main/TaskStatus' }
-    
-        ,{ id: 'TaskType', name: 'TASKTYPE', icon: 'view_list', route: '/main/TaskType' }
-    
-        ,{ id: 'ValidationResult', name: 'VALIDATIONRESULT', icon: 'view_list', route: '/main/ValidationResult' }
-    
-        ,{ id: 'ValidationRule', name: 'VALIDATIONRULE', icon: 'view_list', route: '/main/ValidationRule' }
-    
-        ,{ id: 'WFActivityLog', name: 'WFACTIVITYLOG', icon: 'view_list', route: '/main/WFActivityLog' }
-    
-        ,{ id: 'WFActivityStatus', name: 'WFACTIVITYSTATUS', icon: 'view_list', route: '/main/WFActivityStatus' }
-    
-        ,{ id: 'WFApplication', name: 'WFAPPLICATION', icon: 'view_list', route: '/main/WFApplication' }
-    
-        ,{ id: 'WFApplicationComment', name: 'WFAPPLICATIONCOMMENT', icon: 'view_list', route: '/main/WFApplicationComment' }
-    
-        ,{ id: 'WFApplicationMessage', name: 'WFAPPLICATIONMESSAGE', icon: 'view_list', route: '/main/WFApplicationMessage' }
-    
-        ,{ id: 'WFApplicationStatus', name: 'WFAPPLICATIONSTATUS', icon: 'view_list', route: '/main/WFApplicationStatus' }
-    
-        ,{ id: 'WFCompany', name: 'WFCOMPANY', icon: 'view_list', route: '/main/WFCompany' }
-    
-        ,{ id: 'WFContact', name: 'WFCONTACT', icon: 'view_list', route: '/main/WFContact' }
-    
-        ,{ id: 'WFDashboard', name: 'WFDASHBOARD', icon: 'view_list', route: '/main/WFDashboard' }
-    
-        ,{ id: 'WFFile', name: 'WFFILE', icon: 'view_list', route: '/main/WFFile' }
-    
-        ,{ id: 'WFFileType', name: 'WFFILETYPE', icon: 'view_list', route: '/main/WFFileType' }
-    
-        ,{ id: 'WFIngredient', name: 'WFINGREDIENT', icon: 'view_list', route: '/main/WFIngredient' }
-    
-        ,{ id: 'WFPlant', name: 'WFPLANT', icon: 'view_list', route: '/main/WFPlant' }
-    
-        ,{ id: 'WFPriority', name: 'WFPRIORITY', icon: 'view_list', route: '/main/WFPriority' }
-    
-        ,{ id: 'WFProduct', name: 'WFPRODUCT', icon: 'view_list', route: '/main/WFProduct' }
-    
-        ,{ id: 'WFQuote', name: 'WFQUOTE', icon: 'view_list', route: '/main/WFQuote' }
-    
-        ,{ id: 'WFQuoteItem', name: 'WFQUOTEITEM', icon: 'view_list', route: '/main/WFQuoteItem' }
-    
-        ,{ id: 'WFQuoteStatus', name: 'WFQUOTESTATUS', icon: 'view_list', route: '/main/WFQuoteStatus' }
-    
-        ,{ id: 'WFRole', name: 'WFROLE', icon: 'view_list', route: '/main/WFRole' }
-    
-        ,{ id: 'WFUser', name: 'WFUSER', icon: 'view_list', route: '/main/WFUser' }
-    
-        ,{ id: 'WorkflowHistory', name: 'WORKFLOWHISTORY', icon: 'view_list', route: '/main/WorkflowHistory' }
-    
-    ] 
-},
-    
-    { id: 'settings', name: 'Settings', icon: 'settings', route: '/main/settings'}
-    ,{ id: 'about', name: 'About', icon: 'info', route: '/main/about'}
-    ,{ id: 'logout', name: 'LOGOUT', route: '/login', icon: 'power_settings_new', confirm: 'yes' }
+        id: 'application', name: 'Application', icon: 'edit_square', opened: false,
+        items: [
+
+            { id: 'WFApplication', name: 'Application', icon: 'view_list', route: '/main/WFApplication' }
+                        
+            , { id: 'WFCompany', name: 'Company', icon: 'view_list', route: '/main/WFCompany' }
+
+            , { id: 'WFContact', name: 'Contact', icon: 'view_list', route: '/main/WFContact' }
+
+             , { id: 'WFPlant', name: 'Plant', icon: 'view_list', route: '/main/WFPlant' }
+
+             , { id: 'WFProduct', name: 'Product', icon: 'view_list', route: '/main/WFProduct' }
+
+            , { id: 'WFIngredient', name: 'Ingredients', icon: 'view_list', route: '/main/WFIngredient' }
+
+            , { id: 'WFQuote', name: 'Quote', icon: 'view_list', route: '/main/WFQuote' }
+
+            , { id: 'WFQuoteItem', name: 'Quote Item', icon: 'view_list', route: '/main/WFQuoteItem' }
+
+            , { id: 'WFFile', name: 'Files', icon: 'view_list', route: '/main/WFFile' }
+
+            , { id: 'WFApplicationComment', name: 'Application Comment', icon: 'view_list', route: '/main/WFApplicationComment' }
+
+            , { id: 'WFApplicationMessage', name: 'Application Message', icon: 'view_list', route: '/main/WFApplicationMessage' }
+
+            , { id: 'WFApplicationStatus', name: 'Application Status', icon: 'view_list', route: '/main/WFApplicationStatus' }
+
+            , { id: 'WFDashboard', name: 'Dashboard', icon: 'view_list', route: '/main/WFDashboard' }
+
+            , { id: 'WFActivityLog', name: 'Activity Log', icon: 'view_list', route: '/main/WFActivityLog' }
+
+            , { id: 'WFRole', name: 'Role', icon: 'view_list', route: '/main/WFRole' }
+
+            , { id: 'WFUser', name: 'User', icon: 'view_list', route: '/main/WFUser' }
+        ]
+    },
+    {
+        id: 'data', name: ' WorkFlow Definition', icon: 'remove_red_eye', opened: false,
+        items: [
+
+            { id: 'WFDashboard', name: 'Dashboard', icon: 'view_list', route: '/main/WFDashboard' }
+            , { id: 'LaneDefinition', name: 'Lane Definition', icon: 'view_list', route: '/main/LaneDefinition' }
+
+            , { id: 'LaneRole', name: 'Lane Role', icon: 'view_list', route: '/main/LaneRole' }
+
+            , { id: 'ProcessDefinition', name: 'Process Definition', icon: 'view_list', route: '/main/ProcessDefinition' }
+
+            , { id: 'ProcessMessage', name: 'Process Message', icon: 'view_list', route: '/main/ProcessMessage' }
+
+            , { id: 'TaskComment', name: 'Task Comment', icon: 'view_list', route: '/main/TaskComment' }
+
+            , { id: 'TaskDefinition', name: 'Task Definition', icon: 'view_list', route: '/main/TaskDefinition' }
+
+            , { id: 'TaskFlow', name: 'Task Flow', icon: 'view_list', route: '/main/TaskFlow' }
+
+
+            // ,{ id: 'ValidationResult', name: 'VALIDATIONRESULT', icon: 'view_list', route: '/main/ValidationResult' }
+
+            //,{ id: 'ValidationRule', name: 'VALIDATIONRULE', icon: 'view_list', route: '/main/ValidationRule' }
+
+        ]
+    },
+    {
+        id: 'data', name: ' WorkFlow Instance', icon: 'remove_red_eye', opened: false,
+        items: [
+            { id: 'ProcessInstance', name: 'Process Instance', icon: 'view_list', route: '/main/ProcessInstance' }
+            , { id: 'StageInstance', name: 'Stage Instance', icon: 'view_list', route: '/main/StageInstance' }
+            , { id: 'TaskInstance', name: 'Task Instance', icon: 'view_list', route: '/main/TaskInstance' }
+            , { id: 'WorkflowHistory', name: 'Workflow History', icon: 'view_list', route: '/main/WorkflowHistory' }
+        ]
+    },
+    {
+        id: 'lookup', name: ' Lookup Tables', icon: 'remove_red_eye', opened: false,
+        items: [
+            { id: 'ProcessMessageType', name: 'Process Message Type', icon: 'view_list', route: '/main/ProcessMessageType' }
+
+            , { id: 'WFActivityStatus', name: 'WF Activity Status', icon: 'view_list', route: '/main/WFActivityStatus' }
+
+            , { id: 'ProcessPriority', name: 'Process Priority', icon: 'view_list', route: '/main/ProcessPriority' }
+
+            , { id: 'ProcessStatus', name: 'Process Status', icon: 'view_list', route: '/main/ProcessStatus' }
+
+            , { id: 'TaskStatus', name: 'Task Status', icon: 'view_list', route: '/main/TaskStatus' }
+
+            , { id: 'TaskType', name: 'Task Type', icon: 'view_list', route: '/main/TaskType' }
+
+            , { id: 'StageStatus', name: 'Stage Status', icon: 'view_list', route: '/main/StageStatus' }
+
+            , { id: 'WFQuoteStatus', name: 'WF Quote Status', icon: 'view_list', route: '/main/WFQuoteStatus' }
+
+            //,{ id: 'Sysdiagram', name: 'SYSDIAGRAM', icon: 'view_list', route: '/main/Sysdiagram' }
+
+            , { id: 'TaskCategory', name: 'Task Category', icon: 'view_list', route: '/main/TaskCategory' }
+
+            , { id: 'WFFileType', name: 'WF File Type', icon: 'view_list', route: '/main/WFFileType' }
+
+
+            , { id: 'TaskCommentType', name: 'Task Comment Type', icon: 'view_list', route: '/main/TaskCommentType' }
+
+            , { id: 'WFPriority', name: 'WF Priority', icon: 'view_list', route: '/main/WFPriority' }
+        ]
+    },
+
+    { id: 'settings', name: 'Settings', icon: 'settings', route: '/main/settings' }
+    , { id: 'about', name: 'About', icon: 'info', route: '/main/about' }
+    , { id: 'logout', name: 'LOGOUT', route: '/login', icon: 'power_settings_new', confirm: 'yes' }
 ];
 
 export const MENU_COMPONENTS = [
 
     LaneDefinitionCardComponent
 
-    ,LaneRoleCardComponent
+    , LaneRoleCardComponent
 
-    ,ProcessDefinitionCardComponent
+    , ProcessDefinitionCardComponent
 
-    ,ProcessInstanceCardComponent
+    , ProcessInstanceCardComponent
 
-    ,ProcessMessageCardComponent
+    , ProcessMessageCardComponent
 
-    ,ProcessMessageTypeCardComponent
+    , ProcessMessageTypeCardComponent
 
-    ,ProcessPriorityCardComponent
+    , ProcessPriorityCardComponent
 
-    ,ProcessStatusCardComponent
+    , ProcessStatusCardComponent
 
-    ,StageInstanceCardComponent
+    , StageInstanceCardComponent
 
-    ,StageStatusCardComponent
+    , StageStatusCardComponent
 
-    ,SysdiagramCardComponent
+    , SysdiagramCardComponent
 
-    ,TaskCategoryCardComponent
+    , TaskCategoryCardComponent
 
-    ,TaskCommentCardComponent
+    , TaskCommentCardComponent
 
-    ,TaskCommentTypeCardComponent
+    , TaskCommentTypeCardComponent
 
-    ,TaskDefinitionCardComponent
+    , TaskDefinitionCardComponent
 
-    ,TaskFlowCardComponent
+    , TaskFlowCardComponent
 
-    ,TaskInstanceCardComponent
+    , TaskInstanceCardComponent
 
-    ,TaskStatusCardComponent
+    , TaskStatusCardComponent
 
-    ,TaskTypeCardComponent
+    , TaskTypeCardComponent
 
-    ,ValidationResultCardComponent
+    , ValidationResultCardComponent
 
-    ,ValidationRuleCardComponent
+    , ValidationRuleCardComponent
 
-    ,WFActivityLogCardComponent
+    , WFActivityLogCardComponent
 
-    ,WFActivityStatusCardComponent
+    , WFActivityStatusCardComponent
 
-    ,WFApplicationCardComponent
+    , WFApplicationCardComponent
 
-    ,WFApplicationCommentCardComponent
+    , WFApplicationCommentCardComponent
 
-    ,WFApplicationMessageCardComponent
+    , WFApplicationMessageCardComponent
 
-    ,WFApplicationStatusCardComponent
+    , WFApplicationStatusCardComponent
 
-    ,WFCompanyCardComponent
+    , WFCompanyCardComponent
 
-    ,WFContactCardComponent
+    , WFContactCardComponent
 
-    ,WFDashboardCardComponent
+    , WFDashboardCardComponent
 
-    ,WFFileCardComponent
+    , WFFileCardComponent
 
-    ,WFFileTypeCardComponent
+    , WFFileTypeCardComponent
 
-    ,WFIngredientCardComponent
+    , WFIngredientCardComponent
 
-    ,WFPlantCardComponent
+    , WFPlantCardComponent
 
-    ,WFPriorityCardComponent
+    , WFPriorityCardComponent
 
-    ,WFProductCardComponent
+    , WFProductCardComponent
 
-    ,WFQuoteCardComponent
+    , WFQuoteCardComponent
 
-    ,WFQuoteItemCardComponent
+    , WFQuoteItemCardComponent
 
-    ,WFQuoteStatusCardComponent
+    , WFQuoteStatusCardComponent
 
-    ,WFRoleCardComponent
+    , WFRoleCardComponent
 
-    ,WFUserCardComponent
+    , WFUserCardComponent
 
-    ,WorkflowHistoryCardComponent
+    , WorkflowHistoryCardComponent
 
 ];
