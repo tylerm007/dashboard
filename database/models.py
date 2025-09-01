@@ -45,6 +45,18 @@ else:
 
 
 
+class LaneRole(Base):  # type: ignore
+    __tablename__ = 'LaneRoles'
+    _s_collection_name = 'LaneRole'  # type: ignore
+
+    RoleCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
+    RoleDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    allow_client_generated_ids = True
+
+    # parent relationships (access parent)
+
+    # child relationships (access children)
+    LaneDefinitionList : Mapped[List["LaneDefinition"]] = relationship(back_populates="LaneRole1")
 class ProcessDefinition(Base):  # type: ignore
     __tablename__ = 'ProcessDefinitions'
     _s_collection_name = 'ProcessDefinition'  # type: ignore
@@ -380,12 +392,14 @@ class LaneDefinition(Base):  # type: ignore
     LaneName = Column(Unicode(100), nullable=False)
     LaneDescription = Column(Unicode(500))
     EstimatedDurationDays = Column(Integer)
-    CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
-    CreatedBy = Column(Unicode(100), server_default=text('system'), nullable=False)
+    LaneRole = Column(ForeignKey('LaneRoles.RoleCode'), server_default=text("('NCRC')"), nullable=False)
+    CreatedDate = Column(DATETIME2, server_default=text("(getutcdate())"), nullable=False)
+    CreatedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
     ModifiedDate = Column(DATETIME2)
     ModifiedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
+    LaneRole1 : Mapped["LaneRole"] = relationship(back_populates=("LaneDefinitionList"))
     Process : Mapped["ProcessDefinition"] = relationship(back_populates=("LaneDefinitionList"))
 
     # child relationships (access children)

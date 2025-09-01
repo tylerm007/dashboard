@@ -1,0 +1,253 @@
+<div class="container">
+  <o-form-container breadcrumb="yes" breadcrumb-label-columns="NAME" breadcrumb-separator=", " class="fill-form">
+    <o-form #form attr="COMPANYTB_form_edit" service="COMPANYTB" entity="COMPANYTB" fxLayout="column" show-header="yes"
+      header-actions="R;U" #oDetailForm keys="COMPANY_ID" keys-sql-types="INTEGER" show-header-navigation="yes"
+      (onDataLoaded)="onDataLoaded($event)">
+
+      <o-row attr="row1" layout-align="start stretch">
+        <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+
+          <o-text-input #NAME attr="NAME" label=" N A M E" enabled="yes" required="yes" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #LIST attr="LIST" label="LIST" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-integer-input #GP_NOTIFY attr="GP_NOTIFY" label="GP_NOTIFY" type="integer" editable="no"
+            required="no"></o-integer-input>
+
+          <o-checkbox #PRODUCER attr="PRODUCER" label="PRODUCER" read-only="no" enabled="yes"></o-checkbox>
+
+          <o-checkbox #MARKETER attr="MARKETER" label="MARKETER" read-only="no" enabled="yes"></o-checkbox>
+
+          <o-checkbox #SOURCE attr="SOURCE" label="SOURCE" read-only="no" enabled="yes"></o-checkbox>
+
+          <o-text-input #IN_HOUSE attr="IN_HOUSE" label="IN_HOUSE" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #PRIVATE_LABEL attr="PRIVATE_LABEL" label="PRIVATE_LABEL" enabled="yes" required="no"
+            fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-text-input #COPACKER attr="COPACKER" label="COPACKER" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #CORPORATE attr="CORPORATE" label="CORPORATE" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #COMPANY_TYPE attr="COMPANY_TYPE" label="COMPANY_TYPE" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #INVOICE_TYPE attr="INVOICE_TYPE" label="INVOICE_TYPE" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #INVOICE_FREQUENCY attr="INVOICE_FREQUENCY" label="INVOICE_FREQUENCY" enabled="yes"
+            required="no" fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-text-input #INVOICE_DTL attr="INVOICE_DTL" label="INVOICE_DTL" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-textarea-input #TIMESTAMP attr="TIMESTAMP" label="TIMESTAMP" enabled="true" read-only="false"
+            fxFlex="50%"></o-textarea-input>
+
+          <o-text-input #STATUS attr="STATUS" label="STATUS" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #RC attr="RC" label="RC" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #PARENT_CO attr="PARENT_CO" label="PARENT_CO" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-date-input #INVOICE_LAST_DATE attr="INVOICE_LAST_DATE" value-type="string" label="INVOICE_LAST_DATE"
+            editable="no" required="no" format="YYYY-MM-DD hh:mm:ss" fxFlex="20%" class="form-field"></o-date-input>
+
+          <o-text-input #COMPANY_BILL_TO_NAME attr="COMPANY_BILL_TO_NAME" label="COMPANY_BILL_TO_NAME" enabled="yes"
+            required="no" fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-integer-input #ACTIVE attr="ACTIVE" label="ACTIVE" type="integer" editable="no"
+            required="no"></o-integer-input>
+
+          <o-text-input #AcquiredFrom attr="AcquiredFrom" label="AcquiredFrom" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #MoveToGP attr="MoveToGP" label="MoveToGP" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #DefaultPO attr="DefaultPO" label="DefaultPO" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-date-input #POexpiry attr="POexpiry" value-type="string" label="POexpiry" enabled="yes" required="no"
+            format="YYYY-MM-DD" fxFlex="20%" class="form-field"></o-date-input>
+
+          <o-text-input #PrivateLabelPO attr="PrivateLabelPO" label="PrivateLabelPO" enabled="yes" required="no"
+            fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-date-input #PrivateLabelPOexpiry attr="PrivateLabelPOexpiry" value-type="string"
+            label="PrivateLabelPOexpiry" enabled="yes" required="no" format="YYYY-MM-DD" fxFlex="20%"
+            class="form-field"></o-date-input>
+
+          <o-text-input #VisitPO attr="VisitPO" label="VisitPO" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-date-input #VisitPOexpiry attr="VisitPOexpiry" value-type="string" label="VisitPOexpiry" enabled="yes"
+            required="no" format="YYYY-MM-DD" fxFlex="20%" class="form-field"></o-date-input>
+
+          <o-text-input #ValidFromTime attr="ValidFromTime" label="ValidFromTime" enabled="yes" required="yes"
+            fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-text-input #ValidToTime attr="ValidToTime" label="ValidToTime" enabled="yes" required="yes" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #CATEGORY attr="CATEGORY" label="CATEGORY" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #OLDCOMPANYTYPE attr="OLDCOMPANYTYPE" label="OLDCOMPANYTYPE" enabled="yes" required="no"
+            fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-text-input #BoilerplateInvoiceComment attr="BoilerplateInvoiceComment" label="BoilerplateInvoiceComment"
+            enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+
+          <o-checkbox #ShouldPropagateCompanyPo attr="ShouldPropagateCompanyPo" label="ShouldPropagateCompanyPo"
+            read-only="no" enabled="yes"></o-checkbox>
+
+          <o-checkbox #ShouldPropagateKscPoToPlants attr="ShouldPropagateKscPoToPlants"
+            label="ShouldPropagateKscPoToPlants" read-only="no" enabled="yes"></o-checkbox>
+
+          <o-checkbox #ShouldPropagateVisitPoToPlants attr="ShouldPropagateVisitPoToPlants"
+            label="ShouldPropagateVisitPoToPlants" read-only="no" enabled="yes"></o-checkbox>
+
+          <o-text-input #PoReason attr="PoReason" label="PoReason" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-checkbox #On3rdPartyBilling attr="On3rdPartyBilling" label="On3rdPartyBilling" read-only="no"
+            enabled="yes"></o-checkbox>
+
+          <o-checkbox #IsTest attr="IsTest" label="IsTest" read-only="no" enabled="yes"></o-checkbox>
+
+          <o-date-input #ChometzEmailSentDate attr="ChometzEmailSentDate" value-type="string"
+            label="ChometzEmailSentDate" editable="no" required="no" format="YYYY-MM-DD hh:mm:ss" fxFlex="20%"
+            class="form-field"></o-date-input>
+
+          <o-integer-input #COMPANY_ID attr="COMPANY_ID" label="COMPANY_ID" type="integer" editable="no"
+            required="no"></o-integer-input>
+
+          <o-text-input #JEWISH_OWNED attr="JEWISH_OWNED" label="JEWISH_OWNED" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-text-input #UID attr="UID" label="UID" enabled="yes" required="no" fxFlex="20%"
+            class="form-field"></o-text-input>
+
+          <o-integer-input #CHANGESET_ID attr="CHANGESET_ID" label="CHANGESET_ID" type="integer" editable="no"
+            required="no"></o-integer-input>
+
+          <o-checkbox #IsPoRequired attr="IsPoRequired" label="IsPoRequired" read-only="no" enabled="yes"></o-checkbox>
+
+        </div>
+      </o-row>
+      <mat-tab-group fxFill>
+
+        <mat-tab label="PLANTTB-PrimaryCompany">
+          <div layout-padding>
+            <o-table attr="PLANTTBTable" service="PLANTTB" entity="PLANTTB" keys="PLANT_ID"
+              parent-keys="PrimaryCompany:COMPANY_ID"
+              columns="NAME;DesignatedRFR;PrimaryCompany;GP_NOTIFY;MULTILINES;PASSOVER;PLANT_TYPE;PLANT_DIRECTIONS;ACTIVE;USDA_CODE;DoNotAttach;OtherCertification;ValidFromTime;ValidToTime;MaxOnSiteVisits;MaxVirtualVisits;IsDaily;PLANT_ID;SPECIAL_PROD;JEWISH_OWNED;PlantUID;CHANGESET_ID"
+              horizontal-scroll="yes" detail-form-route="PLANTTB" edit-form-route="PLANTTB"
+              visible-columns="NAME;DesignatedRFR;PrimaryCompany;GP_NOTIFY;MULTILINES;PASSOVER;PLANT_TYPE;PLANT_DIRECTIONS;ACTIVE;USDA_CODE;DoNotAttach;OtherCertification;ValidFromTime;ValidToTime;MaxOnSiteVisits;MaxVirtualVisits;IsDaily;PLANT_ID;SPECIAL_PROD;JEWISH_OWNED;PlantUID;CHANGESET_ID"
+              sort-columns="NAME" query-rows="25" quick-filter="yes" row-height="medium" select-all-checkbox="true"
+              pageable="yes" auto-adjust="true" virtual-scroll="yes" insert-button="yes" delete-button="yes"
+              fixed-header="true" class="vertical-padding-8" edition-mode="dblclick" horizontal-scroll="yes"
+              class="fill-form">
+
+              <o-table-column #NAME attr="NAME" title=" N A M E" editable="no" required="yes"
+                content-align="left"></o-table-column>
+
+              <o-table-column attr="DesignatedRFR" title="DesignatedRFR">
+                <!-- o-table-cell-renderer-service attr="DesignatedRFR" 
+        service="PERSONJOBTB" entity="PERSONJOBTBType" columns="PERSON_JOB_ID;PERSON_JOB_ID"
+        parent-keys="COMPANY_ID:DesignatedRFR"
+        value-column="PERSON_JOB_ID" keys="DesignatedRFR"
+        visible-columns="PERSON_JOB_ID" separator=" - " width="680px">
+    </o-table-cell-renderer-service -->
+              </o-table-column>
+
+              <o-table-column attr="PrimaryCompany" title="PrimaryCompany">
+                <!-- o-table-cell-renderer-service attr="PrimaryCompany" 
+        service="COMPANYTB" entity="COMPANYTBType" columns="COMPANY_ID;NAME"
+        parent-keys="COMPANY_ID:PrimaryCompany"
+        value-column="NAME" keys="PrimaryCompany"
+        visible-columns="NAME" separator=" - " width="680px">
+    </o-table-cell-renderer-service -->
+              </o-table-column>
+
+              <o-table-column attr="GP_NOTIFY" title="GP_NOTIFY">
+                <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+                  render-type="icon" boolean-type="boolean" true-value="true"
+                  false-value="false"></o-table-cell-renderer-boolean>
+              </o-table-column>
+
+              <o-table-column #MULTILINES attr="MULTILINES" title="MULTILINES" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #PASSOVER attr="PASSOVER" title="PASSOVER" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #PLANT_TYPE attr="PLANT_TYPE" title="PLANT_TYPE" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #PLANT_DIRECTIONS attr="PLANT_DIRECTIONS" title="PLANT_DIRECTIONS" editable="no"
+                required="no" content-align="left"></o-table-column>
+
+              <o-table-column #ACTIVE attr="ACTIVE" title="ACTIVE" type="integer" editable="no" required="no"
+                content-align="center"></o-table-column>
+
+              <o-table-column #USDA_CODE attr="USDA_CODE" title="USDA_CODE" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #DoNotAttach attr="DoNotAttach" title="DoNotAttach" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #OtherCertification attr="OtherCertification" title="OtherCertification" editable="no"
+                required="no" content-align="left"></o-table-column>
+
+              <o-table-column #ValidFromTime attr="ValidFromTime" title="ValidFromTime" editable="no" required="yes"
+                content-align="left"></o-table-column>
+
+              <o-table-column #ValidToTime attr="ValidToTime" title="ValidToTime" editable="no" required="yes"
+                content-align="left"></o-table-column>
+
+              <o-table-column #MaxOnSiteVisits attr="MaxOnSiteVisits" title="MaxOnSiteVisits" type="integer"
+                editable="no" required="yes" content-align="center"></o-table-column>
+
+              <o-table-column #MaxVirtualVisits attr="MaxVirtualVisits" title="MaxVirtualVisits" type="integer"
+                editable="no" required="yes" content-align="center"></o-table-column>
+
+              <o-table-column attr="IsDaily" title="IsDaily">
+                <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off"
+                  render-type="icon" boolean-type="boolean" true-value="true"
+                  false-value="false"></o-table-cell-renderer-boolean>
+              </o-table-column>
+
+              <o-table-column #PLANT_ID attr="PLANT_ID" title="PLANT_ID" type="integer" editable="no" required="no"
+                content-align="center"></o-table-column>
+
+              <o-table-column #SPECIAL_PROD attr="SPECIAL_PROD" title="SPECIAL_PROD" editable="no" required="yes"
+                content-align="left"></o-table-column>
+
+              <o-table-column #JEWISH_OWNED attr="JEWISH_OWNED" title="JEWISH_OWNED" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #PlantUID attr="PlantUID" title="PlantUID" editable="no" required="no"
+                content-align="left"></o-table-column>
+
+              <o-table-column #CHANGESET_ID attr="CHANGESET_ID" title="CHANGESET_ID" type="integer" editable="no"
+                required="no" content-align="center"></o-table-column>
+
+              <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+            </o-table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+    </o-form>
+  </o-form-container>
+</div>

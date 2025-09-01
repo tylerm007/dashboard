@@ -9,6 +9,7 @@ export const SERVICE_CONFIG ={ 'LaneDefinition': { 'path': '/LaneDefinition' }
 ,'StageInstance': { 'path': '/StageInstance' }
 ,'StageStatus': { 'path': '/StageStatus' }
 ,'Sysdiagram': { 'path': '/Sysdiagram' }
+,'COMPANYTB': { 'path': '/COMPANYTB' }
 ,'TaskCategory': { 'path': '/TaskCategory' }
 ,'TaskComment': { 'path': '/TaskComment' }
 ,'TaskCommentType': { 'path': '/TaskCommentType' }
@@ -31,6 +32,7 @@ export const SERVICE_CONFIG ={ 'LaneDefinition': { 'path': '/LaneDefinition' }
 ,'WFFile': { 'path': '/WFFile' }
 ,'WFFileType': { 'path': '/WFFileType' }
 ,'WFIngredient': { 'path': '/WFIngredient' }
+,'PLANTTB': { 'path': '/PLANTTB' }
 ,'WFPlant': { 'path': '/WFPlant' }
 ,'WFPriority': { 'path': '/WFPriority' }
 ,'WFProduct': { 'path': '/WFProduct' }

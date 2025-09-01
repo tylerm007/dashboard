@@ -12,6 +12,8 @@ import { ProcessMessageCardComponent } from './ProcessMessage-card/ProcessMessag
 
 import { ProcessMessageTypeCardComponent } from './ProcessMessageType-card/ProcessMessageType-card.component';
 
+
+import { COMPANYTBCardComponent } from './COMPANYTB-card/COMPANYTB-card.component';
 import { ProcessPriorityCardComponent } from './ProcessPriority-card/ProcessPriority-card.component';
 
 import { ProcessStatusCardComponent } from './ProcessStatus-card/ProcessStatus-card.component';
@@ -62,6 +64,7 @@ import { WFDashboardCardComponent } from './WFDashboard-card/WFDashboard-card.co
 
 import { WFFileCardComponent } from './WFFile-card/WFFile-card.component';
 
+import { PLANTTBCardComponent } from './PLANTTB-card/PLANTTB-card.component';
 import { WFFileTypeCardComponent } from './WFFileType-card/WFFileType-card.component';
 
 import { WFIngredientCardComponent } from './WFIngredient-card/WFIngredient-card.component';
@@ -130,41 +133,35 @@ export const MENU_CONFIG: MenuRootItem[] = [
         id: 'data', name: ' WorkFlow Definition', icon: 'remove_red_eye', opened: false,
         items: [
 
-            { id: 'WFDashboard', name: 'Dashboard', icon: 'view_list', route: '/main/WFDashboard' }
+           // { id: 'WFDashboard', name: 'Dashboard', icon: 'view_list', route: '/main/WFDashboard' }
+          
+             { id: 'ProcessDefinition', name: 'Process Definition', icon: 'view_list', route: '/main/ProcessDefinition' }
             , { id: 'LaneDefinition', name: 'Lane Definition', icon: 'view_list', route: '/main/LaneDefinition' }
-
-            , { id: 'LaneRole', name: 'Lane Role', icon: 'view_list', route: '/main/LaneRole' }
-
-            , { id: 'ProcessDefinition', name: 'Process Definition', icon: 'view_list', route: '/main/ProcessDefinition' }
-
-            , { id: 'ProcessMessage', name: 'Process Message', icon: 'view_list', route: '/main/ProcessMessage' }
-
-            , { id: 'TaskComment', name: 'Task Comment', icon: 'view_list', route: '/main/TaskComment' }
-
             , { id: 'TaskDefinition', name: 'Task Definition', icon: 'view_list', route: '/main/TaskDefinition' }
-
             , { id: 'TaskFlow', name: 'Task Flow', icon: 'view_list', route: '/main/TaskFlow' }
 
-
             // ,{ id: 'ValidationResult', name: 'VALIDATIONRESULT', icon: 'view_list', route: '/main/ValidationResult' }
-
             //,{ id: 'ValidationRule', name: 'VALIDATIONRULE', icon: 'view_list', route: '/main/ValidationRule' }
-
         ]
     },
     {
-        id: 'data', name: ' WorkFlow Instance', icon: 'remove_red_eye', opened: false,
+        id: 'wfinstance', name: ' WorkFlow Instance', icon: 'remove_red_eye', opened: false,
         items: [
-            { id: 'ProcessInstance', name: 'Process Instance', icon: 'view_list', route: '/main/ProcessInstance' }
+                {id:'WFDashboard', name: 'Dashboard', icon: 'view_list', route: '/main/WFDashboard'}
+            , { id: 'ProcessInstance', name: 'Process Instance', icon: 'view_list', route: '/main/ProcessInstance' }
             , { id: 'StageInstance', name: 'Stage Instance', icon: 'view_list', route: '/main/StageInstance' }
             , { id: 'TaskInstance', name: 'Task Instance', icon: 'view_list', route: '/main/TaskInstance' }
-            , { id: 'WorkflowHistory', name: 'Workflow History', icon: 'view_list', route: '/main/WorkflowHistory' }
+            , { id: 'WorkflowHistory', name: 'Workflow History', icon: 'view_list', route: '/main/WorkflowHistory' }            
+            , { id: 'ProcessMessage', name: 'Process Message', icon: 'view_list', route: '/main/ProcessMessage' }
+            , { id: 'TaskComment', name: 'Task Comment', icon: 'view_list', route: '/main/TaskComment' }
         ]
     },
     {
         id: 'lookup', name: ' Lookup Tables', icon: 'remove_red_eye', opened: false,
         items: [
             { id: 'ProcessMessageType', name: 'Process Message Type', icon: 'view_list', route: '/main/ProcessMessageType' }
+            
+            , { id: 'LaneRole', name: 'Lane Role', icon: 'view_list', route: '/main/LaneRole' }
 
             , { id: 'WFActivityStatus', name: 'WF Activity Status', icon: 'view_list', route: '/main/WFActivityStatus' }
 
@@ -192,7 +189,14 @@ export const MENU_CONFIG: MenuRootItem[] = [
             , { id: 'WFPriority', name: 'WF Priority', icon: 'view_list', route: '/main/WFPriority' }
         ]
     },
-
+    
+    {id: 'legacy', name: ' Legacy Tables', icon: 'remove_red_eye', opened: false,
+        items: [
+	        { id: 'COMPANYTB', name: 'COMPANYTB', icon: 'view_list', route: '/main/COMPANYTB' }
+            ,{ id: 'PLANTTB', name: 'PLANTTB', icon: 'view_list', route: '/main/PLANTTB' }
+    
+        ]
+    },
     { id: 'settings', name: 'Settings', icon: 'settings', route: '/main/settings' }
     , { id: 'about', name: 'About', icon: 'info', route: '/main/about' }
     , { id: 'logout', name: 'LOGOUT', route: '/login', icon: 'power_settings_new', confirm: 'yes' }
@@ -210,6 +214,7 @@ export const MENU_COMPONENTS = [
 
     , ProcessMessageCardComponent
 
+    ,COMPANYTBCardComponent
     , ProcessMessageTypeCardComponent
 
     , ProcessPriorityCardComponent
@@ -260,6 +265,7 @@ export const MENU_COMPONENTS = [
 
     , WFDashboardCardComponent
 
+    ,PLANTTBCardComponent
     , WFFileCardComponent
 
     , WFFileTypeCardComponent

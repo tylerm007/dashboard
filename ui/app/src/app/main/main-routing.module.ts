@@ -25,6 +25,9 @@ export const routes: Routes = [
     
         { path: 'ProcessMessageType', loadChildren: () => import('./ProcessMessageType/ProcessMessageType.module').then(m => m.ProcessMessageTypeModule) },
     
+    
+        { path: 'COMPANYTB', loadChildren: () => import('./COMPANYTB/COMPANYTB.module').then(m => m.COMPANYTBModule) },
+    
         { path: 'ProcessPriority', loadChildren: () => import('./ProcessPriority/ProcessPriority.module').then(m => m.ProcessPriorityModule) },
     
         { path: 'ProcessStatus', loadChildren: () => import('./ProcessStatus/ProcessStatus.module').then(m => m.ProcessStatusModule) },
@@ -76,6 +79,9 @@ export const routes: Routes = [
         { path: 'WFFile', loadChildren: () => import('./WFFile/WFFile.module').then(m => m.WFFileModule) },
     
         { path: 'WFFileType', loadChildren: () => import('./WFFileType/WFFileType.module').then(m => m.WFFileTypeModule) },
+    
+    
+        { path: 'PLANTTB', loadChildren: () => import('./PLANTTB/PLANTTB.module').then(m => m.PLANTTBModule) },
     
         { path: 'WFIngredient', loadChildren: () => import('./WFIngredient/WFIngredient.module').then(m => m.WFIngredientModule) },
     
