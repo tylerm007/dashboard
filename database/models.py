@@ -49,8 +49,8 @@ class LaneRole(Base):  # type: ignore
     __tablename__ = 'LaneRoles'
     _s_collection_name = 'LaneRole'  # type: ignore
 
-    RoleCode = Column(Unicode(20, 'SQL_Latin1_General_CP1_CI_AS'), primary_key=True)
-    RoleDescription = Column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    RoleCode = Column(Unicode(20), primary_key=True)
+    RoleDescription = Column(Unicode(255), nullable=False)
     allow_client_generated_ids = True
 
     # parent relationships (access parent)
@@ -394,7 +394,7 @@ class LaneDefinition(Base):  # type: ignore
     EstimatedDurationDays = Column(Integer)
     LaneRole = Column(ForeignKey('LaneRoles.RoleCode'), server_default=text("('NCRC')"), nullable=False)
     CreatedDate = Column(DATETIME2, server_default=text("(getutcdate())"), nullable=False)
-    CreatedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    CreatedBy = Column(Unicode(100), nullable=False)
     ModifiedDate = Column(DATETIME2)
     ModifiedBy = Column(Unicode(100))
 
@@ -743,8 +743,8 @@ class StageInstance(Base):  # type: ignore
     CompletedDate = Column(DATETIME2)
     DurationDays = Column(Integer, Computed('(datediff(day,[StartedDate],[CompletedDate]))', persisted=False))
     RetryCount = Column(Integer)
-    AssignedTo = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
-    AssignedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    AssignedTo = Column(Unicode(100))
+    AssignedBy = Column(Unicode(100))
     AssignedDate = Column(DATETIME2)
     CompletedCount = Column(Integer)
     TotalCount = Column(Integer)
