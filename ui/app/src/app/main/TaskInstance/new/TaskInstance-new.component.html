@@ -9,21 +9,21 @@ after-insert-mode="new" class="standalone-form-container" >
         <o-integer-input #TaskInstanceId attr="TaskInstanceId" label=" Task Instance Id" type="integer" editable="no" required="no" ></o-integer-input>
       
         <o-list-picker 
-        attr="InstanceId"
-        service="ProcessInstance" 
-        entity="ProcessInstanceType"
+        attr="StageId"
+        service="StageInstance" 
+        entity="StageInstanceType"
         fxFlex="30" 
         query-on-init="no" 
         query-on-bind="yes" 
         required="yes" 
         enabled="yes" 
         filter="yes"
-        value-column="InstanceId" 
+        value-column="StageInstanceId" 
         value-column-type="INTEGER"  
-        keys="InstanceId" 
-        columns="InstanceId;InstanceId;InstanceId" 
-        title="Instance"
-        visible-columns="InstanceId;InstanceId" 
+        keys="StageInstanceId" 
+        columns="StageInstanceId;StageId;StageInstanceId" 
+        title="Stage"
+        visible-columns="StageInstanceId;StageInstanceId" 
         separator=" - " width="680px" class="form-field">
 </o-list-picker>
       

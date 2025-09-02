@@ -94,8 +94,11 @@
       <o-integer-input #CompanyID attr="CompanyID" label="CompanyID" type="integer" editable="no" required="yes" ></o-integer-input>
       
       <o-integer-input #PlantID attr="PlantID" label="PlantID" type="integer" editable="no" required="no" ></o-integer-input>
-      
+      <o-button (click)="start_workflow()" fxFlex="30%"
+      label="Start Workflow" 
+      icon="download_file" color="primary" type="raised"></o-button>
     </div>
+
   </o-row>
       
       <mat-tab-group fxFill>

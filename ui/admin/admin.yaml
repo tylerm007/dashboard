@@ -32,7 +32,12 @@ resources:
     tab_groups:
     - direction: tomany
       fks:
-        - LaneId
+      - LaneId
+      name: StageInstanceList
+      resource: StageInstance
+    - direction: tomany
+      fks:
+      - LaneId
       name: TaskDefinitionList
       resource: TaskDefinition
     - direction: toone
@@ -482,6 +487,11 @@ resources:
     - name: ModifiedDate
     - name: ModifiedBy
     tab_groups:
+    - direction: tomany
+      fks:
+      - StageId
+      name: TaskInstanceList
+      resource: TaskInstance
     - direction: toone
       fks:
       - LaneId
@@ -708,7 +718,7 @@ resources:
       name: TaskInstanceId
       search: true
       sort: true
-    - name: InstanceId
+    - name: StageId
       required: true
     - name: Status
       required: true
@@ -740,9 +750,9 @@ resources:
       resource: WorkflowHistory
     - direction: toone
       fks:
-      - InstanceId
-      name: Instance
-      resource: ProcessInstance
+      - StageId
+      name: Stage
+      resource: StageInstance
     - direction: toone
       fks:
       - Status

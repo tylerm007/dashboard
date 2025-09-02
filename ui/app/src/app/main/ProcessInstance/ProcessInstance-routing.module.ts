@@ -35,13 +35,6 @@ const routes: Routes = [
         }
     }
 },{
-    path: ':InstanceId/TaskInstance', loadChildren: () => import('../TaskInstance/TaskInstance.module').then(m => m.TaskInstanceModule),
-    data: {
-        oPermission: {
-            permissionId: 'TaskInstance-detail-permissions'
-        }
-    }
-},{
     path: ':InstanceId/ValidationResult', loadChildren: () => import('../ValidationResult/ValidationResult.module').then(m => m.ValidationResultModule),
     data: {
         oPermission: {

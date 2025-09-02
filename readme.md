@@ -294,3 +294,119 @@ This generated project also contains a React Admin app:
 ### Python Tips
 
 If you are new to Python, check out [these tips](https://apilogicserver.github.io/Docs/Tech-Python/).
+
+# API Endpoints Documentation for `workflow.py`
+
+## Overview
+This module provides several endpoints for managing workflows, tasks, and messages in the application. Below is a detailed description of each endpoint.
+
+---
+
+## `/start_workflow`
+**Method:** `POST`, `OPTIONS`
+
+### Description
+Starts a new workflow instance based on the provided process name, application ID, and user details.
+
+### Request Parameters
+- `process_name` (string, optional): Name of the workflow process. Default is `"Application Workflow"`.
+- `application_id` (string, optional): ID of the application. Default is `"1"`.
+- `started_by` (string, optional): User who initiated the workflow. Default is `"admin"`.
+- `priority` (string, optional): Priority of the workflow. Default is `"Normal"`.
+
+### Example Request
+```bash
+curl -X POST http://localhost:5656/start_workflow \
+     -H "Content-Type: application/json" \
+     -d '{
+       "process_name": "Application Workflow",
+       "application_id": "1", 
+       "started_by": "admin",
+       "priority": "HIGH"
+     }'
+```
+
+### Response
+- **200 OK**: Returns the `process_instance_id` of the newly created workflow.
+
+---
+
+## `/complete_task`
+**Method:** `POST`, `OPTIONS`
+
+### Description
+Marks a task in the workflow as completed.
+
+### Request Body
+- `task_instance_id` (string): ID of the task instance to complete.
+- `completed_by` (string): User who completed the task.
+- `completion_notes` (string, optional): Notes about the task completion.
+
+### Response
+- **200 OK**: Returns the `task_instance_id` of the completed task.
+- **404 Not Found**: If the task instance or task definition is not found.
+- **400 Bad Request**: If prior tasks are not completed.
+
+---
+
+## `/application_message`
+**Method:** `POST`, `OPTIONS`
+
+### Description
+Sends a message related to an application in the workflow.
+
+### Request Body
+- `message` (string): The message text.
+- `application_id` (string): ID of the application.
+- `from_user` (string): Sender of the message.
+- `to_user` (string): Recipient of the message.
+- `priority` (string, optional): Priority of the message. Default is `"NORMAL"`.
+- `message_type` (string, optional): Type of the message. Default is `"Standard"`.
+
+### Response
+- **200 OK**: Returns the `application_id` of the application.
+- **404 Not Found**: If the application is not found.
+
+---
+
+## `/process_message`
+**Method:** `POST`, `OPTIONS`
+
+### Description
+Sends a message related to a process in the workflow.
+
+### Request Body
+- `message` (string): The message text.
+- `process_id` (string): ID of the process.
+- `from_user` (string): Sender of the message.
+- `to_user` (string): Recipient of the message.
+- `subject` (string): Subject of the message.
+- `priority` (string, optional): Priority of the message. Default is `"NORMAL"`.
+- `message_type` (string, optional): Type of the message. Default is `"Standard"`.
+
+### Response
+- **200 OK**: Returns the `process_id` of the process.
+- **404 Not Found**: If the process instance is not found.
+
+---
+
+## `/assign_task`
+**Method:** `POST`, `OPTIONS`
+
+### Description
+Assigns a user to a task in the workflow.
+
+### Request Body
+- `task_instance_id` (string): ID of the task instance.
+- `user_id` (string): ID of the user to assign.
+
+### Response
+- **200 OK**: Returns the `task_instance_id` of the task.
+- **404 Not Found**: If the task instance is not found.
+
+---
+
+## Notes
+- All endpoints log their operations for debugging and traceability.
+- Ensure the database models and relationships are correctly configured for the endpoints to function properly.
+- Proper error handling is implemented to return meaningful error messages.

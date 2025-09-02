@@ -23,10 +23,18 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         """        
         Illustrates:
         * Use standard Flask, here for non-database endpoints.
+        * Returns NCRC data in JSON format
 
         Test it with:
         
-        Invoke-RestMethod -Uri "http://localhost:5656/get_ncrc_data?applicationId=1" -Method GET
+        Invoke-RestMethod -Uri "http://localhost:5656/get_ncrc_data?applicationId=1" -Method GET -ContentType "application/json"
+        
+        Returns JSON response with application data including:
+        - Application info (ID, submission date, status)
+        - Company details (name, category, certification status)
+        - Plant information (name, location, address)
+        - Products list (label names, brands, certifications)
+        - Ingredients list (NCRC IDs, manufacturers, certifications)
         """
         application_id = request.args.get('applicationId',1, type=int)
         app_logger.info(f'{application_id}')

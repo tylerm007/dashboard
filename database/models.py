@@ -525,7 +525,6 @@ class ProcessInstance(Base):  # type: ignore
     # child relationships (access children)
     ProcessMessageList : Mapped[List["ProcessMessage"]] = relationship(back_populates="Instance")
     StageInstanceList : Mapped[List["StageInstance"]] = relationship(back_populates="ProcessInstance")
-    TaskInstanceList : Mapped[List["TaskInstance"]] = relationship(back_populates="Instance")
     TaskCommentList : Mapped[List["TaskComment"]] = relationship(back_populates="ProcessInstance")
     ValidationResultList : Mapped[List["ValidationResult"]] = relationship(back_populates="Instance")
     WorkflowHistoryList : Mapped[List["WorkflowHistory"]] = relationship(back_populates="Instance")
@@ -744,6 +743,9 @@ class StageInstance(Base):  # type: ignore
     CompletedDate = Column(DATETIME2)
     DurationDays = Column(Integer, Computed('(datediff(day,[StartedDate],[CompletedDate]))', persisted=False))
     RetryCount = Column(Integer)
+    AssignedTo = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    AssignedBy = Column(Unicode(100, 'SQL_Latin1_General_CP1_CI_AS'))
+    AssignedDate = Column(DATETIME2)
     CompletedCount = Column(Integer)
     TotalCount = Column(Integer)
     CreatedDate = Column(DATETIME2, server_default=text("getutcdate()"), nullable=False)
@@ -757,6 +759,7 @@ class StageInstance(Base):  # type: ignore
     StageStatus : Mapped["StageStatus"] = relationship(back_populates=("StageInstanceList"))
 
     # child relationships (access children)
+    TaskInstanceList : Mapped[List["TaskInstance"]] = relationship(back_populates="Stage")
 
 
 
@@ -765,8 +768,8 @@ class TaskInstance(Base):  # type: ignore
     _s_collection_name = 'TaskInstance'  # type: ignore
 
     TaskInstanceId = Column(Integer, autoincrement=True, primary_key=True)
-    InstanceId = Column(ForeignKey('ProcessInstances.InstanceId'), nullable=False)
     TaskId = Column(ForeignKey('TaskDefinitions.TaskId'), nullable=False)
+    StageId = Column(ForeignKey('StageInstance.StageInstanceId'), nullable=False)
     Status = Column(ForeignKey('TaskStatus.StatusCode'), server_default=text('Pending'), nullable=False, index=True)
     AssignedTo = Column(Unicode(100), index=True)
     StartedDate = Column(DATETIME2, index=True)
@@ -778,7 +781,7 @@ class TaskInstance(Base):  # type: ignore
     RetryCount = Column(Integer, server_default=text("0"))
 
     # parent relationships (access parent)
-    Instance : Mapped["ProcessInstance"] = relationship(back_populates=("TaskInstanceList"))
+    Stage : Mapped["StageInstance"] = relationship(back_populates=("TaskInstanceList"))
     TaskStatus : Mapped["TaskStatus"] = relationship(back_populates=("TaskInstanceList"))
     TaskDef : Mapped["TaskDefinition"] = relationship(back_populates=("TaskInstanceList"))
 

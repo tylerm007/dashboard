@@ -9,6 +9,7 @@ import { OFormComponent, OntimizeService, OListPickerComponent, OTableComponent,
 })
 export class WFApplicationDetailComponent implements OnInit  {
   protected service: OntimizeService;
+  public data: any;
 
   @ViewChild('oDetailForm') form: OFormComponent;
   
@@ -26,7 +27,21 @@ export class WFApplicationDetailComponent implements OnInit  {
     this.service.configureService(conf);
   }
   onDataLoaded(e: object) {
+    this.data = e;
     console.log(JSON.stringify(e));
   }
-
+  start_workflow() {
+    // Implement workflow start logic here
+    console.log("Starting workflow...");
+    //ServiceRequestParam<T> = {
+    //method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+    //url: string;
+    //body?: any;
+    this.service.doRequest({method: 'GET', url: 'http://localhost:5656/start_workflow?application_id=' + this.data.ApplicationID}).subscribe((resp) => {
+      console.log("res: " + JSON.stringify(resp));
+      if (resp.code === 0) {
+        console.log('workflow started successfully')
+      }
+    });
+  }
 }

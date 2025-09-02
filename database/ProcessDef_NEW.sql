@@ -258,8 +258,8 @@ INSERT INTO TaskStatus (StatusCode, StatusDescription) VALUES
 -- Task Instance Execution
 CREATE TABLE TaskInstances (
     TaskInstanceId INT IDENTITY(1,1) PRIMARY KEY,
-    InstanceId INT NOT NULL, -- ProcessInstance
     TaskId INT NOT NULL, -- TaskDefinition
+    StageId INT NOT NULL, -- StageInstance
     Status NVARCHAR(20) NOT NULL DEFAULT 'Pending', -- 'Pending', 'InProgress', 'Completed', 'Failed', 'Skipped'
     AssignedTo NVARCHAR(100),
     StartedDate DATETIME2,
@@ -270,7 +270,7 @@ CREATE TABLE TaskInstances (
     ErrorMessage NVARCHAR(1000),
     RetryCount INT DEFAULT 0,
     FOREIGN KEY (Status) REFERENCES TaskStatus(StatusCode),
-    FOREIGN KEY (InstanceId) REFERENCES ProcessInstances(InstanceId),
+    FOREIGN KEY (StageId) REFERENCES StageInstances(StageInstanceId),
     FOREIGN KEY (TaskId) REFERENCES TaskDefinitions(TaskId)
 );
 
