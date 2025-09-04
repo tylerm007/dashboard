@@ -5,10 +5,11 @@ import json
 class JotFormAPI:
     def __init__(self, api_key):
         self.api_key = api_key
-        self.base_url = "https://api.jotform.com"
+        self.base_url = "https://ou.jotform.com"
         self.headers = {
             'APIKEY': api_key,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'jf-team-id': '240425799590063'
         }
     
     def get_user_files(self, limit=20, offset=0):
@@ -29,7 +30,7 @@ class JotFormAPI:
     
     def get_form_files(self, form_id):
         """Get all files from a specific form"""
-        url = f"{self.base_url}/form/{form_id}/files"
+        url = f"{self.base_url}/API/form/{form_id}/files"
         
         response = requests.get(url, headers=self.headers)
         
@@ -41,7 +42,7 @@ class JotFormAPI:
     
     def get_submission_files(self, submission_id):
         """Get files from a specific submission"""
-        url = f"{self.base_url}/submission/{submission_id}/files"
+        url = f"{self.base_url}/API/submission/{submission_id}/files"
         
         response = requests.get(url, headers=self.headers)
         
@@ -53,7 +54,7 @@ class JotFormAPI:
     
     def get_forms(self, limit=20):
         """Get list of forms (to find form IDs)"""
-        url = f"{self.base_url}/user/forms"
+        url = f"{self.base_url}/API/user/forms"
         params = {'limit': limit}
         
         response = requests.get(url, headers=self.headers, params=params)
@@ -66,7 +67,7 @@ class JotFormAPI:
     
     def get_submissions(self, form_id, limit=20):
         """Get submissions for a form (to find submission IDs)"""
-        url = f"{self.base_url}/form/{form_id}/submissions"
+        url = f"{self.base_url}/API/form/{form_id}/submissions"
         params = {'limit': limit}
         
         response = requests.get(url, headers=self.headers, params=params)
@@ -93,7 +94,7 @@ class JotFormAPI:
 # Usage Example
 if __name__ == "__main__":
     # Replace with your actual API key
-    API_KEY = "your_api_key_here"
+    API_KEY = "6a43a5bd9eb0000522ee130271621f53"
     
     jf = JotFormAPI(API_KEY)
     
@@ -129,10 +130,10 @@ if __name__ == "__main__":
     
     # Example 3: Get files from specific submission
     # You would need to know the submission ID
-    submission_id = "your_submission_id_here"  # Replace with actual ID from Application
-    submission_files = jf.get_submission_files(submission_id)
+    submission_id = "4804"  # Replace with actual ID from Application
+    submission_files = jf.get_submission_files(submission_id) or []
 
-    for file in submission_files.get('content', []):
-        print(f"  - {file.get('name', 'N/A')}") 
-        
+    for file in submission_files:
+        print(f"  - {file}") 
+
 #curl -X POST -d "webhookURL=http://my.webhook.url/connect-to-DB.ext" -d "apiKey={myApiKey}" "https://api.jotform.com/v1/form/{myFormID}/webhooks"

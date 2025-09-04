@@ -31,11 +31,11 @@
         entity="TaskInstance" 
         keys="TaskInstanceId"
         parent-keys="Status:StatusCode"
-        columns="TaskInstanceId;InstanceId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
+        columns="TaskInstanceId;StageId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
         horizontal-scroll="yes"
         detail-form-route="TaskInstance" 
         edit-form-route="TaskInstance"
-        visible-columns="TaskInstanceId;InstanceId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
+        visible-columns="TaskInstanceId;StageId;Status;TaskId;AssignedTo;StartedDate;CompletedDate;DurationMinutes;Result;ResultData;ErrorMessage;RetryCount"  
         sort-columns="TaskInstanceId" 
         query-rows="25" 
         quick-filter="yes"
@@ -53,12 +53,12 @@
         
           <o-table-column #TaskInstanceId attr="TaskInstanceId" title=" Task Instance Id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
         
-          <o-table-column attr="InstanceId" title="Instance">
-    <o-table-cell-renderer-service attr="InstanceId" 
-        service="ProcessInstance" entity="ProcessInstanceType" columns="InstanceId;InstanceId"
-        parent-keys="StatusCode:InstanceId"
-        value-column="InstanceId" keys="InstanceId"
-        visible-columns="InstanceId" separator=" - " width="680px">
+          <o-table-column attr="StageId" title="Stage">
+    <o-table-cell-renderer-service attr="StageId" 
+        service="StageInstance" entity="StageInstanceType" columns="StageInstanceId;StageInstanceId"
+        parent-keys="StatusCode:StageId"
+        value-column="StageInstanceId" keys="StageId"
+        visible-columns="StageInstanceId" separator=" - " width="680px">
     </o-table-cell-renderer-service>
 </o-table-column>
         

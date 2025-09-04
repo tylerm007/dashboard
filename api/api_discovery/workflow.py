@@ -50,10 +50,10 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         """
 
         # Extract variables from request.args
-        process_name = request.args.get('process_name',"Application Workflow")
+        process_name = request.args.get('process_name',"OU Certification Workflow")
         application_id = request.args.get('application_id', '1')
         started_by = request.args.get('started_by','admin')
-        priority = request.args.get('priority', 'Normal')  # Default to 'Normal' if not provided
+        priority = request.args.get('priority', 'NORMAL')  # Default to 'Normal' if not provided
         app_logger.debug(f'Starting workflow: {process_name} for application_id: {application_id} by {started_by} with priority {priority}')    
         return _start_workflow(process_name, int(application_id), started_by, priority)
 
@@ -71,7 +71,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         process_instance = ProcessInstance.query.filter_by(ApplicationId=application_id).first()
         if process_instance is None:
                  # Get StartTaskId
-                row = TaskDefinition.query.filter_by(ProcessId=process_id, TaskType='Event', TaskCategory='Start').order_by(TaskDefinition.Sequence).first()
+                row = TaskDefinition.query.filter_by(ProcessId=process_id, TaskType='EVENT', TaskCategory='START').order_by(TaskDefinition.Sequence).first()
                 start_task_id = row.TaskId if row else None
                 print(f'Start TaskDefinition TaskId: {start_task_id}') 
                 if not start_task_id:
@@ -99,7 +99,6 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         LaneDefinitions = LaneDefinition.query.filter_by(ProcessId=process_id).all()
         for lane in LaneDefinitions:
                 print(f'LaneDefinition: {lane.LaneName}')
-                #stage_instance_id = str(uuid.uuid4())
                 stage_instance = StageInstance(
                         ProcessInstanceId=process_instance_id,
                         LaneId=lane.LaneId,
@@ -112,7 +111,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
                 rows = TaskDefinition.query.filter_by(LaneId=lane.LaneId).order_by(TaskDefinition.Sequence).all() # LaneId=lane.LaneId
                 for row in rows:
                         print(f'TaskDefinition: {row.TaskName}')
-                        status = 'Pending' if row.TaskCategory != 'Start' else 'Completed'
+                        status = 'Pending' if row.TaskCategory != 'START' else 'Completed'
                         task_instance = TaskInstance(
                                 TaskId=row.TaskId,
                                 StageId=stage_instance.StageInstanceId,

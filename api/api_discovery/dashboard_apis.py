@@ -46,7 +46,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
 
         company_application = CompanyApplication.query.filter_by(ID=application['ApplicationNumber']).first()
         if not company_application:
-            return jsonify({"error": "Company application not found"}), 404
+            return jsonify({"error": f"Company application {application['ApplicationNumber']} not found"}), 404
 
         company_id = application['CompanyID'] if 'CompanyID' in application else None
         if not company_id:
@@ -58,9 +58,10 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
         
         owns = OWNSTB.query.filter_by(COMPANY_ID=company_id).all()
         if not owns:
-           return jsonify({"error": "Ownership not found"}), 404
+           return jsonify({"error": f"Ownership not found for company ID: {company_id}"}), 404
 
-        planttb = PLANTTB.query.filter_by(PLANT_ID=application['PlantID']).first()
+        plant_id = application['PlantID'] or -9999
+        planttb = PLANTTB.query.filter_by(PLANT_ID=plant_id).first()
         #plants = PLANTTB.query.filter(PLANTTB.PLANT_ID.in_(own.PLANT_ID for own in owns)).all()
         if not planttb:
             app.logger.info(f'No plant found for company ID: {company_id} in Application {application_id}')    
@@ -79,7 +80,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
             "otherPlantsLocation": "Secondary facility at 425a Commerce Drive, Rochester NY"
             }
         '''
-        address = PLANTADDRESSTB.query.filter_by(PLANT_ID=planttb.PLANT_ID).first()
+        address = PLANTADDRESSTB.query.filter_by(PLANT_ID=plant_id).first()
         if address:
             plant["address"] = {
                 "street": address.STREET1, 
@@ -92,24 +93,22 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
             }
         else:
             plant["address"] = {
-                "street": "Unknown",
-                "line2": "Unknown", 
-                "city": "Unknown",
-                "state": "Unknown",
-                "zip": "Unknown",
-                "country": "Unknown",
+                "street": company_application.Street1 if hasattr(company_application, 'Street1') else "Unknown",
+                "line2": company_application.Street2 if hasattr(company_application, 'Street2') else "Unknown",
+                "city": company_application.City if hasattr(company_application, 'City') else "Unknown",
+                "state": company_application.State if hasattr(company_application, 'State') else "Unknown",
+                "zip": company_application.Zip if hasattr(company_application, 'Zip') else "Unknown",
+                "country": company_application.Country if hasattr(company_application, 'Country') else "Unknown",
                 "type": "Unknown"
             }
 
-        plant["contacts"] = {}
-        '''
-            {
+        plant["contacts"] =  {
                 "name": "John Mitchell",
                 "title": "Plant Manager",
                 "phone": "(585) 555-0123",
                 "email": "j.mitchell@happycowmills.com"
             }
-        '''
+        
         application['Plants'] = plant
         products = WFProduct.query.filter_by(ApplicationID=application_id).all()
         application['Products'] = products
@@ -119,7 +118,7 @@ def add_service(app, api, project_dir, swagger_host: str, PORT: str, method_deco
             "applicationId": company_application.ID,
             "submissionDate": company_application.dateSubmitted.strftime('%Y-%m-%d') if hasattr(company_application, 'dateSubmitted') and company_application.dateSubmitted else "UNKNOWN",
             "status": application.Status if hasattr(application, 'Status') else "Pending",
-            "kashrusCompanyId": company_application.CompanyID if hasattr(company_application, 'CompanyID') else "KC-2025-4829",
+            "kashrusCompanyId": company_application.CompanyID if hasattr(company_application, 'CompanyID') else "NOT ENTERED",
             "kashrusStatus": 'UNKNOWN', # TODO company_application.KashrusStatus if hasattr(company_application, 'KashrusStatus') else "Company Created",
             "primaryContact": f'{company_application.FirstName} {company_application.LastName}' 
         }

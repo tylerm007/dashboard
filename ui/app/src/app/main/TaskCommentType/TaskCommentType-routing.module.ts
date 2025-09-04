@@ -13,14 +13,7 @@ const routes: Routes = [
         permissionId: 'TaskCommentType-detail-permissions'
       }
     }
-  },{
-    path: ':CommentType/TaskComment', loadChildren: () => import('../TaskComment/TaskComment.module').then(m => m.TaskCommentModule),
-    data: {
-        oPermission: {
-            permissionId: 'TaskComment-detail-permissions'
-        }
-    }
-}
+  }
 ];
 
 export const TASKCOMMENTTYPE_MODULE_DECLARATIONS = [

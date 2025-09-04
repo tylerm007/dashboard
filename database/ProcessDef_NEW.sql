@@ -4,10 +4,6 @@ use dashboard;
 -- BPMN-based Workflow Management System
 -- =============================================
 
--- Create database schema
--- CREATE SCHEMA workflow;
--- GO
-
 -- =============================================
 -- Core Workflow Tables
 -- =============================================
@@ -36,6 +32,21 @@ IF OBJECT_ID('sp_AddMessage', 'P') IS NOT NULL DROP PROCEDURE IF EXISTS sp_AddMe
 IF OBJECT_ID('sp_AddComment', 'P') IS NOT NULL DROP PROCEDURE sp_AddComment;
 IF OBJECT_ID('sp_GetWorkflowStatus', 'P') IS NOT NULL DROP PROCEDURE sp_GetWorkflowStatus;
 
+-- Truncate child tables first (tables with foreign keys)
+IF OBJECT_ID('WorkflowHistory', 'U') IS NOT NULL DELETE FROM WorkflowHistory;
+IF OBJECT_ID('TaskComments', 'U') IS NOT NULL DELETE FROM TaskComments;
+IF OBJECT_ID('ProcessMessages', 'U') IS NOT NULL DELETE FROM ProcessMessages;
+IF OBJECT_ID('ValidationResults', 'U') IS NOT NULL DELETE FROM ValidationResults;
+IF OBJECT_ID('StageInstance', 'U') IS NOT NULL DELETE FROM StageInstance;
+IF OBJECT_ID('TaskInstances', 'U') IS NOT NULL DELETE FROM TaskInstances;
+IF OBJECT_ID('TaskStatus','U') IS NOT NULL DELETE FROM TaskStatus;
+IF OBJECT_ID('ProcessInstances', 'U') IS NOT NULL DELETE FROM ProcessInstances;
+IF OBJECT_ID('TaskFlow', 'U') IS NOT NULL DELETE FROM TaskFlow;
+IF OBJECT_ID('TaskDefinitions', 'U') IS NOT NULL DELETE FROM TaskDefinitions;
+IF OBJECT_ID('ProcessDefinitions', 'U') IS NOT NULL DELETE FROM ProcessDefinitions;
+IF OBJECT_ID('TaskCategories', 'U') IS NOT NULL DELETE FROM TaskCategories;
+IF OBJECT_ID('TaskTypes', 'U') IS NOT NULL DELETE FROM TaskTypes;
+IF OBJECT_ID('LaneDefinitions', 'U') IS NOT NULL DELETE FROM LaneDefinitions;
 
 -- Drop child tables first (tables with foreign keys)
 IF OBJECT_ID('WorkflowHistory', 'U') IS NOT NULL DROP TABLE WorkflowHistory;
@@ -82,13 +93,7 @@ CREATE TABLE LaneRoles (
     RoleDescription NVARCHAR(255) NOT NULL
 );
 
-INSERT INTO LaneRoles (RoleCode, RoleDescription) VALUES
-    ('NCRC', 'NCRC - National Council of Rabbinical Certification'),
-    ('Sales', 'Sales Team'),
-    ('Legal', 'Legal Department'),
-    ('Finance', 'Finance Department'),
-    ('Ingredients', 'Ingredients Review Team'),
-    ('Products', 'Products Review Team');
+
 CREATE TABLE LaneDefinitions(
 	LaneId INT IDENTITY(1,1) PRIMARY KEY,
 	ProcessId INT NOT NULL,
@@ -108,25 +113,12 @@ CREATE TABLE TaskTypes (
     TaskTypeCode NVARCHAR(20) NOT NULL PRIMARY KEY,
     TaskTypeDescription NVARCHAR(255) NOT NULL
 );
-INSERT INTO TaskTypes (TaskTypeCode, TaskTypeDescription) VALUES
-    ('UserTask', 'Task performed by a user'),
-    ('ServiceTask', 'Automated service task'),
-    ('ScriptTask', 'Script execution task'),
-    ('Gateway', 'Decision point in the workflow'),
-    ('Event', 'Start or end event');
+
 
 CREATE TABLE TaskCategories (
     TaskCategoryCode NVARCHAR(20) NOT NULL PRIMARY KEY,
     TaskCategoryDescription NVARCHAR(255) NOT NULL
 );  
-
-INSERT INTO TaskCategories (TaskCategoryCode, TaskCategoryDescription) VALUES
-    ('Validation', 'Data validation task'),
-    ('Action', 'Action task'),
-    ('Decision', 'Decision gateway'),
-    ('Start', 'Start event'),
-    ('End', 'End event'),
-    ('Notification', 'Notification task');
 
 -- Task Definitions within Processes
 CREATE TABLE TaskDefinitions (
@@ -169,24 +161,12 @@ CREATE TABLE ProcessStatus (
     StatusDescription NVARCHAR(255) NOT NULL
 );
 
-INSERT INTO ProcessStatus (StatusCode, StatusDescription) VALUES
-('NEW', 'Process is new'),
-('ACTIVE', 'Process is active'),
-('COMPLETED', 'Process has been completed'),
-('SUSPENDED', 'Process has been suspended'),
-('TERMINATED', 'Process has been terminated');
-
 
 CREATE TABLE ProcessPriorities (
     PriorityCode NVARCHAR(10) NOT NULL PRIMARY KEY,
     PriorityDescription NVARCHAR(255) NOT NULL
 );  
 
-INSERT INTO ProcessPriorities (PriorityCode, PriorityDescription) VALUES
-    ('LOW', 'Low Priority'),
-    ('NORMAL', 'Normal Priority'),
-    ('HIGH', 'High Priority'),
-    ('CRITICAL', 'Critical Priority');
 
 -- Application Workflow Instances
 CREATE TABLE ProcessInstances (
@@ -212,12 +192,6 @@ CREATE TABLE StageStatus (
     StatusCode NVARCHAR(20) NOT NULL PRIMARY KEY,
     StatusDescription NVARCHAR(255) NOT NULL
 );
-
-INSERT INTO StageStatus (StatusCode, StatusDescription) VALUES
-    ('NEW', 'Stage is new'),
-    ('IN_PROGRESS', 'Stage is in progress'),
-    ('OVERDUE', 'Stage is overdue'),
-    ('COMPLETED', 'Stage has been completed');
 
 -- Stage Instance is a specific instance of a stage within a process
 CREATE TABLE StageInstance(
@@ -249,12 +223,15 @@ CREATE TABLE TaskStatus (
     StatusDescription NVARCHAR(255) NOT NULL
 );
 
+-- Task Status
 INSERT INTO TaskStatus (StatusCode, StatusDescription) VALUES
-    ('Pending', 'Task is pending execution'),
-    ('InProgress', 'Task is currently being executed'),
-    ('Completed', 'Task has been completed successfully'),
-    ('Failed', 'Task execution has failed'),
-    ('Skipped', 'Task has been skipped');
+('Pending', 'Task Pending Execution'),
+('Running', 'Task Currently Running'),
+('Completed', 'Task Completed Successfully'),
+('Failed', 'Task Failed'),
+('Skipped', 'Task Skipped'),
+('Cancelled', 'Task Cancelled');
+
 -- Task Instance Execution
 CREATE TABLE TaskInstances (
     TaskInstanceId INT IDENTITY(1,1) PRIMARY KEY,
@@ -319,6 +296,7 @@ INSERT INTO ProcessMessageTypes (MessageTypeCode, MessageTypeDescription) VALUES
     ('Urgent', 'Urgent message requiring immediate attention'),
     ('System', 'System-generated message'),
     ('Notification', 'Notification message');
+
 -- ProcessMessages
 CREATE TABLE ProcessMessages (
     MessageId INT IDENTITY(1,1) PRIMARY KEY,
@@ -358,7 +336,7 @@ CREATE TABLE TaskComments (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     IsVisible BIT NOT NULL DEFAULT 1,
     FOREIGN KEY (CommentType) REFERENCES TaskCommentTypes(CommentTypeCode),
-    FOREIGN KEY (ProcessInstanceId) REFERENCES ProcessInstances(InstanceId),
+    FOREIGN KEY (ProcessInstanceId) REFERENCES ProcessInstance(InstanceId),
     FOREIGN KEY (TaskInstanceId) REFERENCES TaskInstances(TaskInstanceId)
 );
 
@@ -404,41 +382,6 @@ CREATE INDEX IX_WorkflowHistory_InstanceId ON WorkflowHistory(InstanceId);
 CREATE INDEX IX_WorkflowHistory_ActionDate ON WorkflowHistory(ActionDate);
 
 -- =============================================
--- Insert Process Definition and Tasks
--- =============================================
-GO
--- Insert the Admin Completion Workflow Process
--- DECLARE 1 INT = 1;
-INSERT INTO ProcessDefinitions ( ProcessName, ProcessVersion, Description, CreatedBy)
-VALUES ( 'Application Workflow', '1.0', 'NCRC Application preprocessing and validation workflow for admins', 'admin');
-
-INSERT INTO LaneDefinitions (ProcessId, LaneName, LaneDescription, EstimatedDurationDays, CreatedBy)
-VALUES 
-    (1, 'Application Initialization', 'Lane for reviewing applications', 2, 'admin'),
-    (1, 'Sales Review', 'Lane for reviewing sales', 2, 'admin'),
-    (1, 'NDA Review', 'Lane for reviewing NDA ', 2, 'admin'),
-    (1, 'Products Review', 'Lane for reviewing products ', 2, 'admin'),
-    (1, 'Ingredients Review', 'Lane for reviewing ingredients ', 2, 'admin'),
-    (1, 'Legal Review', 'Lane for reviewing legal aspects ', 2, 'admin'),
-    (1, 'Invoice Review', 'Lane for reviewing invoice payments', 2, 'admin'),
-    (1, 'Certification Review', 'Lane for  certification ', 2, 'admin');
-
-
-
--- Insert Task Definitions for Admin Completion Workflow
-INSERT INTO TaskDefinitions (ProcessId, TaskName, TaskType, TaskCategory, Sequence, LaneId, AssigneeRole, EstimatedDurationMinutes, Description, AutoComplete)
-VALUES 
-    (1, 'Start_Application_Submitted', 'Event', 'Start', 1, 1, 'System', NULL, 'Application submitted and ready for admin review', 1),
-    (1, 'Mark_Application_Complete', 'UserTask', 'Action', 10, 1, 'Admin', 2, 'Admin marks application as complete and ready for dispatch', 0),
-    (1, 'Admin_Action_Gateway', 'Gateway', 'Decision', 11, 1, 'Admin', NULL, 'Admin chooses next action: Dispatch, Undo, Comment, or Message', 0),
-    (1, 'Dispatch_To_Queue', 'ServiceTask', 'Action', 12, 1, 'Admin', 1, 'Send application to dispatcher review queue', 0),
-    (1, 'Undo_Completion', 'UserTask', 'Action', 13, 1, 'Admin', 1, 'Return application to incomplete status for further review', 0),
-    (1, 'Add_Internal_Comment', 'UserTask', 'Notification', 14, 1, 'Admin', 3, 'Add internal comment for audit trail', 0),
-    (1, 'Send_Message_To_Dispatcher', 'UserTask', 'Notification', 15, 1, 'Admin', 5, 'Send message to dispatcher about application status', 0),
-    (1, 'Application_Dispatched', 'Event', 'End', 16, 1, 'System', NULL, 'Application successfully dispatched to review queue', 1),
-    (1, 'Under_Review', 'Event', 'End', 17, 1, 'Dispatcher', NULL, 'Application is under review by dispatcher', 1);
-GO
--- =============================================
 -- Insert Validation Rules
 -- =============================================
 
@@ -446,7 +389,7 @@ GO
 -- =============================================
 -- Sample Views for Workflow Monitoring
 -- =============================================
-
+GO
 -- View: Active Workflow Instances
 CREATE VIEW vw_ActiveWorkflows AS
 SELECT 

@@ -222,7 +222,7 @@ class ValidationRule(Base):  # type: ignore
     # parent relationships (access parent)
 
     # child relationships (access children)
-    ValidationResultList : Mapped[List["ValidationResult"]] = relationship(back_populates="Validation")
+   # ValidationResultList : Mapped[List["ValidationResult"]] = relationship(back_populates="Validation")
 
 
 
@@ -473,10 +473,10 @@ class WFApplication(Base):  # type: ignore
     WFCompanyList : Mapped[List["WFCompany"]] = relationship(back_populates="Application")
     WFContactList : Mapped[List["WFContact"]] = relationship(back_populates="Application")
     WFFileList : Mapped[List["WFFile"]] = relationship(back_populates="Application")
-    WFPlantList : Mapped[List["WFPlant"]] = relationship(back_populates="Application")
-    WFQuoteList : Mapped[List["WFQuote"]] = relationship(back_populates="Application")
-    WFProductList : Mapped[List["WFProduct"]] = relationship(back_populates="Application")
     WFIngredientList : Mapped[List["WFIngredient"]] = relationship(back_populates="Application")
+    WFPlantList : Mapped[List["WFPlant"]] = relationship(back_populates="Application")
+    WFProductList : Mapped[List["WFProduct"]] = relationship(back_populates="Application")
+    WFQuoteList : Mapped[List["WFQuote"]] = relationship(back_populates="Application")
 
 
 
@@ -526,7 +526,6 @@ class ProcessInstance(Base):  # type: ignore
     ProcessMessageList : Mapped[List["ProcessMessage"]] = relationship(back_populates="Instance")
     StageInstanceList : Mapped[List["StageInstance"]] = relationship(back_populates="ProcessInstance")
     TaskCommentList : Mapped[List["TaskComment"]] = relationship(back_populates="ProcessInstance")
-    ValidationResultList : Mapped[List["ValidationResult"]] = relationship(back_populates="Instance")
     WorkflowHistoryList : Mapped[List["WorkflowHistory"]] = relationship(back_populates="Instance")
 
 
@@ -787,7 +786,6 @@ class TaskInstance(Base):  # type: ignore
 
     # child relationships (access children)
     TaskCommentList : Mapped[List["TaskComment"]] = relationship(back_populates="TaskInstance")
-    ValidationResultList : Mapped[List["ValidationResult"]] = relationship(back_populates="TaskInstance")
     WorkflowHistoryList : Mapped[List["WorkflowHistory"]] = relationship(back_populates="TaskInstance")
 
 
@@ -882,9 +880,9 @@ class ValidationResult(Base):  # type: ignore
     ValidatedBy = Column(Unicode(100))
 
     # parent relationships (access parent)
-    Instance : Mapped["ProcessInstance"] = relationship(back_populates=("ValidationResultList"))
-    TaskInstance : Mapped["TaskInstance"] = relationship(back_populates=("ValidationResultList"))
-    Validation : Mapped["ValidationRule"] = relationship(back_populates=("ValidationResultList"))
+    #Instance : Mapped["ProcessInstance"] = relationship(back_populates=("ValidationResultList"))
+    #TaskInstance : Mapped["TaskInstance"] = relationship(back_populates=("ValidationResultList"))
+    #Validation : Mapped["ValidationRule"] = relationship(back_populates=("ValidationResultList"))
 
     # child relationships (access children)
 

@@ -28,20 +28,6 @@ const routes: Routes = [
         }
     }
 },{
-    path: ':ProcessInstanceId/TaskComment', loadChildren: () => import('../TaskComment/TaskComment.module').then(m => m.TaskCommentModule),
-    data: {
-        oPermission: {
-            permissionId: 'TaskComment-detail-permissions'
-        }
-    }
-},{
-    path: ':InstanceId/ValidationResult', loadChildren: () => import('../ValidationResult/ValidationResult.module').then(m => m.ValidationResultModule),
-    data: {
-        oPermission: {
-            permissionId: 'ValidationResult-detail-permissions'
-        }
-    }
-},{
     path: ':InstanceId/WorkflowHistory', loadChildren: () => import('../WorkflowHistory/WorkflowHistory.module').then(m => m.WorkflowHistoryModule),
     data: {
         oPermission: {
